@@ -60,6 +60,7 @@ async function bootstrap() {
     .addTag('countries', 'Country management')
     .addTag('faq', 'Frequently asked questions')
     .addTag('testimonials', 'Customer testimonials')
+    .addTag('seed', 'Database seed (development / controlled bootstrap)')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

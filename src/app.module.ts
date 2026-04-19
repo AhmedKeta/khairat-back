@@ -13,6 +13,7 @@ import { PaymentsModule } from './application/payments/payments.module';
 import { CountriesModule } from './application/countries/countries.module';
 import { FaqModule } from './application/faq/faq.module';
 import { TestimonialsModule } from './application/testimonials/testimonials.module';
+import { SeedModule } from './application/seed/seed.module';
 
 import { UserEntity } from './infrastructure/database/entities/user.entity';
 import { ServiceEntity } from './infrastructure/database/entities/service.entity';
@@ -96,6 +97,7 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
     CountriesModule,
     FaqModule,
     TestimonialsModule,
+    SeedModule,
   ],
 })
 export class AppModule {}
