@@ -15,4 +15,9 @@ export abstract class UserRepositoryPort {
   abstract update(id: string, user: Partial<User>): Promise<User>;
   abstract delete(id: string): Promise<void>;
   abstract existsByEmail(email: string): Promise<boolean>;
+  /** When `excludeUserId` is set, ignores that user (for updates). */
+  abstract existsByWhatsappNumber(
+    whatsappNumber: string,
+    excludeUserId?: string,
+  ): Promise<boolean>;
 }

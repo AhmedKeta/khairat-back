@@ -19,7 +19,8 @@ export class CountryEntity {
   @Column()
   currency: string;
 
-  @Column({ name: 'price_multiplier', type: 'decimal', precision: 5, scale: 4, default: 1.0 })
+  // Needs to support large multipliers (e.g., IDR).
+  @Column({ name: 'price_multiplier', type: 'decimal', precision: 12, scale: 4, default: 1.0 })
   priceMultiplier: number;
 
   @Column({ name: 'flag_emoji', nullable: true })
