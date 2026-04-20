@@ -17,6 +17,7 @@ import { UploadModule } from './application/upload/upload.module';
 import { SeedModule } from './application/seed/seed.module';
 
 import { UserEntity } from './infrastructure/database/entities/user.entity';
+import { AuditLogEntity } from './infrastructure/database/entities/audit-log.entity';
 import { ServiceEntity } from './infrastructure/database/entities/service.entity';
 import { OrderEntity } from './infrastructure/database/entities/order.entity';
 import { PaymentEntity } from './infrastructure/database/entities/payment.entity';
@@ -84,6 +85,7 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
           CountryEntity,
           FaqEntity,
           TestimonialEntity,
+          AuditLogEntity,
         ],
         synchronize: configService.get('NODE_ENV') !== 'production',
         logging: configService.get('NODE_ENV') === 'development',
@@ -99,7 +101,7 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
     FaqModule,
     TestimonialsModule,
     UploadModule,
-    SeedModule
+    SeedModule,
   ],
 })
 export class AppModule {}

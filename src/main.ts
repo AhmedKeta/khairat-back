@@ -86,6 +86,10 @@ async function bootstrap() {
 
   logger.log(`Khairat API running on port ${port}`, 'Bootstrap');
   logger.log(`Swagger docs: http://localhost:${port}/api/docs`, 'Bootstrap');
+  logger.log(
+    `Audit logs (admin): GET http://localhost:${port}/api/v1/users/admin/audit-logs`,
+    'Bootstrap',
+  );
 }
 
 bootstrap();

@@ -9,13 +9,18 @@ import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { UserListQueryDto } from '../../application/users/dto/user-list-query.dto';
+import { AuditLogService } from '../../application/audit-logs/audit-log.service';
+import { FindAuditLogsDto } from '../../application/audit-logs/dto/find-audit-logs.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller({ path: 'users', version: '1' })
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly auditLogService: AuditLogService,
+  ) {}
 
   @Get('me')
   @ApiOperation({ summary: 'Get current user profile' })
@@ -38,6 +43,19 @@ export class UsersController {
     return this.usersService.create(dto);
   }
 
+  /** Declared before `:id` so `admin` is not captured as a user id. */
+  @Get('admin/audit-logs')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({
+    summary: 'List audit logs (admin, cursor pagination)',
+    description:
+      'Same payload as legacy GET /audit-logs; mounted under /users for reliable routing.',
+  })
+  async listAuditLogs(@Query() query: FindAuditLogsDto) {
+    return this.auditLogService.findWithCursor(query);
+  }
+
   @Get()
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
@@ -45,6 +63,7 @@ export class UsersController {
   async findAll(@Query() filters: UserListQueryDto) {
     return this.usersService.findAll(filters);
   }
+
 
   @Get(':id')
   @UseGuards(RolesGuard)

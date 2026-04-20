@@ -6,9 +6,10 @@ import { UserEntity } from '../../infrastructure/database/entities/user.entity';
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
 import { AuthModule } from '../auth/auth.module';
+import { AuditLogsModule } from '../audit-logs/audit-logs.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), AuthModule],
+  imports: [TypeOrmModule.forFeature([UserEntity]), AuthModule, AuditLogsModule],
   controllers: [UsersController],
   providers: [
     UsersService,
