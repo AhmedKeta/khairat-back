@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, ILike } from 'typeorm';
+import { Repository, Not, Equal } from 'typeorm';
 import { UserEntity } from '../database/entities/user.entity';
 import { UserRepositoryPort, UserFilters } from '../../domain/user/ports/user.repository.port';
 import { User } from '../../domain/user/entities/user.entity';
@@ -67,6 +67,17 @@ export class UserRepository implements UserRepositoryPort {
 
   async existsByEmail(email: string): Promise<boolean> {
     const count = await this.repo.count({ where: { email } });
+    return count > 0;
+  }
+
+  async existsByWhatsappNumber(
+    whatsappNumber: string,
+    excludeUserId?: string,
+  ): Promise<boolean> {
+    const where = excludeUserId
+      ? { whatsappNumber, id: Not(Equal(excludeUserId)) }
+      : { whatsappNumber };
+    const count = await this.repo.count({ where });
     return count > 0;
   }
 

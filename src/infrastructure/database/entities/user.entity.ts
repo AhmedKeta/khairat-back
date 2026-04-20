@@ -24,7 +24,7 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column({ name: 'whatsapp_number' })
+  @Column({ name: 'whatsapp_number', unique: true })
   whatsappNumber: string;
 
   @Column({ name: 'country_id', nullable: true })

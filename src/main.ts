@@ -2,21 +2,35 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
+import { join } from 'path';
+import { mkdirSync } from 'fs';
+import * as express from 'express';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { TransformInterceptor } from './shared/interceptors/transform.interceptor';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const uploadRoot = join(process.cwd(), 'uploads');
+  for (const dir of ['images', 'videos']) {
+    mkdirSync(join(uploadRoot, dir), { recursive: true });
+  }
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { bufferLogs: true });
+  app.use('/uploads', express.static(uploadRoot));
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(logger);
 
   const configService = app.get(ConfigService);
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+  );
 
   app.enableCors({
     origin: [
@@ -60,6 +74,7 @@ async function bootstrap() {
     .addTag('countries', 'Country management')
     .addTag('faq', 'Frequently asked questions')
     .addTag('testimonials', 'Customer testimonials')
+    .addTag('upload', 'Media uploads (admin)')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

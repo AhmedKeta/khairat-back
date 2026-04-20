@@ -26,6 +26,13 @@ export class AuthService {
       throw new ConflictException('Email already registered');
     }
 
+    const phoneTaken = await this.userRepository.existsByWhatsappNumber(
+      dto.whatsappNumber,
+    );
+    if (phoneTaken) {
+      throw new ConflictException('Phone number already registered');
+    }
+
     const hashedPassword = await bcrypt.hash(dto.password, 12);
 
     const user = await this.userRepository.create({

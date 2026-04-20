@@ -1,13 +1,14 @@
-import { Controller, Get, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../../application/users/users.service';
 import { UpdateUserDto } from '../../application/users/dto/update-user.dto';
+import { CreateUserDto } from '../../application/users/dto/create-user.dto';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
-import { UserFilters } from '../../domain/user/ports/user.repository.port';
+import { UserListQueryDto } from '../../application/users/dto/user-list-query.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -29,11 +30,19 @@ export class UsersController {
     return this.usersService.update(user.id, allowedUpdates);
   }
 
+  @Post()
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Create user (admin)' })
+  async create(@Body() dto: CreateUserDto) {
+    return this.usersService.create(dto);
+  }
+
   @Get()
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get all users (admin)' })
-  async findAll(@Query() filters: UserFilters) {
+  async findAll(@Query() filters: UserListQueryDto) {
     return this.usersService.findAll(filters);
   }
 
