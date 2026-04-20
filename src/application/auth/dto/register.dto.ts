@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsUUID,
   Matches,
+  MaxLength,
 } from 'class-validator';
 
 export class RegisterDto {
@@ -30,4 +31,15 @@ export class RegisterDto {
   @IsString()
   @MinLength(8)
   password: string;
+
+  @ApiPropertyOptional({ description: 'Guest id from website localStorage' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  guestId?: string;
+
+  @ApiPropertyOptional({ description: 'Latest tracking visit UUID' })
+  @IsOptional()
+  @IsUUID()
+  trackingVisitId?: string;
 }

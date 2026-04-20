@@ -18,7 +18,8 @@ export class OrderRepository implements OrderRepositoryPort {
 
     const query = this.repo.createQueryBuilder('order')
       .leftJoinAndSelect('order.user', 'user')
-      .leftJoinAndSelect('order.service', 'service');
+      .leftJoinAndSelect('order.service', 'service')
+      .leftJoinAndSelect('order.trackingVisit', 'trackingVisit');
 
     if (userId) query.andWhere('order.userId = :userId', { userId });
     if (status) query.andWhere('order.status = :status', { status });
@@ -39,7 +40,7 @@ export class OrderRepository implements OrderRepositoryPort {
   async findById(id: string): Promise<Order | null> {
     const entity = await this.repo.findOne({
       where: { id },
-      relations: ['user', 'service'],
+      relations: ['user', 'service', 'trackingVisit'],
     });
     return entity ? this.toDomain(entity) : null;
   }
@@ -71,11 +72,13 @@ export class OrderRepository implements OrderRepositoryPort {
       status: entity.status,
       paymentId: entity.paymentId,
       notes: entity.notes,
+      trackingVisitId: entity.trackingVisitId ?? null,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
     (order as any).user = entity.user;
     (order as any).service = entity.service;
+    (order as any).trackingVisit = entity.trackingVisit;
     return order;
   }
 }

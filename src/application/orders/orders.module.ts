@@ -9,11 +9,13 @@ import { ServiceRepository } from '../../infrastructure/repositories/service.rep
 import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.port';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { AuthModule } from '../auth/auth.module';
+import { TrackingModule } from '../tracking/tracking.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([OrderEntity, ServiceEntity]),
     AuthModule,
+    TrackingModule,
   ],
   controllers: [OrdersController],
   providers: [

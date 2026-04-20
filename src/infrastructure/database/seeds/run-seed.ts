@@ -5,6 +5,7 @@ import { seedUsers } from './seeders/user.seeder';
 import { seedServices } from './seeders/service.seeder';
 import { seedFaqs } from './seeders/faq.seeder';
 import { seedTestimonials } from './seeders/testimonial.seeder';
+import { seedOurWorks } from './seeders/our-work.seeder';
 import { seedOrders } from './seeders/order.seeder';
 import { seedPayments } from './seeders/payment.seeder';
 
@@ -19,6 +20,8 @@ export async function runSeed(ds = AppDataSource): Promise<void> {
   await seedFaqs(ds);
   console.log('Seeding testimonials...');
   await seedTestimonials(ds);
+  console.log('Seeding our works...');
+  await seedOurWorks(ds);
   console.log('Seeding orders...');
   await seedOrders(ds);
   console.log('Seeding payments...');

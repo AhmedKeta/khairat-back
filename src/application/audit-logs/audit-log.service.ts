@@ -8,6 +8,7 @@ import { OrderEntity } from '../../infrastructure/database/entities/order.entity
 import { PaymentEntity } from '../../infrastructure/database/entities/payment.entity';
 import { ServiceEntity } from '../../infrastructure/database/entities/service.entity';
 import { TestimonialEntity } from '../../infrastructure/database/entities/testimonial.entity';
+import { OurWorkEntity } from '../../infrastructure/database/entities/our-work.entity';
 import { UserEntity } from '../../infrastructure/database/entities/user.entity';
 import { CreateAuditLogDto } from './dto/create-audit-log.dto';
 import { FindAuditLogsDto } from './dto/find-audit-logs.dto';
@@ -22,6 +23,7 @@ const AUDIT_SNAPSHOT_ENTITY_MAP: Record<
   Payment: PaymentEntity,
   Faq: FaqEntity,
   Testimonial: TestimonialEntity,
+  Work: OurWorkEntity,
   Country: CountryEntity,
 };
 

@@ -11,6 +11,8 @@ import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { UserListQueryDto } from '../../application/users/dto/user-list-query.dto';
 import { AuditLogService } from '../../application/audit-logs/audit-log.service';
 import { FindAuditLogsDto } from '../../application/audit-logs/dto/find-audit-logs.dto';
+import { TrackingService } from '../../application/tracking/tracking.service';
+import { FindTrackingVisitsDto } from '../../application/tracking/dto/find-tracking-visits.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -20,6 +22,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly auditLogService: AuditLogService,
+    private readonly trackingService: TrackingService,
   ) {}
 
   @Get('me')
@@ -54,6 +57,22 @@ export class UsersController {
   })
   async listAuditLogs(@Query() query: FindAuditLogsDto) {
     return this.auditLogService.findWithCursor(query);
+  }
+
+  @Get('admin/tracking-visits')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: 'List website visits / traffic (admin, cursor pagination)' })
+  async listTrackingVisits(@Query() query: FindTrackingVisitsDto) {
+    return this.trackingService.findVisitsForAdmin(query);
+  }
+
+  @Get('admin/tracking-analytics')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Traffic analytics aggregates (admin)' })
+  async trackingAnalytics() {
+    return this.trackingService.getAnalytics();
   }
 
   @Get()

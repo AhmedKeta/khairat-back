@@ -7,7 +7,7 @@ async function resetSeed(): Promise<void> {
   try {
     console.log('Resetting seeded tables...');
     await AppDataSource.query(
-      'TRUNCATE TABLE "payments", "orders", "testimonials", "faqs", "services", "users" RESTART IDENTITY CASCADE',
+      'TRUNCATE TABLE "payments", "orders", "our_works", "testimonials", "faqs", "services", "users" RESTART IDENTITY CASCADE',
     );
     await runSeed(AppDataSource);
   } finally {

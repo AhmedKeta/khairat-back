@@ -11,6 +11,7 @@ import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { TrackingService } from '../tracking/tracking.service';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     private readonly userRepository: UserRepositoryPort,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly trackingService: TrackingService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -48,6 +50,8 @@ export class AuthService {
 
     const tokens = await this.generateTokens(user.id, user.email, user.role);
 
+    await this.attachTrackingToUser(dto.guestId, dto.trackingVisitId, user.id);
+
     return {
       user: this.sanitizeUser(user),
       ...tokens,
@@ -70,6 +74,8 @@ export class AuthService {
     }
 
     const tokens = await this.generateTokens(user.id, user.email, user.role);
+
+    await this.attachTrackingToUser(dto.guestId, dto.trackingVisitId, user.id);
 
     return {
       user: this.sanitizeUser(user),
@@ -133,5 +139,22 @@ export class AuthService {
   private sanitizeUser(user: any) {
     const { password, refreshToken, ...rest } = user;
     return rest;
+  }
+
+  private async attachTrackingToUser(
+    guestId: string | undefined,
+    trackingVisitId: string | undefined,
+    userId: string,
+  ): Promise<void> {
+    try {
+      if (guestId?.trim()) {
+        await this.trackingService.linkGuestToUser(guestId, userId);
+      }
+      if (trackingVisitId?.trim()) {
+        await this.trackingService.linkVisitToUser(trackingVisitId.trim(), userId);
+      }
+    } catch {
+      // Never block auth on tracking persistence issues
+    }
   }
 }

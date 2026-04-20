@@ -6,11 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToOne,
 } from 'typeorm';
 import { OrderStatus } from '../../../domain/order/value-objects/order-status.enum';
 import { UserEntity } from './user.entity';
 import { ServiceEntity } from './service.entity';
+import { UserTrackingEntity } from './user-tracking.entity';
 
 @Entity('orders')
 export class OrderEntity {
@@ -55,6 +55,13 @@ export class OrderEntity {
 
   @Column({ nullable: true, type: 'text' })
   notes: string;
+
+  @Column({ name: 'tracking_visit_id', nullable: true })
+  trackingVisitId?: string | null;
+
+  @ManyToOne(() => UserTrackingEntity, { nullable: true })
+  @JoinColumn({ name: 'tracking_visit_id' })
+  trackingVisit?: UserTrackingEntity | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -9,7 +9,9 @@ import { PaymentEntity } from './entities/payment.entity';
 import { CountryEntity } from './entities/country.entity';
 import { FaqEntity } from './entities/faq.entity';
 import { TestimonialEntity } from './entities/testimonial.entity';
+import { OurWorkEntity } from './entities/our-work.entity';
 import { AuditLogEntity } from './entities/audit-log.entity';
+import { UserTrackingEntity } from './entities/user-tracking.entity';
 
 config({ path: resolve(__dirname, '../../../.env') });
 
@@ -21,7 +23,9 @@ const entities = [
   CountryEntity,
   FaqEntity,
   TestimonialEntity,
+  OurWorkEntity,
   AuditLogEntity,
+  UserTrackingEntity,
 ];
 
 export const AppDataSource = new DataSource({

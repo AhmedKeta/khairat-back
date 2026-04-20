@@ -7,9 +7,10 @@ import { UserRepository } from '../../infrastructure/repositories/user.repositor
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
 import { AuthModule } from '../auth/auth.module';
 import { AuditLogsModule } from '../audit-logs/audit-logs.module';
+import { TrackingModule } from '../tracking/tracking.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity]), AuthModule, AuditLogsModule],
+  imports: [TypeOrmModule.forFeature([UserEntity]), AuthModule, AuditLogsModule, TrackingModule],
   controllers: [UsersController],
   providers: [
     UsersService,

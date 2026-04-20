@@ -13,17 +13,19 @@ import { PaymentsModule } from './application/payments/payments.module';
 import { CountriesModule } from './application/countries/countries.module';
 import { FaqModule } from './application/faq/faq.module';
 import { TestimonialsModule } from './application/testimonials/testimonials.module';
+import { WorksModule } from './application/works/works.module';
 import { UploadModule } from './application/upload/upload.module';
 import { SeedModule } from './application/seed/seed.module';
-
 import { UserEntity } from './infrastructure/database/entities/user.entity';
 import { AuditLogEntity } from './infrastructure/database/entities/audit-log.entity';
+import { UserTrackingEntity } from './infrastructure/database/entities/user-tracking.entity';
 import { ServiceEntity } from './infrastructure/database/entities/service.entity';
 import { OrderEntity } from './infrastructure/database/entities/order.entity';
 import { PaymentEntity } from './infrastructure/database/entities/payment.entity';
 import { CountryEntity } from './infrastructure/database/entities/country.entity';
 import { FaqEntity } from './infrastructure/database/entities/faq.entity';
 import { TestimonialEntity } from './infrastructure/database/entities/testimonial.entity';
+import { OurWorkEntity } from './infrastructure/database/entities/our-work.entity';
 
 @Module({
   imports: [
@@ -85,7 +87,9 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
           CountryEntity,
           FaqEntity,
           TestimonialEntity,
+          OurWorkEntity,
           AuditLogEntity,
+          UserTrackingEntity,
         ],
         synchronize: configService.get('NODE_ENV') !== 'production',
         logging: configService.get('NODE_ENV') === 'development',
@@ -100,6 +104,7 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
     CountriesModule,
     FaqModule,
     TestimonialsModule,
+    WorksModule,
     UploadModule,
     SeedModule,
   ],

@@ -11,6 +11,7 @@ export class Order {
   status: OrderStatus;
   paymentId: string | null;
   notes: string | null;
+  trackingVisitId?: string | null;
   createdAt: Date;
   updatedAt: Date;
 

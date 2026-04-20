@@ -11,9 +11,11 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { UserEntity } from '../../infrastructure/database/entities/user.entity';
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
+import { TrackingModule } from '../tracking/tracking.module';
 
 @Module({
   imports: [
+    TrackingModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

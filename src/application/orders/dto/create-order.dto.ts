@@ -15,4 +15,11 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   notes?: string;
+
+  @ApiPropertyOptional({
+    description: 'Marketing visit id from POST /tracking/visit (ties order to traffic)',
+  })
+  @IsOptional()
+  @IsUUID()
+  trackingVisitId?: string;
 }
