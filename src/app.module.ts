@@ -14,6 +14,7 @@ import { CountriesModule } from './application/countries/countries.module';
 import { FaqModule } from './application/faq/faq.module';
 import { TestimonialsModule } from './application/testimonials/testimonials.module';
 import { UploadModule } from './application/upload/upload.module';
+import { SeedModule } from './application/seed/seed.module';
 
 import { UserEntity } from './infrastructure/database/entities/user.entity';
 import { ServiceEntity } from './infrastructure/database/entities/service.entity';
@@ -98,6 +99,7 @@ import { TestimonialEntity } from './infrastructure/database/entities/testimonia
     FaqModule,
     TestimonialsModule,
     UploadModule,
+    SeedModule
   ],
 })
 export class AppModule {}
