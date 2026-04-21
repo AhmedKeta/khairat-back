@@ -50,6 +50,11 @@ export class UserRepository implements UserRepositoryPort {
     return entity ? this.toDomain(entity) : null;
   }
 
+  async findByWhatsappNumber(whatsappNumber: string): Promise<User | null> {
+    const entity = await this.repo.findOne({ where: { whatsappNumber } });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   async create(user: Partial<User>): Promise<User> {
     const entity = this.repo.create(user as Partial<UserEntity>);
     const saved = await this.repo.save(entity);

@@ -23,6 +23,14 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
+    if (dto.password !== dto.confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    if (!dto.terms) {
+      throw new BadRequestException('You must accept the terms');
+    }
+
     const exists = await this.userRepository.existsByEmail(dto.email);
     if (exists) {
       throw new ConflictException('Email already registered');
@@ -59,7 +67,16 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    const user = await this.userRepository.findByEmail(dto.email);
+    const identifier = dto.identifier.trim();
+    const normalizedPhone = this.normalizePhone(identifier);
+    const normalizedEmail = identifier.toLowerCase();
+
+    const user =
+      (await this.userRepository.findByEmail(normalizedEmail)) ||
+      (normalizedPhone
+        ? await this.userRepository.findByWhatsappNumber(normalizedPhone)
+        : null) ||
+      (await this.userRepository.findByWhatsappNumber(identifier));
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -139,6 +156,17 @@ export class AuthService {
   private sanitizeUser(user: any) {
     const { password, refreshToken, ...rest } = user;
     return rest;
+  }
+
+  private normalizePhone(value: string): string | null {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+
+    const hasPlus = trimmed.startsWith('+');
+    const digitsOnly = trimmed.replace(/[^\d]/g, '');
+    if (!digitsOnly) return null;
+
+    return hasPlus ? `+${digitsOnly}` : digitsOnly;
   }
 
   private async attachTrackingToUser(
