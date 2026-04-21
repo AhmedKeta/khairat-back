@@ -22,7 +22,7 @@ export class AuthController {
   @Post('login')
   @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Login with email and password' })
+  @ApiOperation({ summary: 'Login with email/phone and password' })
   async login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
