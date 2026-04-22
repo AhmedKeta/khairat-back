@@ -23,7 +23,7 @@ export class PaymentsService {
     if (order.userId !== user.id) throw new BadRequestException('Order does not belong to user');
 
     const existingPayment = await this.paymentRepository.findByOrderId(orderId);
-    if (existingPayment && existingPayment.status === PaymentStatus.SUCCESS) {
+    if (existingPayment?.status === PaymentStatus.SUCCESS) {
       throw new BadRequestException('Order already paid');
     }
 
@@ -41,16 +41,35 @@ export class PaymentsService {
       webhookUrl: `${backendUrl}/api/v1/payments/webhook`,
     });
 
-    const payment = await this.paymentRepository.create({
-      orderId: order.id,
-      provider: 'EasyKash',
-      transactionId: gatewayResponse.transactionId,
-      amount: order.total,
-      currency: 'USD',
-      status: PaymentStatus.INITIATED,
-      gatewayUrl: gatewayResponse.redirectUrl,
-      responsePayload: gatewayResponse.rawResponse,
-    });
+    /**
+     * Payment–Order is modeled as @OneToOne with JoinColumn on `order_id`, so that column is UNIQUE.
+     * Retrying payment (pending or failed) must UPDATE the existing row, not INSERT another.
+     */
+    const payment = existingPayment
+      ? await this.paymentRepository.update(existingPayment.id, {
+          provider: 'EasyKash',
+          transactionId: gatewayResponse.transactionId,
+          amount: order.total,
+          currency: 'USD',
+          status: PaymentStatus.INITIATED,
+          gatewayUrl: gatewayResponse.redirectUrl,
+          responsePayload: gatewayResponse.rawResponse,
+          webhookReceivedAt: null,
+        })
+      : await this.paymentRepository.create({
+          orderId: order.id,
+          provider: 'EasyKash',
+          transactionId: gatewayResponse.transactionId,
+          amount: order.total,
+          currency: 'USD',
+          status: PaymentStatus.INITIATED,
+          gatewayUrl: gatewayResponse.redirectUrl,
+          responsePayload: gatewayResponse.rawResponse,
+        });
+
+    if (!payment) {
+      throw new BadRequestException('Could not persist payment');
+    }
 
     this.logger.log(`Payment initiated: ${payment.id} for order: ${orderId}`);
 
