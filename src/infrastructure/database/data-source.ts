@@ -1,19 +1,19 @@
-import 'reflect-metadata';
-import { config } from 'dotenv';
-import { resolve, join } from 'path';
-import { DataSource } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { ServiceEntity } from './entities/service.entity';
-import { OrderEntity } from './entities/order.entity';
-import { PaymentEntity } from './entities/payment.entity';
-import { CountryEntity } from './entities/country.entity';
-import { FaqEntity } from './entities/faq.entity';
-import { TestimonialEntity } from './entities/testimonial.entity';
-import { OurWorkEntity } from './entities/our-work.entity';
-import { AuditLogEntity } from './entities/audit-log.entity';
-import { UserTrackingEntity } from './entities/user-tracking.entity';
+import "reflect-metadata";
+import { config } from "dotenv";
+import { resolve, join } from "path";
+import { DataSource } from "typeorm";
+import { UserEntity } from "./entities/user.entity";
+import { ServiceEntity } from "./entities/service.entity";
+import { OrderEntity } from "./entities/order.entity";
+import { PaymentEntity } from "./entities/payment.entity";
+import { CountryEntity } from "./entities/country.entity";
+import { FaqEntity } from "./entities/faq.entity";
+import { TestimonialEntity } from "./entities/testimonial.entity";
+import { OurWorkEntity } from "./entities/our-work.entity";
+import { AuditLogEntity } from "./entities/audit-log.entity";
+import { UserTrackingEntity } from "./entities/user-tracking.entity";
 
-config({ path: resolve(__dirname, '../../../.env') });
+config({ path: resolve(__dirname, "../../../.env") });
 
 const entities = [
   UserEntity,
@@ -28,15 +28,31 @@ const entities = [
   UserTrackingEntity,
 ];
 
-export const AppDataSource = new DataSource({
-  type: 'postgres',
-  host: process.env.DB_HOST || process.env.DB_URL || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432', 10),
-  username: process.env.DB_USERNAME || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_DATABASE || 'khairat',
-  synchronize: process.env.NODE_ENV !== 'production',
-  logging: process.env.NODE_ENV === 'development',
-  entities,
-  migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
-});
+const isProd = !!process.env.DATABASE_URL;
+
+export const AppDataSource = new DataSource(
+  isProd
+    ? {
+        type: "postgres",
+        url: process.env.DATABASE_URL, // ✅ FULL URL here
+        ssl: {
+          rejectUnauthorized: false,
+        },
+        synchronize: false,
+        logging: false,
+        entities,
+        migrations: [join(__dirname, "migrations", "*.{ts,js}")],
+      }
+    : {
+        type: "postgres",
+        host: process.env.DB_HOST || "localhost",
+        port: parseInt(process.env.DB_PORT || "5432", 10),
+        username: process.env.DB_USERNAME || "postgres",
+        password: process.env.DB_PASSWORD || "postgres",
+        database: process.env.DB_DATABASE || "khairat",
+        synchronize: true,
+        logging: true,
+        entities,
+        migrations: [join(__dirname, "migrations", "*.{ts,js}")],
+      },
+);
