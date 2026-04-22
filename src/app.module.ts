@@ -72,28 +72,50 @@ import { OurWorkEntity } from './infrastructure/database/entities/our-work.entit
 
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST', 'localhost'),
-        port: configService.get<number>('DB_PORT', 5432),
-        username: configService.get('DB_USERNAME', 'postgres'),
-        password: configService.get('DB_PASSWORD', 'postgres'),
-        database: configService.get('DB_DATABASE', 'khairat'),
-        entities: [
-          UserEntity,
-          ServiceEntity,
-          OrderEntity,
-          PaymentEntity,
-          CountryEntity,
-          FaqEntity,
-          TestimonialEntity,
-          OurWorkEntity,
-          AuditLogEntity,
-          UserTrackingEntity,
-        ],
-        synchronize: configService.get('NODE_ENV') !== 'production',
-        logging: configService.get('NODE_ENV') === 'development',
-      }),
+      useFactory: (configService: ConfigService) => {
+        const nodeEnv = configService.get<string>('NODE_ENV');
+        const isProduction = nodeEnv === 'production';
+        const databaseUrl = configService.get<string>('DATABASE_URL');
+        const synchronize =
+          configService.get<string>('DB_SYNCHRONIZE') === 'true' || !isProduction;
+
+        const baseConfig = {
+          type: 'postgres' as const,
+          entities: [
+            UserEntity,
+            ServiceEntity,
+            OrderEntity,
+            PaymentEntity,
+            CountryEntity,
+            FaqEntity,
+            TestimonialEntity,
+            OurWorkEntity,
+            AuditLogEntity,
+            UserTrackingEntity,
+          ],
+          synchronize,
+          logging: nodeEnv === 'development',
+        };
+
+        if (databaseUrl) {
+          return {
+            ...baseConfig,
+            url: databaseUrl,
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          };
+        }
+
+        return {
+          ...baseConfig,
+          host: configService.get<string>('DB_HOST', 'localhost'),
+          port: configService.get<number>('DB_PORT', 5432),
+          username: configService.get<string>('DB_USERNAME', 'postgres'),
+          password: configService.get<string>('DB_PASSWORD', 'postgres'),
+          database: configService.get<string>('DB_DATABASE', 'khairat'),
+        };
+      },
     }),
 
     AuthModule,
