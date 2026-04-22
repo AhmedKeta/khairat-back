@@ -32,6 +32,10 @@ export async function runSeed(ds = AppDataSource): Promise<void> {
 async function main() {
   await AppDataSource.initialize();
   try {
+    if (process.env.SEED_SYNC_SCHEMA === 'true') {
+      console.log('Synchronizing database schema before seeding...');
+      await AppDataSource.synchronize();
+    }
     await runSeed(AppDataSource);
   } finally {
     if (AppDataSource.isInitialized) {

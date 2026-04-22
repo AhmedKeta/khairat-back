@@ -29,6 +29,7 @@ const entities = [
 ];
 
 const isProd = !!process.env.DATABASE_URL;
+const shouldSynchronize = process.env.DB_SYNCHRONIZE === "true";
 
 export const AppDataSource = new DataSource(
   isProd
@@ -38,7 +39,7 @@ export const AppDataSource = new DataSource(
         ssl: {
           rejectUnauthorized: false,
         },
-        synchronize: false,
+        synchronize: shouldSynchronize,
         logging: false,
         entities,
         migrations: [join(__dirname, "migrations", "*.{ts,js}")],
