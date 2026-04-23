@@ -5,9 +5,9 @@ import { AppDataSource } from "../infrastructure/database/data-source";
 import { ServiceEntity } from "../infrastructure/database/entities/service.entity";
 import { Polar } from "@polar-sh/sdk";
 import {
-  SUPPORTED_CURRENCIES,
+  POLAR_CHARGEABLE_CURRENCIES,
   POLAR_DEFAULT_CURRENCY,
-  isSupportedCurrency,
+  isPolarChargeable,
 } from "../shared/constants/currencies";
 
 config({ path: resolve(__dirname, "../../.env") });
@@ -26,7 +26,7 @@ function buildPolarPrices(service: ServiceEntity): {
     }))
     .filter(
       (p) =>
-        isSupportedCurrency(p.currency) &&
+        isPolarChargeable(p.currency) &&
         Number.isFinite(p.amount) &&
         p.amount > 0,
     );
@@ -34,7 +34,7 @@ function buildPolarPrices(service: ServiceEntity): {
   // Legacy fallback
   if (normalized.length === 0 && Number(service.price) > 0) {
     const legacyCurrency = (service.currency || "USD").toUpperCase();
-    if (isSupportedCurrency(legacyCurrency)) {
+    if (isPolarChargeable(legacyCurrency)) {
       normalized.push({
         currency: legacyCurrency,
         amount: Number(service.price),
@@ -43,15 +43,21 @@ function buildPolarPrices(service: ServiceEntity): {
   }
 
   const hasUsd = normalized.some((p) => p.currency === POLAR_DEFAULT_CURRENCY);
-  if (!hasUsd && Number(service.price) > 0) {
-    normalized.unshift({
-      currency: POLAR_DEFAULT_CURRENCY,
-      amount: Number(service.price),
-    });
+  if (!hasUsd) {
+    const usdFromPrices = source.find(
+      (p: any) => String(p?.currency ?? "").toUpperCase() === POLAR_DEFAULT_CURRENCY,
+    );
+    const fallback = Number(usdFromPrices?.amount ?? service.price);
+    if (Number.isFinite(fallback) && fallback > 0) {
+      normalized.unshift({
+        currency: POLAR_DEFAULT_CURRENCY,
+        amount: fallback,
+      });
+    }
   }
 
   const seen = new Set<string>();
-  const ordered = [...SUPPORTED_CURRENCIES].flatMap((code) => {
+  const ordered = [...POLAR_CHARGEABLE_CURRENCIES].flatMap((code) => {
     const entry = normalized.find((p) => p.currency === code);
     if (!entry || seen.has(code)) return [];
     seen.add(code);
