@@ -23,12 +23,14 @@ async function main() {
     | 'production';
   const accessToken = process.env.POLAR_ACCESS_TOKEN ?? '';
   const organizationId = process.env.POLAR_ORGANIZATION_ID;
+  // Polar Organization Access Tokens (OATs) reject requests that include
+  // `organization_id`. Only pass it when an explicit opt-in is set
+  // (i.e. when you're using a user-access token instead of an OAT).
+  const sendOrgId = process.env.POLAR_SEND_ORGANIZATION_ID === 'true';
 
-  if (!accessToken || !organizationId) {
+  if (!accessToken) {
     // Don't fail the build/deploy — the sync is optional until Polar creds exist.
-    console.warn(
-      '[sync:polar] Skipped: POLAR_ACCESS_TOKEN and/or POLAR_ORGANIZATION_ID not set.',
-    );
+    console.warn('[sync:polar] Skipped: POLAR_ACCESS_TOKEN not set.');
     return;
   }
 
@@ -55,7 +57,7 @@ async function main() {
       try {
         if (!service.polarProductId) {
           const created: any = await polar.products.create({
-            organizationId,
+            ...(sendOrgId && organizationId ? { organizationId } : {}),
             name,
             description: description || undefined,
             recurringInterval: null,

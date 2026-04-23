@@ -54,8 +54,17 @@ export class PolarProductSyncService {
 
     try {
       if (!service.polarProductId) {
+        // Polar Organization Access Tokens (OATs) are already scoped to one
+        // org — the API rejects requests that include `organization_id`
+        // alongside an OAT. Only include it when explicitly configured AND
+        // the token is not an OAT (set POLAR_SEND_ORGANIZATION_ID=true to
+        // force it for user-access tokens).
+        const sendOrgId =
+          this.config.get<string>('POLAR_SEND_ORGANIZATION_ID') === 'true';
         const created: any = await this.polar.products.create({
-          organizationId: this.organizationId!,
+          ...(sendOrgId && this.organizationId
+            ? { organizationId: this.organizationId }
+            : {}),
           name,
           description: description || undefined,
           recurringInterval: null,
