@@ -23,6 +23,7 @@ import {
 import { ServiceRepositoryPort } from "../../domain/service/ports/service.repository.port";
 import {
   SUPPORTED_CURRENCIES,
+  POLAR_DEFAULT_CURRENCY,
   isSupportedCurrency,
 } from "../../shared/constants/currencies";
 
@@ -66,32 +67,61 @@ export class PolarAdapter implements PaymentGatewayPort {
       );
     }
 
-    // Polar expects price amounts in minor units (cents).
-    const unitAmountCents = Math.round(
-      (dto.amount / Math.max(dto.quantity, 1)) * 100,
-    );
-    const requested = String(dto.currency || "USD").toUpperCase();
+    const quantity = Math.max(dto.quantity, 1);
+    const requested = String(dto.currency || POLAR_DEFAULT_CURRENCY).toUpperCase();
     if (!isSupportedCurrency(requested)) {
       throw new BadRequestException(
         `Currency ${requested} is not supported by Polar. Allowed: ${SUPPORTED_CURRENCIES.join(", ")}`,
       );
     }
-    const currency = requested.toLowerCase();
+
+    // Build the checkout price override from the service's full multi-currency
+    // price list (multiplied by quantity). Polar requires the organization's
+    // default presentment currency (USD) to be present in any override, even
+    // when the customer is paying in a different currency.
+    const servicePrices =
+      ((service as any).prices as
+        | { currency: string; amount: number }[]
+        | undefined) ?? [];
+
+    const overrideMap = new Map<string, number>();
+    for (const entry of servicePrices) {
+      const code = String(entry.currency || "").toUpperCase();
+      if (!isSupportedCurrency(code)) continue;
+      overrideMap.set(code, Number(entry.amount));
+    }
+
+    if (!overrideMap.has(POLAR_DEFAULT_CURRENCY)) {
+      // Fall back to the order amount converted through the (single) USD entry
+      // on the service so the override is still valid.
+      const usdFallback = Number(
+        (service as any).price ?? dto.amount / quantity,
+      );
+      overrideMap.set(POLAR_DEFAULT_CURRENCY, usdFallback);
+    }
+
+    if (!overrideMap.has(requested)) {
+      // Customer's currency wasn't stored on the service - bill at the order
+      // amount they saw on the frontend.
+      overrideMap.set(requested, dto.amount / quantity);
+    }
+
+    const overridePrices = Array.from(overrideMap.entries()).map(
+      ([code, unitAmount]) => ({
+        amountType: "fixed" as const,
+        priceAmount: Math.round(unitAmount * quantity * 100),
+        priceCurrency: code.toLowerCase(),
+      }),
+    );
 
     try {
       const checkout = await this.polar.checkouts.create({
         products: [polarProductId],
-        // Override the product's price at checkout time so future price changes
-        // always bill the amount currently on the order.
         prices: {
-          [polarProductId]: [
-            {
-              amountType: "fixed",
-              priceAmount: unitAmountCents,
-              priceCurrency: currency,
-            },
-          ],
+          [polarProductId]: overridePrices,
         } as any,
+        // Tell Polar which of the override prices to actually charge.
+        currency: requested.toLowerCase(),
         externalCustomerId: dto.userId,
         customerEmail: dto.customerEmail,
         customerName: dto.customerName,
@@ -100,7 +130,7 @@ export class PolarAdapter implements PaymentGatewayPort {
           orderId: dto.orderId,
           userId: dto.userId,
           serviceId: dto.serviceId,
-          quantity: String(dto.quantity),
+          quantity: String(quantity),
         },
       } as any);
 
