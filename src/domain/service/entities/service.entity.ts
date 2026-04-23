@@ -8,12 +8,18 @@ export interface ServiceDescription {
   en: string;
 }
 
+export interface ServicePrice {
+  currency: string;
+  amount: number;
+}
+
 export class Service {
   id: string;
   title: ServiceTitle;
   description: ServiceDescription;
   price: number;
   currency: string;
+  prices: ServicePrice[];
   feedsCount: number | null;
   images: string[];
   videos: string[];

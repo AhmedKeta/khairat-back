@@ -24,11 +24,15 @@ export class ServicesService {
   }
 
   async create(dto: CreateServiceDto) {
+    const prices = (dto.prices ?? []).map((p) => ({
+      currency: String(p.currency).toUpperCase(),
+      amount: Number(p.amount),
+    }));
+
     const service = await this.serviceRepository.create({
       title: dto.title,
       description: dto.description,
-      price: dto.price,
-      currency: dto.currency || 'USD',
+      prices,
       feedsCount: dto.feedsCount,
       images: dto.images || [],
       videos: dto.videos || [],
@@ -44,7 +48,14 @@ export class ServicesService {
 
   async update(id: string, dto: UpdateServiceDto) {
     await this.findById(id);
-    const updated = await this.serviceRepository.update(id, dto);
+    const payload: any = { ...dto };
+    if (Array.isArray(dto.prices)) {
+      payload.prices = dto.prices.map((p) => ({
+        currency: String(p.currency).toUpperCase(),
+        amount: Number(p.amount),
+      }));
+    }
+    const updated = await this.serviceRepository.update(id, payload);
 
     const polarProductId = await this.polarSync.syncService(updated);
     if (polarProductId && polarProductId !== updated.polarProductId) {

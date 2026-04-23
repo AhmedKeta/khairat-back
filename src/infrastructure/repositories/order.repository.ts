@@ -69,6 +69,7 @@ export class OrderRepository implements OrderRepositoryPort {
       unitPrice: Number(entity.unitPrice),
       subtotal: Number(entity.subtotal),
       total: Number(entity.total),
+      currency: entity.currency ?? 'USD',
       status: entity.status,
       paymentId: entity.paymentId,
       notes: entity.notes,

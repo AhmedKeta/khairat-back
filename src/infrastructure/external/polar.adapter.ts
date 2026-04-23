@@ -1,6 +1,6 @@
-import { Injectable, Logger, BadRequestException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Polar } from '@polar-sh/sdk';
+import { Injectable, Logger, BadRequestException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Polar } from "@polar-sh/sdk";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const {
   validateEvent,
@@ -12,15 +12,19 @@ const {
     secret: string,
   ) => unknown;
   WebhookVerificationError: new (...args: any[]) => Error;
-} = require('@polar-sh/sdk/webhooks');
+} = require("@polar-sh/sdk/webhooks");
 import {
   PaymentGatewayPort,
   InitiatePaymentDto,
   PaymentGatewayResponse,
   WebhookPayload,
   ParsedWebhookEvent,
-} from '../../domain/payment/ports/payment-gateway.port';
-import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
+} from "../../domain/payment/ports/payment-gateway.port";
+import { ServiceRepositoryPort } from "../../domain/service/ports/service.repository.port";
+import {
+  SUPPORTED_CURRENCIES,
+  isSupportedCurrency,
+} from "../../shared/constants/currencies";
 
 @Injectable()
 export class PolarAdapter implements PaymentGatewayPort {
@@ -31,13 +35,13 @@ export class PolarAdapter implements PaymentGatewayPort {
     private readonly configService: ConfigService,
     private readonly serviceRepository: ServiceRepositoryPort,
   ) {
-    const server = (this.configService.get<string>('POLAR_SERVER') ??
-      'sandbox') as 'sandbox' | 'production';
-    const accessToken = this.configService.get<string>('POLAR_ACCESS_TOKEN');
+    const server = (this.configService.get<string>("POLAR_SERVER") ??
+      "sandbox") as "sandbox" | "production";
+    const accessToken = this.configService.get<string>("POLAR_ACCESS_TOKEN");
 
     this.polar = new Polar({
       server,
-      accessToken: accessToken ?? '',
+      accessToken: accessToken ?? "",
     });
   }
 
@@ -66,7 +70,13 @@ export class PolarAdapter implements PaymentGatewayPort {
     const unitAmountCents = Math.round(
       (dto.amount / Math.max(dto.quantity, 1)) * 100,
     );
-    const currency = (dto.currency || 'USD').toLowerCase();
+    const requested = String(dto.currency || "USD").toUpperCase();
+    if (!isSupportedCurrency(requested)) {
+      throw new BadRequestException(
+        `Currency ${requested} is not supported by Polar. Allowed: ${SUPPORTED_CURRENCIES.join(", ")}`,
+      );
+    }
+    const currency = requested.toLowerCase();
 
     try {
       const checkout = await this.polar.checkouts.create({
@@ -76,7 +86,7 @@ export class PolarAdapter implements PaymentGatewayPort {
         prices: {
           [polarProductId]: [
             {
-              amountType: 'fixed',
+              amountType: "fixed",
               priceAmount: unitAmountCents,
               priceCurrency: currency,
             },
@@ -97,7 +107,7 @@ export class PolarAdapter implements PaymentGatewayPort {
       return {
         transactionId: (checkout as any).id,
         redirectUrl: (checkout as any).url,
-        status: 'INITIATED',
+        status: "INITIATED",
         rawResponse: checkout as any,
       };
     } catch (error: any) {
@@ -112,9 +122,9 @@ export class PolarAdapter implements PaymentGatewayPort {
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
   ): ParsedWebhookEvent {
-    const secret = this.configService.get<string>('POLAR_WEBHOOK_SECRET');
+    const secret = this.configService.get<string>("POLAR_WEBHOOK_SECRET");
     if (!secret) {
-      throw new BadRequestException('POLAR_WEBHOOK_SECRET is not configured');
+      throw new BadRequestException("POLAR_WEBHOOK_SECRET is not configured");
     }
 
     try {
@@ -126,8 +136,8 @@ export class PolarAdapter implements PaymentGatewayPort {
       };
     } catch (error) {
       if (error instanceof WebhookVerificationError) {
-        this.logger.warn('Invalid Polar webhook signature');
-        throw new BadRequestException('Invalid webhook signature');
+        this.logger.warn("Invalid Polar webhook signature");
+        throw new BadRequestException("Invalid webhook signature");
       }
       throw error;
     }
@@ -142,14 +152,14 @@ export class PolarAdapter implements PaymentGatewayPort {
       const orderId =
         (checkout?.metadata as any)?.orderId ?? checkout?.externalCustomerId;
       const succeeded =
-        checkout?.status === 'succeeded' || checkout?.status === 'confirmed';
+        checkout?.status === "succeeded" || checkout?.status === "confirmed";
 
       return {
         transactionId,
-        orderId: orderId ?? '',
-        status: succeeded ? 'SUCCESS' : 'FAILED',
+        orderId: orderId ?? "",
+        status: succeeded ? "SUCCESS" : "FAILED",
         amount: Number(checkout?.amount ?? 0) / 100,
-        signature: '',
+        signature: "",
         rawPayload: checkout,
       };
     } catch (error: any) {
