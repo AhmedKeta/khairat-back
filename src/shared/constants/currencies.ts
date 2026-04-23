@@ -21,23 +21,20 @@ export const POLAR_DEFAULT_CURRENCY: SupportedCurrency = 'USD';
 
 /**
  * Currencies that Polar actually accepts for charging customers.
- * Can be overridden by `POLAR_CHARGEABLE_CURRENCIES` env var
- * (comma-separated, e.g. "USD,EUR,GBP,CAD,AUD").
- *
- * Currencies outside this list (EGP, SAR, KWD, QAR, AED, BHD, OMR) are
- * display-only: the customer sees the price in their local currency but is
- * charged the USD equivalent at checkout.
+ * Defaults to every supported currency - trusts whatever the Polar
+ * organization allows in its dashboard. Narrow it via env var
+ * `POLAR_CHARGEABLE_CURRENCIES="USD,EUR,GBP"` if Polar rejects any currency
+ * for your org; customers who pick a rejected currency will be charged in
+ * the fallback (USD) instead.
  */
-const DEFAULT_POLAR_CHARGEABLE: readonly string[] = ['USD', 'EUR', 'GBP'];
-
 function parseChargeable(): readonly string[] {
   const raw = process.env.POLAR_CHARGEABLE_CURRENCIES;
-  if (!raw) return DEFAULT_POLAR_CHARGEABLE;
+  if (!raw) return [...SUPPORTED_CURRENCIES];
   const list = raw
     .split(',')
     .map((s) => s.trim().toUpperCase())
     .filter(Boolean);
-  return list.length > 0 ? list : DEFAULT_POLAR_CHARGEABLE;
+  return list.length > 0 ? list : [...SUPPORTED_CURRENCIES];
 }
 
 export const POLAR_CHARGEABLE_CURRENCIES = parseChargeable();

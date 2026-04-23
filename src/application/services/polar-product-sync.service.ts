@@ -115,10 +115,9 @@ export class PolarProductSyncService {
 
   /**
    * Convert `service.prices` into Polar's fixed-price payload.
-   * Only includes Polar-chargeable currencies (USD/EUR/GBP by default; see
-   * POLAR_CHARGEABLE_CURRENCIES env var). Display-only currencies like EGP,
-   * SAR, KWD are dropped here - customers paying in those end up billed in
-   * USD at checkout time.
+   * Sends every currency the service was priced in that is also allowed
+   * by Polar (all SUPPORTED_CURRENCIES by default; narrow via the
+   * POLAR_CHARGEABLE_CURRENCIES env var if Polar rejects a particular one).
    * Guarantees the USD entry is present (Polar requires the org's default
    * presentment currency in every product's price list).
    */
