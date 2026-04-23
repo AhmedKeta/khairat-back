@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger, BadRequestException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Polar } from "@polar-sh/sdk";
 import { Service } from "../../domain/service/entities/service.entity";
@@ -8,13 +8,34 @@ import {
   isPolarChargeable,
 } from "../../shared/constants/currencies";
 
+function formatPolarError(error: any): string {
+  if (!error) return "Unknown Polar error";
+  const detail = error.body$ ?? error.response?.data ?? null;
+  if (typeof detail === "string") return detail;
+  if (detail) {
+    try {
+      const parsed = typeof detail === "string" ? JSON.parse(detail) : detail;
+      const first = Array.isArray(parsed?.detail) ? parsed.detail[0] : null;
+      if (first?.msg) {
+        const loc = Array.isArray(first.loc) ? first.loc.join(".") : "";
+        return loc ? `${loc}: ${first.msg}` : first.msg;
+      }
+      return JSON.stringify(parsed);
+    } catch {
+      return String(detail);
+    }
+  }
+  return error.message ?? String(error);
+}
+
 /**
  * Keeps every local `Service` mirrored as a Polar Product so the PolarAdapter
  * can reference a valid `productId` when creating checkout sessions.
  *
- * Every method is best-effort: errors are logged but never thrown so a Polar
- * outage cannot block the admin CRUD. A service that failed to sync will be
- * retried on the next update, or manually by toggling it once.
+ * `syncService` throws when it fails to CREATE a product (the admin needs to
+ * see the Polar rejection reason in the dashboard). Updates of an existing
+ * product are best-effort - they log but do not throw so a transient Polar
+ * outage cannot block routine edits.
  */
 @Injectable()
 export class PolarProductSyncService {
@@ -61,15 +82,15 @@ export class PolarProductSyncService {
       return service.polarProductId ?? null;
     }
 
-    try {
-      if (!service.polarProductId) {
-        // Polar Organization Access Tokens (OATs) are already scoped to one
-        // org — the API rejects requests that include `organization_id`
-        // alongside an OAT. Only include it when explicitly configured AND
-        // the token is not an OAT (set POLAR_SEND_ORGANIZATION_ID=true to
-        // force it for user-access tokens).
-        const sendOrgId =
-          this.config.get<string>("POLAR_SEND_ORGANIZATION_ID") === "true";
+    if (!service.polarProductId) {
+      // Polar Organization Access Tokens (OATs) are already scoped to one
+      // org — the API rejects requests that include `organization_id`
+      // alongside an OAT. Only include it when explicitly configured AND
+      // the token is not an OAT (set POLAR_SEND_ORGANIZATION_ID=true to
+      // force it for user-access tokens).
+      const sendOrgId =
+        this.config.get<string>("POLAR_SEND_ORGANIZATION_ID") === "true";
+      try {
         const created: any = await this.polar.products.create({
           ...(sendOrgId && this.organizationId
             ? { organizationId: this.organizationId }
@@ -83,12 +104,20 @@ export class PolarProductSyncService {
           `Polar product created for service ${service.id}: ${created?.id} with currencies [${polarPrices.map((p) => p.priceCurrency).join(", ")}]`,
         );
         return created?.id ?? null;
+      } catch (error: any) {
+        const detail = formatPolarError(error);
+        this.logger.error(
+          `Polar product create failed for service ${service.id}: ${detail}`,
+        );
+        throw new BadRequestException(`Polar rejected the product: ${detail}`);
       }
+    }
 
-      // Polar does not allow mutating the amount on an existing fixed price,
-      // so we only refresh name/description here. The PolarAdapter overrides
-      // prices per-checkout with the current service.prices, so the charged
-      // amount is always live even when the catalog entry drifts.
+    // Polar does not allow mutating the amount on an existing fixed price,
+    // so we only refresh name/description here. The PolarAdapter overrides
+    // prices per-checkout with the current service.prices, so the charged
+    // amount is always live even when the catalog entry drifts.
+    try {
       await this.polar.products.update({
         id: service.polarProductId,
         productUpdate: {
@@ -101,15 +130,10 @@ export class PolarProductSyncService {
       );
       return service.polarProductId;
     } catch (error: any) {
-      const detail =
-        error?.body$ ??
-        error?.response?.data ??
-        error?.message ??
-        String(error);
       this.logger.error(
-        `Polar product sync failed for service ${service.id}: ${typeof detail === "string" ? detail : JSON.stringify(detail)}`,
+        `Polar product update failed for service ${service.id}: ${formatPolarError(error)}`,
       );
-      return service.polarProductId ?? null;
+      return service.polarProductId;
     }
   }
 
@@ -151,10 +175,13 @@ export class PolarProductSyncService {
 
     // Ensure USD is in the set (add it using the legacy price or the USD entry
     // from service.prices if the filtered list somehow dropped it).
-    const hasUsd = normalized.some((p) => p.currency === POLAR_DEFAULT_CURRENCY);
+    const hasUsd = normalized.some(
+      (p) => p.currency === POLAR_DEFAULT_CURRENCY,
+    );
     if (!hasUsd) {
       const usdFromPrices = source.find(
-        (p) => String(p.currency ?? "").toUpperCase() === POLAR_DEFAULT_CURRENCY,
+        (p) =>
+          String(p.currency ?? "").toUpperCase() === POLAR_DEFAULT_CURRENCY,
       );
       const fallback = Number(usdFromPrices?.amount ?? service.price);
       if (Number.isFinite(fallback) && fallback > 0) {
