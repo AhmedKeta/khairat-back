@@ -4,6 +4,23 @@ import { ServiceEntity } from '../../entities/service.entity';
 const TARGET_SERVICE_ROWS = 16;
 const BASE_SERVICE_TITLES_EN = ['Zakat Guidance', 'Hajj & Umrah Support', 'Islamic Will (Wasiyya)'];
 
+// Rough reference rates used for seed data only. Admins override real
+// prices per-currency from the dashboard; these just give sensible demo values.
+const SEED_RATES: Record<string, number> = {
+  USD: 1,
+  EUR: 0.92,
+  GBP: 0.8,
+  CAD: 1.38,
+  AUD: 1.52,
+};
+
+function buildSeedPrices(usd: number): { currency: string; amount: number }[] {
+  return Object.entries(SEED_RATES).map(([currency, rate]) => ({
+    currency,
+    amount: Number((usd * rate).toFixed(2)),
+  }));
+}
+
 function buildServiceRows(): Partial<ServiceEntity>[] {
   const rows: Partial<ServiceEntity>[] = [
     {
@@ -14,6 +31,7 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
       },
       price: 49.99,
       currency: 'USD',
+      prices: buildSeedPrices(49.99),
       feedsCount: 1,
       images: [],
       videos: [],
@@ -27,6 +45,7 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
       },
       price: 79.0,
       currency: 'USD',
+      prices: buildSeedPrices(79.0),
       feedsCount: 2,
       images: [],
       videos: [],
@@ -40,6 +59,7 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
       },
       price: 120.0,
       currency: 'USD',
+      prices: buildSeedPrices(120.0),
       feedsCount: null,
       images: [],
       videos: [],
@@ -49,14 +69,16 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
 
   for (let i = BASE_SERVICE_TITLES_EN.length + 1; i <= TARGET_SERVICE_ROWS; i++) {
     const idx = String(i).padStart(2, '0');
+    const usd = 35 + i * 7;
     rows.push({
       title: { en: `Islamic Service ${idx}`, ar: `خدمة إسلامية ${idx}` },
       description: {
         en: `Seeded service package ${idx} for consultations and guidance.`,
         ar: `حزمة خدمة تجريبية رقم ${idx} للاستشارات والإرشاد.`,
       },
-      price: 35 + i * 7,
+      price: usd,
       currency: 'USD',
+      prices: buildSeedPrices(usd),
       feedsCount: i % 4 === 0 ? null : (i % 5) + 1,
       images: [],
       videos: [],

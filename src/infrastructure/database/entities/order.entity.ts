@@ -43,6 +43,9 @@ export class OrderEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
+  @Column({ default: 'USD' })
+  currency: string;
+
   @Column({
     type: 'enum',
     enum: OrderStatus,

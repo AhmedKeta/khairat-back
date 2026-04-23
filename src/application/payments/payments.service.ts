@@ -48,13 +48,15 @@ export class PaymentsService {
     const safeLocale =
       locale && SUPPORTED_LOCALES.has(locale) ? locale : DEFAULT_LOCALE;
 
+    const orderCurrency = (order.currency || 'USD').toUpperCase();
+
     const gatewayResponse = await this.paymentGateway.initiatePayment({
       orderId: order.id,
       userId: user.id,
       serviceId: order.serviceId,
       quantity: order.quantity,
       amount: order.total,
-      currency: 'USD',
+      currency: orderCurrency,
       customerName: user.fullName,
       customerEmail: user.email,
       customerPhone: user.whatsappNumber,
@@ -71,7 +73,7 @@ export class PaymentsService {
           provider: 'Polar',
           transactionId: gatewayResponse.transactionId,
           amount: order.total,
-          currency: 'USD',
+          currency: orderCurrency,
           status: PaymentStatus.INITIATED,
           gatewayUrl: gatewayResponse.redirectUrl,
           responsePayload: gatewayResponse.rawResponse,
@@ -82,7 +84,7 @@ export class PaymentsService {
           provider: 'Polar',
           transactionId: gatewayResponse.transactionId,
           amount: order.total,
-          currency: 'USD',
+          currency: orderCurrency,
           status: PaymentStatus.INITIATED,
           gatewayUrl: gatewayResponse.redirectUrl,
           responsePayload: gatewayResponse.rawResponse,

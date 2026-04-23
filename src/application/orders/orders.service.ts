@@ -6,6 +6,10 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { TrackingService } from '../tracking/tracking.service';
+import {
+  normalizeCurrency,
+  POLAR_DEFAULT_CURRENCY,
+} from '../../shared/constants/currencies';
 
 @Injectable()
 export class OrdersService {
@@ -46,7 +50,21 @@ export class OrdersService {
       await this.trackingService.linkVisitToUser(dto.trackingVisitId, userId);
     }
 
-    const unitPrice = service.price;
+    const requested = normalizeCurrency(dto.currency);
+    const availablePrices = Array.isArray(service.prices) ? service.prices : [];
+    const match =
+      availablePrices.find(
+        (p) => String(p.currency).toUpperCase() === requested,
+      ) ??
+      availablePrices.find(
+        (p) =>
+          String(p.currency).toUpperCase() === POLAR_DEFAULT_CURRENCY,
+      );
+
+    const currency = match
+      ? String(match.currency).toUpperCase()
+      : POLAR_DEFAULT_CURRENCY;
+    const unitPrice = match ? Number(match.amount) : Number(service.price);
     const subtotal = unitPrice * dto.quantity;
     const total = subtotal;
 
@@ -57,6 +75,7 @@ export class OrdersService {
       unitPrice,
       subtotal,
       total,
+      currency,
       status: OrderStatus.PENDING,
       notes: dto.notes,
       trackingVisitId,
