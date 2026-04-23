@@ -25,10 +25,11 @@ async function main() {
   const organizationId = process.env.POLAR_ORGANIZATION_ID;
 
   if (!accessToken || !organizationId) {
-    console.error(
-      'Missing POLAR_ACCESS_TOKEN or POLAR_ORGANIZATION_ID. Set them in backend/.env and retry.',
+    // Don't fail the build/deploy — the sync is optional until Polar creds exist.
+    console.warn(
+      '[sync:polar] Skipped: POLAR_ACCESS_TOKEN and/or POLAR_ORGANIZATION_ID not set.',
     );
-    process.exit(1);
+    return;
   }
 
   const polar = new Polar({ server, accessToken });
