@@ -2,8 +2,13 @@ export const SUPPORTED_CURRENCIES = [
   'USD',
   'EUR',
   'GBP',
-  'CAD',
-  'AUD',
+  'EGP',
+  'SAR',
+  'KWD',
+  'QAR',
+  'AED',
+  'BHD',
+  'OMR',
 ] as const;
 
 export type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
