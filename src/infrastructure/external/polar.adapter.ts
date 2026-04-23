@@ -76,10 +76,10 @@ export class PolarAdapter implements PaymentGatewayPort {
       );
     }
 
-    // Polar only accepts a subset of currencies (USD/EUR/GBP by default).
-    // If the customer picked a display-only currency (e.g. EGP, SAR), bill
-    // them in USD instead. The order already records the requested currency
-    // for display, so the user-facing experience stays local.
+    // Defaults to "every supported currency is chargeable", so `requested`
+    // is used as-is. If POLAR_CHARGEABLE_CURRENCIES is set and excludes
+    // `requested`, fall back to USD and log the swap. Order still records
+    // the original requested currency for display.
     const chargeCurrency = isPolarChargeable(requested)
       ? requested
       : POLAR_DEFAULT_CURRENCY;
