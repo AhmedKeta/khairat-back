@@ -18,6 +18,7 @@ export class Service {
   images: string[];
   videos: string[];
   isActive: boolean;
+  polarProductId: string | null;
   createdAt: Date;
   updatedAt: Date;
 

@@ -71,6 +71,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
       images: entity.images,
       videos: entity.videos,
       isActive: entity.isActive,
+      polarProductId: entity.polarProductId ?? null,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });

@@ -1,6 +1,16 @@
-import { Controller, Post, Get, Body, Param, Headers, UseGuards, RawBodyRequest, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Param,
+  UseGuards,
+  RawBodyRequest,
+  Req,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { PaymentsService } from '../../application/payments/payments.service';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 
@@ -14,19 +24,19 @@ export class PaymentsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Initiate payment for an order' })
   async initiate(
-    @Body() body: { orderId: string },
+    @Body() body: { orderId: string; locale?: string },
     @CurrentUser() user: any,
   ) {
-    return this.paymentsService.initiatePayment(body.orderId, user);
+    return this.paymentsService.initiatePayment(body.orderId, user, body.locale);
   }
 
   @Post('webhook')
-  @ApiOperation({ summary: 'Handle EasyKash webhook' })
-  async webhook(
-    @Body() payload: Record<string, any>,
-    @Headers('x-easykash-signature') signature: string,
-  ) {
-    return this.paymentsService.handleWebhook(payload, signature);
+  @ApiOperation({ summary: 'Handle Polar.sh webhook (Standard Webhooks)' })
+  async webhook(@Req() req: RawBodyRequest<Request>) {
+    return this.paymentsService.handleWebhook(
+      req.rawBody ?? Buffer.from(''),
+      req.headers as Record<string, string | string[] | undefined>,
+    );
   }
 
   @Get(':id')

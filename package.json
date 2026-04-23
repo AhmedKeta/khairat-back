@@ -24,7 +24,8 @@
     "migration:run": "npm run typeorm -- migration:run -d src/infrastructure/database/data-source.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/infrastructure/database/data-source.ts",
     "seed": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/run-seed.ts",
-    "seed:reset": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/reset-seed.ts"
+    "seed:reset": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/reset-seed.ts",
+    "sync:polar": "ts-node -r tsconfig-paths/register src/scripts/sync-polar-products.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -36,6 +37,7 @@
     "@nestjs/swagger": "^7.1.0",
     "@nestjs/throttler": "^5.0.0",
     "@nestjs/typeorm": "^10.0.0",
+    "@polar-sh/sdk": "^0.47.0",
     "axios": "^1.5.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
