@@ -22,7 +22,7 @@ export class PaymentEntity {
   @JoinColumn({ name: 'order_id' })
   order: OrderEntity;
 
-  @Column({ default: 'EasyKash' })
+  @Column({ default: 'Polar' })
   provider: string;
 
   @Column({ name: 'transaction_id', nullable: true })

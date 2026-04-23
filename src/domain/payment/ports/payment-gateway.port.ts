@@ -1,5 +1,8 @@
 export interface InitiatePaymentDto {
   orderId: string;
+  userId: string;
+  serviceId: string;
+  quantity: number;
   amount: number;
   currency: string;
   customerName: string;
@@ -25,8 +28,23 @@ export interface WebhookPayload {
   rawPayload: Record<string, any>;
 }
 
+export type ParsedWebhookEvent = {
+  type: string;
+  data: Record<string, any>;
+  raw: Record<string, any>;
+};
+
 export abstract class PaymentGatewayPort {
   abstract initiatePayment(dto: InitiatePaymentDto): Promise<PaymentGatewayResponse>;
-  abstract verifyWebhookSignature(payload: Record<string, any>, signature: string): boolean;
+
+  /**
+   * Validate the webhook signature and parse the raw body into a typed event.
+   * Throws if the signature is invalid.
+   */
+  abstract verifyAndParseEvent(
+    body: Buffer,
+    headers: Record<string, string | string[] | undefined>,
+  ): ParsedWebhookEvent;
+
   abstract getTransactionStatus(transactionId: string): Promise<WebhookPayload>;
 }

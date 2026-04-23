@@ -37,7 +37,7 @@ export async function seedPayments(ds: DataSource): Promise<void> {
     await paymentRepo.upsert(
       {
         orderId: order.id,
-        provider: 'EasyKash',
+        provider: 'Polar',
         transactionId,
         amount: Number(order.total),
         currency: 'USD',

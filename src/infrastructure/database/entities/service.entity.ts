@@ -35,6 +35,9 @@ export class ServiceEntity {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
+  @Column({ name: 'polar_product_id', type: 'varchar', nullable: true })
+  polarProductId: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

@@ -4,17 +4,20 @@ import { PaymentsController } from '../../presentation/controllers/payments.cont
 import { PaymentsService } from './payments.service';
 import { PaymentEntity } from '../../infrastructure/database/entities/payment.entity';
 import { OrderEntity } from '../../infrastructure/database/entities/order.entity';
+import { ServiceEntity } from '../../infrastructure/database/entities/service.entity';
 import { PaymentRepository } from '../../infrastructure/repositories/payment.repository';
 import { OrderRepository } from '../../infrastructure/repositories/order.repository';
+import { ServiceRepository } from '../../infrastructure/repositories/service.repository';
 import { PaymentRepositoryPort } from '../../domain/payment/ports/payment.repository.port';
 import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.port';
+import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { PaymentGatewayPort } from '../../domain/payment/ports/payment-gateway.port';
-import { EasyKashAdapter } from '../../infrastructure/external/easykash.adapter';
+import { PolarAdapter } from '../../infrastructure/external/polar.adapter';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PaymentEntity, OrderEntity]),
+    TypeOrmModule.forFeature([PaymentEntity, OrderEntity, ServiceEntity]),
     AuthModule,
   ],
   controllers: [PaymentsController],
@@ -22,7 +25,8 @@ import { AuthModule } from '../auth/auth.module';
     PaymentsService,
     { provide: PaymentRepositoryPort, useClass: PaymentRepository },
     { provide: OrderRepositoryPort, useClass: OrderRepository },
-    { provide: PaymentGatewayPort, useClass: EasyKashAdapter },
+    { provide: ServiceRepositoryPort, useClass: ServiceRepository },
+    { provide: PaymentGatewayPort, useClass: PolarAdapter },
   ],
   exports: [PaymentsService],
 })
