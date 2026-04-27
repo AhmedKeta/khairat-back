@@ -18,11 +18,11 @@ export class PaymentEntity {
   @Column({ name: 'order_id' })
   orderId: string;
 
-  @OneToOne(() => OrderEntity)
+  @OneToOne(() => OrderEntity, (order) => order.payment)
   @JoinColumn({ name: 'order_id' })
   order: OrderEntity;
 
-  @Column({ default: 'Polar' })
+  @Column({ default: 'polar' })
   provider: string;
 
   @Column({ name: 'transaction_id', nullable: true })

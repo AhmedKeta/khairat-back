@@ -8,6 +8,7 @@ export interface InitiatePaymentDto {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  customerCountry?: string;
   returnUrl: string;
   webhookUrl: string;
 }
@@ -28,22 +29,38 @@ export interface WebhookPayload {
   rawPayload: Record<string, any>;
 }
 
+/**
+ * Normalized webhook event each gateway adapter must return after verifying
+ * the inbound signature. Outcome semantics live with the adapter so
+ * `PaymentsService` stays gateway-agnostic.
+ */
 export type ParsedWebhookEvent = {
-  type: string;
-  data: Record<string, any>;
+  outcome: 'SUCCESS' | 'FAILED' | 'IGNORE';
+  orderId: string | null;
+  transactionId: string | null;
   raw: Record<string, any>;
 };
 
 export abstract class PaymentGatewayPort {
+  /**
+   * Stable, lowercase identifier used by the router and persisted on the
+   * payment row as `provider` (e.g. 'polar', 'paymob').
+   */
+  abstract readonly id: string;
+
   abstract initiatePayment(dto: InitiatePaymentDto): Promise<PaymentGatewayResponse>;
 
   /**
-   * Validate the webhook signature and parse the raw body into a typed event.
-   * Throws if the signature is invalid.
+   * Validate the webhook signature and parse the request into a normalized
+   * `ParsedWebhookEvent`. Throws if the signature is invalid.
+   *
+   * Some gateways sign the body (Polar — Standard Webhooks header),
+   * others sign a query parameter (Paymob — `?hmac=`).
    */
   abstract verifyAndParseEvent(
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
+    query: Record<string, string>,
   ): ParsedWebhookEvent;
 
   abstract getTransactionStatus(transactionId: string): Promise<WebhookPayload>;

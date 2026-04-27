@@ -16,9 +16,6 @@ export class TestimonialEntity {
   @Column({ nullable: true })
   avatar: string;
 
-  @Column({ nullable: true })
-  country: string;
-
   @Column({ type: 'text' })
   content: string;
 

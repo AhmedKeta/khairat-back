@@ -30,6 +30,7 @@ import {
 
 @Injectable()
 export class PolarAdapter implements PaymentGatewayPort {
+  readonly id = 'polar';
   private readonly logger = new Logger(PolarAdapter.name);
   private readonly polar: Polar;
 
@@ -170,19 +171,16 @@ export class PolarAdapter implements PaymentGatewayPort {
   verifyAndParseEvent(
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
+    _query: Record<string, string>,
   ): ParsedWebhookEvent {
     const secret = this.configService.get<string>("POLAR_WEBHOOK_SECRET");
     if (!secret) {
       throw new BadRequestException("POLAR_WEBHOOK_SECRET is not configured");
     }
 
+    let event: any;
     try {
-      const event = validateEvent(body, headers, secret);
-      return {
-        type: (event as any).type,
-        data: (event as any).data,
-        raw: event as any,
-      };
+      event = validateEvent(body, headers, secret);
     } catch (error) {
       if (error instanceof WebhookVerificationError) {
         this.logger.warn("Invalid Polar webhook signature");
@@ -190,6 +188,42 @@ export class PolarAdapter implements PaymentGatewayPort {
       }
       throw error;
     }
+
+    const type: string = event?.type ?? "";
+    const data: Record<string, any> = event?.data ?? {};
+    const metadata: Record<string, any> = data.metadata ?? {};
+    const orderId: string | null = metadata.orderId ?? null;
+    const transactionId: string | null = data.checkoutId ?? data.id ?? null;
+
+    return {
+      outcome: this.resolveOutcome(type, data),
+      orderId,
+      transactionId,
+      raw: event,
+    };
+  }
+
+  /**
+   * Map a Polar event to a SUCCESS / FAILED / IGNORE outcome for the local
+   * order. Polar emits many events; we only act on a minimal, reliable subset
+   * so repeated webhooks are harmless.
+   */
+  private resolveOutcome(
+    type: string,
+    data: Record<string, any>,
+  ): "SUCCESS" | "FAILED" | "IGNORE" {
+    if (type === "order.paid" || type === "order.created") {
+      return "SUCCESS";
+    }
+
+    if (type === "checkout.updated" || type === "checkout.created") {
+      const status = String(data.status ?? "").toLowerCase();
+      if (status === "succeeded" || status === "confirmed") return "SUCCESS";
+      if (status === "failed" || status === "expired") return "FAILED";
+      return "IGNORE";
+    }
+
+    return "IGNORE";
   }
 
   async getTransactionStatus(transactionId: string): Promise<WebhookPayload> {
