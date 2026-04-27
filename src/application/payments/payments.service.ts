@@ -7,9 +7,9 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { PaymentRepositoryPort } from '../../domain/payment/ports/payment.repository.port';
 import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.port';
-import { PaymentGatewayPort } from '../../domain/payment/ports/payment-gateway.port';
 import { PaymentStatus } from '../../domain/payment/value-objects/payment-status.enum';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
+import { PaymentGatewayRouter } from './payment-gateway.router';
 
 const DEFAULT_LOCALE = 'en';
 const SUPPORTED_LOCALES = new Set(['en', 'ar']);
@@ -21,7 +21,7 @@ export class PaymentsService {
   constructor(
     private readonly paymentRepository: PaymentRepositoryPort,
     private readonly orderRepository: OrderRepositoryPort,
-    private readonly paymentGateway: PaymentGatewayPort,
+    private readonly gatewayRouter: PaymentGatewayRouter,
     private readonly configService: ConfigService,
   ) {}
 
@@ -49,8 +49,17 @@ export class PaymentsService {
       locale && SUPPORTED_LOCALES.has(locale) ? locale : DEFAULT_LOCALE;
 
     const orderCurrency = (order.currency || 'USD').toUpperCase();
+    const orderCountry =
+      (order as any).country ??
+      (order as any).user?.countryId ??
+      null;
 
-    const gatewayResponse = await this.paymentGateway.initiatePayment({
+    const gateway = this.gatewayRouter.resolve({
+      currency: orderCurrency,
+      country: orderCountry,
+    });
+
+    const gatewayResponse = await gateway.initiatePayment({
       orderId: order.id,
       userId: user.id,
       serviceId: order.serviceId,
@@ -60,8 +69,9 @@ export class PaymentsService {
       customerName: user.fullName,
       customerEmail: user.email,
       customerPhone: user.whatsappNumber,
+      customerCountry: orderCountry ?? undefined,
       returnUrl: `${frontendUrl}/${safeLocale}/payment/success?orderId=${order.id}`,
-      webhookUrl: `${backendUrl}/api/v1/payments/webhook`,
+      webhookUrl: `${backendUrl}/api/v1/payments/webhook/${gateway.id}`,
     });
 
     /**
@@ -70,7 +80,7 @@ export class PaymentsService {
      */
     const payment = existingPayment
       ? await this.paymentRepository.update(existingPayment.id, {
-          provider: 'Polar',
+          provider: gateway.id,
           transactionId: gatewayResponse.transactionId,
           amount: order.total,
           currency: orderCurrency,
@@ -81,7 +91,7 @@ export class PaymentsService {
         })
       : await this.paymentRepository.create({
           orderId: order.id,
-          provider: 'Polar',
+          provider: gateway.id,
           transactionId: gatewayResponse.transactionId,
           amount: order.total,
           currency: orderCurrency,
@@ -94,43 +104,43 @@ export class PaymentsService {
       throw new BadRequestException('Could not persist payment');
     }
 
-    this.logger.log(`Payment initiated: ${payment.id} for order: ${orderId}`);
+    this.logger.log(
+      `Payment initiated via ${gateway.id}: ${payment.id} for order: ${orderId}`,
+    );
 
     return {
       paymentId: payment.id,
+      provider: gateway.id,
       redirectUrl: gatewayResponse.redirectUrl,
       transactionId: gatewayResponse.transactionId,
     };
   }
 
   /**
-   * Standard Webhooks handler for Polar.sh.
-   * Receives the raw request body + headers, validates the signature via the adapter,
-   * then marks the matching local order PAID/FAILED using `metadata.orderId`.
+   * Verify and apply an inbound webhook for the given gateway. Each adapter
+   * returns a normalized `ParsedWebhookEvent` so this method stays gateway-
+   * agnostic — the only branching is on the `outcome` field.
    */
   async handleWebhook(
+    gatewayId: string,
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
+    query: Record<string, string>,
   ) {
-    this.logger.log('Polar webhook received');
+    this.logger.log(`Webhook received for gateway: ${gatewayId}`);
 
-    const event = this.paymentGateway.verifyAndParseEvent(body, headers);
-    this.logger.log(`Polar event type: ${event.type}`);
+    const gateway = this.gatewayRouter.byId(gatewayId);
+    const event = gateway.verifyAndParseEvent(body, headers, query);
 
-    const data = event.data ?? {};
-    const metadata: Record<string, any> = data.metadata ?? {};
-    const orderId: string | undefined = metadata.orderId;
-
-    if (!orderId) {
-      this.logger.warn(
-        `Polar event ${event.type} missing metadata.orderId; ignoring`,
-      );
+    if (event.outcome === 'IGNORE') {
       return { received: true };
     }
 
-    // Decide whether this event should transition the order.
-    const outcome = this.resolveEventOutcome(event.type, data);
-    if (outcome === 'IGNORE') {
+    const orderId = event.orderId;
+    if (!orderId) {
+      this.logger.warn(
+        `Webhook from ${gatewayId} missing orderId; ignoring`,
+      );
       return { received: true };
     }
 
@@ -147,10 +157,9 @@ export class PaymentsService {
       return { received: true };
     }
 
-    const transactionId: string | undefined =
-      data.checkoutId ?? data.id ?? payment.transactionId;
+    const transactionId = event.transactionId ?? payment.transactionId;
 
-    if (outcome === 'SUCCESS') {
+    if (event.outcome === 'SUCCESS') {
       await this.paymentRepository.update(payment.id, {
         status: PaymentStatus.SUCCESS,
         transactionId,
@@ -175,33 +184,6 @@ export class PaymentsService {
     }
 
     return { received: true };
-  }
-
-  /**
-   * Map a Polar event to a SUCCESS / FAILED / IGNORE outcome for the local order.
-   *
-   * Polar emits many events. We only act on a minimal, reliable subset:
-   *  - `order.paid`, `order.created`      -> a paying order was created      (SUCCESS)
-   *  - `checkout.updated` (status=succeeded|confirmed) -> checkout completed (SUCCESS)
-   *  - `checkout.updated` (status=failed|expired)      -> checkout failed     (FAILED)
-   * Everything else is IGNOREd so repeated webhooks are harmless.
-   */
-  private resolveEventOutcome(
-    type: string,
-    data: Record<string, any>,
-  ): 'SUCCESS' | 'FAILED' | 'IGNORE' {
-    if (type === 'order.paid' || type === 'order.created') {
-      return 'SUCCESS';
-    }
-
-    if (type === 'checkout.updated' || type === 'checkout.created') {
-      const status = String(data.status ?? '').toLowerCase();
-      if (status === 'succeeded' || status === 'confirmed') return 'SUCCESS';
-      if (status === 'failed' || status === 'expired') return 'FAILED';
-      return 'IGNORE';
-    }
-
-    return 'IGNORE';
   }
 
   async findById(id: string) {

@@ -30,12 +30,41 @@ export class PaymentsController {
     return this.paymentsService.initiatePayment(body.orderId, user, body.locale);
   }
 
-  @Post('webhook')
-  @ApiOperation({ summary: 'Handle Polar.sh webhook (Standard Webhooks)' })
-  async webhook(@Req() req: RawBodyRequest<Request>) {
+  /**
+   * Per-gateway webhook endpoint. The trailing `:gatewayId` selects which
+   * adapter verifies and parses the inbound callback (e.g. `polar`,
+   * `paymob`). New gateways drop in by registering an adapter; no controller
+   * changes required.
+   */
+  @Post('webhook/:gatewayId')
+  @ApiOperation({ summary: 'Handle gateway-specific payment webhook' })
+  async webhookForGateway(
+    @Param('gatewayId') gatewayId: string,
+    @Req() req: RawBodyRequest<Request>,
+  ) {
     return this.paymentsService.handleWebhook(
+      gatewayId,
       req.rawBody ?? Buffer.from(''),
       req.headers as Record<string, string | string[] | undefined>,
+      this.normalizeQuery(req.query),
+    );
+  }
+
+  /**
+   * Backwards-compat alias kept so existing Polar dashboard webhooks
+   * configured against `/api/v1/payments/webhook` keep working without a
+   * redeploy on the Polar side.
+   */
+  @Post('webhook')
+  @ApiOperation({
+    summary: 'Legacy webhook endpoint (forwards to Polar adapter)',
+  })
+  async legacyWebhook(@Req() req: RawBodyRequest<Request>) {
+    return this.paymentsService.handleWebhook(
+      'polar',
+      req.rawBody ?? Buffer.from(''),
+      req.headers as Record<string, string | string[] | undefined>,
+      this.normalizeQuery(req.query),
     );
   }
 
@@ -45,5 +74,17 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Get payment by ID' })
   async findById(@Param('id') id: string) {
     return this.paymentsService.findById(id);
+  }
+
+  private normalizeQuery(
+    query: Record<string, any> | undefined,
+  ): Record<string, string> {
+    const out: Record<string, string> = {};
+    if (!query) return out;
+    for (const [k, v] of Object.entries(query)) {
+      if (v == null) continue;
+      out[k] = Array.isArray(v) ? String(v[0]) : String(v);
+    }
+    return out;
   }
 }

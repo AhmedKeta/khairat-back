@@ -11,8 +11,9 @@ import { ServiceRepository } from '../../infrastructure/repositories/service.rep
 import { PaymentRepositoryPort } from '../../domain/payment/ports/payment.repository.port';
 import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.port';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
-import { PaymentGatewayPort } from '../../domain/payment/ports/payment-gateway.port';
 import { PolarAdapter } from '../../infrastructure/external/polar.adapter';
+import { PaymobAdapter } from '../../infrastructure/external/paymob.adapter';
+import { PaymentGatewayRouter } from './payment-gateway.router';
 import { AuthModule } from '../auth/auth.module';
 
 @Module({
@@ -26,7 +27,9 @@ import { AuthModule } from '../auth/auth.module';
     { provide: PaymentRepositoryPort, useClass: PaymentRepository },
     { provide: OrderRepositoryPort, useClass: OrderRepository },
     { provide: ServiceRepositoryPort, useClass: ServiceRepository },
-    { provide: PaymentGatewayPort, useClass: PolarAdapter },
+    PolarAdapter,
+    PaymobAdapter,
+    PaymentGatewayRouter,
   ],
   exports: [PaymentsService],
 })

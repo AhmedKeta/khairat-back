@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+  Logger,
+} from '@nestjs/common';
 import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/order.repository.port';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
@@ -13,6 +18,8 @@ import {
 
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
   constructor(
     private readonly orderRepository: OrderRepositoryPort,
     private readonly serviceRepository: ServiceRepositoryPort,
@@ -45,9 +52,20 @@ export class OrdersService {
 
     let trackingVisitId: string | null = null;
     if (dto.trackingVisitId) {
-      await this.trackingService.assertVisitExists(dto.trackingVisitId);
-      trackingVisitId = dto.trackingVisitId;
-      await this.trackingService.linkVisitToUser(dto.trackingVisitId, userId);
+      try {
+        await this.trackingService.assertVisitExists(dto.trackingVisitId);
+        trackingVisitId = dto.trackingVisitId;
+        await this.trackingService.linkVisitToUser(dto.trackingVisitId, userId);
+      } catch (error) {
+        // Tracking is analytics-only and must never block checkout.
+        if (error instanceof NotFoundException) {
+          this.logger.warn(
+            `Ignoring stale tracking visit id "${dto.trackingVisitId}" during order creation`,
+          );
+        } else {
+          throw error;
+        }
+      }
     }
 
     const requested = normalizeCurrency(dto.currency);
@@ -68,6 +86,8 @@ export class OrdersService {
     const subtotal = unitPrice * dto.quantity;
     const total = subtotal;
 
+    const country = dto.country ? dto.country.toUpperCase() : null;
+
     return this.orderRepository.create({
       userId,
       serviceId: dto.serviceId,
@@ -76,6 +96,7 @@ export class OrdersService {
       subtotal,
       total,
       currency,
+      country,
       status: OrderStatus.PENDING,
       notes: dto.notes,
       trackingVisitId,

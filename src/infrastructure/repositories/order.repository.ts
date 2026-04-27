@@ -19,7 +19,8 @@ export class OrderRepository implements OrderRepositoryPort {
     const query = this.repo.createQueryBuilder('order')
       .leftJoinAndSelect('order.user', 'user')
       .leftJoinAndSelect('order.service', 'service')
-      .leftJoinAndSelect('order.trackingVisit', 'trackingVisit');
+      .leftJoinAndSelect('order.trackingVisit', 'trackingVisit')
+      .leftJoinAndSelect('order.payment', 'payment');
 
     if (userId) query.andWhere('order.userId = :userId', { userId });
     if (status) query.andWhere('order.status = :status', { status });
@@ -40,7 +41,7 @@ export class OrderRepository implements OrderRepositoryPort {
   async findById(id: string): Promise<Order | null> {
     const entity = await this.repo.findOne({
       where: { id },
-      relations: ['user', 'service', 'trackingVisit'],
+      relations: ['user', 'service', 'trackingVisit', 'payment'],
     });
     return entity ? this.toDomain(entity) : null;
   }
@@ -70,6 +71,7 @@ export class OrderRepository implements OrderRepositoryPort {
       subtotal: Number(entity.subtotal),
       total: Number(entity.total),
       currency: entity.currency ?? 'USD',
+      country: entity.country ?? null,
       status: entity.status,
       paymentId: entity.paymentId,
       notes: entity.notes,
@@ -80,6 +82,7 @@ export class OrderRepository implements OrderRepositoryPort {
     (order as any).user = entity.user;
     (order as any).service = entity.service;
     (order as any).trackingVisit = entity.trackingVisit;
+    (order as any).payment = entity.payment ?? null;
     return order;
   }
 }

@@ -33,7 +33,6 @@ export class TestimonialsService {
     const testimonial = this.repo.create({
       userName: dto.userName,
       avatar: dto.avatar ?? null,
-      country: dto.country ?? null,
       content: dto.content,
       contentAr: dto.contentAr ?? null,
       rating: dto.rating ?? 5,

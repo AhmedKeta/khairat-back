@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsUUID, IsInt, IsPositive, IsOptional, IsString, IsIn } from 'class-validator';
+import {
+  IsUUID,
+  IsInt,
+  IsPositive,
+  IsOptional,
+  IsString,
+  IsIn,
+  Length,
+} from 'class-validator';
 import { SUPPORTED_CURRENCIES } from '../../../shared/constants/currencies';
 
 export class CreateOrderDto {
@@ -21,6 +29,16 @@ export class CreateOrderDto {
   @IsString()
   @IsIn(SUPPORTED_CURRENCIES as unknown as string[])
   currency?: string;
+
+  @ApiPropertyOptional({
+    example: 'EG',
+    description:
+      'ISO-3166 alpha-2 country code of the donor. Used as a fallback to route the payment to the right gateway when currency mapping is ambiguous.',
+  })
+  @IsOptional()
+  @IsString()
+  @Length(2, 2)
+  country?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

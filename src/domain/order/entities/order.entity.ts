@@ -9,6 +9,7 @@ export class Order {
   subtotal: number;
   total: number;
   currency: string;
+  country: string | null;
   status: OrderStatus;
   paymentId: string | null;
   notes: string | null;

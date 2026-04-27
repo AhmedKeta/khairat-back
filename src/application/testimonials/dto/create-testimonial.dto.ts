@@ -11,11 +11,6 @@ export class CreateTestimonialDto {
   @IsString()
   avatar?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  country?: string;
-
   @ApiProperty()
   @IsString()
   content: string;

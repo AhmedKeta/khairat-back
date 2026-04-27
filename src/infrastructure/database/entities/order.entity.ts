@@ -5,12 +5,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { OrderStatus } from '../../../domain/order/value-objects/order-status.enum';
 import { UserEntity } from './user.entity';
 import { ServiceEntity } from './service.entity';
 import { UserTrackingEntity } from './user-tracking.entity';
+import { PaymentEntity } from './payment.entity';
 
 @Entity('orders')
 export class OrderEntity {
@@ -46,6 +48,14 @@ export class OrderEntity {
   @Column({ default: 'USD' })
   currency: string;
 
+  /**
+   * ISO-3166 alpha-2 country code captured from the donor's selection at
+   * checkout. Used by `PaymentGatewayRouter` as a fallback when the order's
+   * currency is not enough to pick a gateway.
+   */
+  @Column({ length: 2, nullable: true })
+  country: string | null;
+
   @Column({
     type: 'enum',
     enum: OrderStatus,
@@ -65,6 +75,9 @@ export class OrderEntity {
   @ManyToOne(() => UserTrackingEntity, { nullable: true })
   @JoinColumn({ name: 'tracking_visit_id' })
   trackingVisit?: UserTrackingEntity | null;
+
+  @OneToOne(() => PaymentEntity, (payment) => payment.order)
+  payment?: PaymentEntity | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
