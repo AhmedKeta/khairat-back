@@ -2,7 +2,6 @@ import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
-import { PolarProductSyncService } from './polar-product-sync.service';
 
 @Injectable()
 export class ServicesService {
@@ -10,7 +9,6 @@ export class ServicesService {
 
   constructor(
     private readonly serviceRepository: ServiceRepositoryPort,
-    private readonly polarSync: PolarProductSyncService,
   ) {}
 
   async findAll(filters: ServiceFilters) {
@@ -38,11 +36,6 @@ export class ServicesService {
       videos: dto.videos || [],
       isActive: true,
     });
-
-    const polarProductId = await this.polarSync.syncService(service);
-    if (polarProductId && polarProductId !== service.polarProductId) {
-      return this.serviceRepository.update(service.id, { polarProductId });
-    }
     return service;
   }
 
@@ -55,18 +48,11 @@ export class ServicesService {
         amount: Number(p.amount),
       }));
     }
-    const updated = await this.serviceRepository.update(id, payload);
-
-    const polarProductId = await this.polarSync.syncService(updated);
-    if (polarProductId && polarProductId !== updated.polarProductId) {
-      return this.serviceRepository.update(id, { polarProductId });
-    }
-    return updated;
+    return this.serviceRepository.update(id, payload);
   }
 
   async delete(id: string) {
-    const service = await this.findById(id);
-    await this.polarSync.archiveService(service);
+    await this.findById(id);
     await this.serviceRepository.delete(id);
   }
 

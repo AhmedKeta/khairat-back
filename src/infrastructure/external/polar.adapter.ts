@@ -62,10 +62,11 @@ export class PolarAdapter implements PaymentGatewayPort {
       );
     }
 
-    const polarProductId = (service as any).polarProductId as string | null;
-    if (!polarProductId) {
+    const checkoutProductId =
+      this.configService.get<string>('POLAR_CHECKOUT_PRODUCT_ID') ?? null;
+    if (!checkoutProductId) {
       throw new BadRequestException(
-        `Service ${dto.serviceId} is not yet synced to Polar. Save the service in the dashboard once to create the matching Polar product.`,
+        'POLAR_CHECKOUT_PRODUCT_ID is not configured',
       );
     }
 
@@ -136,9 +137,9 @@ export class PolarAdapter implements PaymentGatewayPort {
 
     try {
       const checkout = await this.polar.checkouts.create({
-        products: [polarProductId],
+        products: [checkoutProductId],
         prices: {
-          [polarProductId]: overridePrices,
+          [checkoutProductId]: overridePrices,
         } as any,
         // Tell Polar which of the override prices to actually charge.
         currency: chargeCurrency.toLowerCase(),
@@ -168,11 +169,11 @@ export class PolarAdapter implements PaymentGatewayPort {
     }
   }
 
-  verifyAndParseEvent(
+  async verifyAndParseEvent(
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
     _query: Record<string, string>,
-  ): ParsedWebhookEvent {
+  ): Promise<ParsedWebhookEvent> {
     const secret = this.configService.get<string>("POLAR_WEBHOOK_SECRET");
     if (!secret) {
       throw new BadRequestException("POLAR_WEBHOOK_SECRET is not configured");

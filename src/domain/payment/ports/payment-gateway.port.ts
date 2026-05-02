@@ -18,6 +18,11 @@ export interface PaymentGatewayResponse {
   redirectUrl: string;
   status: string;
   rawResponse: Record<string, any>;
+  /**
+   * Gateways that correlate webhooks via a merchant reference (e.g. EasyKash
+   * Direct Pay `customerReference`) persist this on `payments.gateway_customer_reference`.
+   */
+  gatewayCustomerReference?: string;
 }
 
 export interface WebhookPayload {
@@ -61,7 +66,7 @@ export abstract class PaymentGatewayPort {
     body: Buffer,
     headers: Record<string, string | string[] | undefined>,
     query: Record<string, string>,
-  ): ParsedWebhookEvent;
+  ): Promise<ParsedWebhookEvent>;
 
   abstract getTransactionStatus(transactionId: string): Promise<WebhookPayload>;
 }

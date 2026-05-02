@@ -5,6 +5,7 @@ export class Payment {
   orderId: string;
   provider: string;
   transactionId: string | null;
+  gatewayCustomerReference: string | null;
   amount: number;
   currency: string;
   status: PaymentStatus;

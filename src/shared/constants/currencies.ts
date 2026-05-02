@@ -70,6 +70,36 @@ export function isPaymobChargeable(code: string): boolean {
   return PAYMOB_CHARGEABLE_CURRENCIES.includes(code.toUpperCase());
 }
 
+/**
+ * EasyKash Direct Payment hosted currencies per Pay API docs.
+ * Override with `EASYKASH_CHARGEABLE_CURRENCIES="EGP,USD,..."`.
+ */
+const EASYKASH_DEFAULT_CHARGEABLE = [
+  'EGP',
+  'USD',
+  'SAR',
+  'EUR',
+  'GBP',
+  'QAR',
+  'AED',
+] as const;
+
+function parseEasykashChargeable(): readonly string[] {
+  const raw = process.env.EASYKASH_CHARGEABLE_CURRENCIES;
+  if (!raw) return [...EASYKASH_DEFAULT_CHARGEABLE];
+  const list = raw
+    .split(',')
+    .map((s) => s.trim().toUpperCase())
+    .filter(Boolean);
+  return list.length > 0 ? list : [...EASYKASH_DEFAULT_CHARGEABLE];
+}
+
+export const EASYKASH_CHARGEABLE_CURRENCIES = parseEasykashChargeable();
+
+export function isEasyKashChargeable(code: string): boolean {
+  return EASYKASH_CHARGEABLE_CURRENCIES.includes(code.toUpperCase());
+}
+
 export function normalizeCurrency(code: string | undefined | null): SupportedCurrency {
   if (!code) return POLAR_DEFAULT_CURRENCY;
   const upper = code.toUpperCase();

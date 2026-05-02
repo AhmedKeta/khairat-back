@@ -13,6 +13,7 @@ import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.p
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { PolarAdapter } from '../../infrastructure/external/polar.adapter';
 import { PaymobAdapter } from '../../infrastructure/external/paymob.adapter';
+import { EasyKashAdapter } from '../../infrastructure/external/easykash.adapter';
 import { PaymentGatewayRouter } from './payment-gateway.router';
 import { AuthModule } from '../auth/auth.module';
 
@@ -29,6 +30,7 @@ import { AuthModule } from '../auth/auth.module';
     { provide: ServiceRepositoryPort, useClass: ServiceRepository },
     PolarAdapter,
     PaymobAdapter,
+    EasyKashAdapter,
     PaymentGatewayRouter,
   ],
   exports: [PaymentsService],

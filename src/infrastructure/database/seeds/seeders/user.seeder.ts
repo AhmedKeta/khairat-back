@@ -37,28 +37,28 @@ export async function seedUsers(ds: DataSource): Promise<void> {
       whatsappNumber: '+966500000001',
       role: UserRole.ADMIN,
     },
-    {
-      fullName: 'Seed Demo User',
-      email: demoEmail,
-      password: demoPassword,
-      whatsappNumber: '+966500000002',
-      role: UserRole.USER,
-    },
+    // {
+    //   fullName: 'Seed Demo User',
+    //   email: demoEmail,
+    //   password: demoPassword,
+    //   whatsappNumber: '+966500000002',
+    //   role: UserRole.USER,
+    // },
   ];
 
-  for (let i = 1; i <= TARGET_USER_ROWS * 2 && rows.length < TARGET_USER_ROWS; i++) {
-    const email = `seed.user${String(i).padStart(3, '0')}@khairat.local`;
-    if (rows.some((row) => row.email === email)) {
-      continue;
-    }
-    rows.push({
-      fullName: `Seed User ${String(i).padStart(3, '0')}`,
-      email,
-      password: 'User123!',
-      whatsappNumber: `+9665${String(1000000 + i).padStart(7, '0')}`,
-      role: UserRole.USER,
-    });
-  }
+  // for (let i = 1; i <= TARGET_USER_ROWS * 2 && rows.length < TARGET_USER_ROWS; i++) {
+  //   const email = `seed.user${String(i).padStart(3, '0')}@khairat.local`;
+  //   if (rows.some((row) => row.email === email)) {
+  //     continue;
+  //   }
+  //   rows.push({
+  //     fullName: `Seed User ${String(i).padStart(3, '0')}`,
+  //     email,
+  //     password: 'User123!',
+  //     whatsappNumber: `+9665${String(1000000 + i).padStart(7, '0')}`,
+  //     role: UserRole.USER,
+  //   });
+  // }
 
   for (const row of rows) {
     await repo.upsert(
