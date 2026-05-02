@@ -22,6 +22,15 @@ export class PaymentRepository implements PaymentRepositoryPort {
     return entity ? this.toDomain(entity) : null;
   }
 
+  async findByGatewayCustomerReference(ref: string): Promise<Payment | null> {
+    const key = ref?.trim();
+    if (!key) return null;
+    const entity = await this.repo.findOne({
+      where: { gatewayCustomerReference: key },
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
   async create(payment: Partial<Payment>): Promise<Payment> {
     const entity = this.repo.create(payment as Partial<PaymentEntity>);
     const saved = await this.repo.save(entity);
@@ -39,6 +48,7 @@ export class PaymentRepository implements PaymentRepositoryPort {
       orderId: entity.orderId,
       provider: entity.provider,
       transactionId: entity.transactionId,
+      gatewayCustomerReference: entity.gatewayCustomerReference ?? null,
       amount: Number(entity.amount),
       currency: entity.currency,
       status: entity.status,

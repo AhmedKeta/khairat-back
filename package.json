@@ -24,8 +24,7 @@
     "migration:run": "npm run typeorm -- migration:run -d src/infrastructure/database/data-source.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/infrastructure/database/data-source.ts",
     "seed": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/run-seed.ts",
-    "seed:reset": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/reset-seed.ts",
-    "sync:polar": "ts-node -r tsconfig-paths/register src/scripts/sync-polar-products.ts"
+    "seed:reset": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/reset-seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -6,14 +6,12 @@ import { ServiceEntity } from '../../infrastructure/database/entities/service.en
 import { ServiceRepository } from '../../infrastructure/repositories/service.repository';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { AuthModule } from '../auth/auth.module';
-import { PolarProductSyncService } from './polar-product-sync.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ServiceEntity]), AuthModule],
   controllers: [ServicesController],
   providers: [
     ServicesService,
-    PolarProductSyncService,
     { provide: ServiceRepositoryPort, useClass: ServiceRepository },
   ],
   exports: [ServicesService],

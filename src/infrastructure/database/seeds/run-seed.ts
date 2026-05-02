@@ -14,18 +14,18 @@ export async function runSeed(ds = AppDataSource): Promise<void> {
   await seedCountries(ds);
   console.log('Seeding users...');
   await seedUsers(ds);
-  console.log('Seeding services...');
-  await seedServices(ds);
-  console.log('Seeding FAQs...');
-  await seedFaqs(ds);
+  // console.log('Seeding services...');
+  // await seedServices(ds);
+  // console.log('Seeding FAQs...');
+  // await seedFaqs(ds);
   console.log('Seeding testimonials...');
   await seedTestimonials(ds);
-  console.log('Seeding our works...');
-  await seedOurWorks(ds);
-  console.log('Seeding orders...');
-  await seedOrders(ds);
-  console.log('Seeding payments...');
-  await seedPayments(ds);
+  // console.log('Seeding our works...');
+  // await seedOurWorks(ds);
+  // console.log('Seeding orders...');
+  // await seedOrders(ds);
+  // console.log('Seeding payments...');
+  // await seedPayments(ds);
   console.log('Done.');
 }
 

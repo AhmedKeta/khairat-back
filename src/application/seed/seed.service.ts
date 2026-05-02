@@ -1,6 +1,7 @@
 import { Injectable, ForbiddenException, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
+import { timingSafeEqual } from 'crypto';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from '../../infrastructure/database/entities/user.entity';
@@ -22,7 +23,7 @@ export class SeedService {
     return this.config.get<string>('ENABLE_DATABASE_SEED') === 'true';
   }
 
-  async run(): Promise<{
+  async run(httpSecret?: string): Promise<{
     message: string;
     countries: { message: string };
     admin: { email: string; created: boolean; updated: boolean };
@@ -31,6 +32,21 @@ export class SeedService {
       throw new ForbiddenException(
         'Database seed is disabled. Set ENABLE_DATABASE_SEED=true in your environment to run.',
       );
+    }
+
+    const nodeEnv = this.config.get<string>('NODE_ENV', 'development');
+    const requiredSecret = this.config.get<string>('SEED_HTTP_SECRET');
+    if (nodeEnv === 'production') {
+      if (!requiredSecret) {
+        throw new ForbiddenException(
+          'HTTP seed is disabled in production until SEED_HTTP_SECRET is set. Use CLI seed or set the secret and send header X-Seed-Secret.',
+        );
+      }
+      const a = Buffer.from(requiredSecret, 'utf8');
+      const b = Buffer.from(httpSecret ?? '', 'utf8');
+      if (a.length !== b.length || !timingSafeEqual(a, b)) {
+        throw new ForbiddenException('Invalid or missing X-Seed-Secret header.');
+      }
     }
 
     const countriesResult = await this.countriesService.seed();

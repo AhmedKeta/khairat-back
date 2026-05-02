@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PaymentGatewayPort } from '../../domain/payment/ports/payment-gateway.port';
 import { PolarAdapter } from '../../infrastructure/external/polar.adapter';
 import { PaymobAdapter } from '../../infrastructure/external/paymob.adapter';
+import { EasyKashAdapter } from '../../infrastructure/external/easykash.adapter';
 
 export interface GatewaySelection {
   currency?: string | null;
@@ -30,10 +31,12 @@ export class PaymentGatewayRouter {
     private readonly configService: ConfigService,
     polar: PolarAdapter,
     paymob: PaymobAdapter,
+    easykash: EasyKashAdapter,
   ) {
     this.registry = new Map<string, PaymentGatewayPort>([
       [polar.id, polar],
       [paymob.id, paymob],
+      [easykash.id, easykash],
     ]);
   }
 

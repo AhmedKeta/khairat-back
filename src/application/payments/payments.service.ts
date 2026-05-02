@@ -78,6 +78,11 @@ export class PaymentsService {
      * Payment–Order is modeled as @OneToOne with JoinColumn on `order_id`, so that column is UNIQUE.
      * Retrying payment (pending or failed) must UPDATE the existing row, not INSERT another.
      */
+    const refPayload =
+      gatewayResponse.gatewayCustomerReference != null
+        ? { gatewayCustomerReference: gatewayResponse.gatewayCustomerReference }
+        : {};
+
     const payment = existingPayment
       ? await this.paymentRepository.update(existingPayment.id, {
           provider: gateway.id,
@@ -88,6 +93,7 @@ export class PaymentsService {
           gatewayUrl: gatewayResponse.redirectUrl,
           responsePayload: gatewayResponse.rawResponse,
           webhookReceivedAt: null,
+          ...refPayload,
         })
       : await this.paymentRepository.create({
           orderId: order.id,
@@ -98,6 +104,7 @@ export class PaymentsService {
           status: PaymentStatus.INITIATED,
           gatewayUrl: gatewayResponse.redirectUrl,
           responsePayload: gatewayResponse.rawResponse,
+          ...refPayload,
         });
 
     if (!payment) {
@@ -130,7 +137,7 @@ export class PaymentsService {
     this.logger.log(`Webhook received for gateway: ${gatewayId}`);
 
     const gateway = this.gatewayRouter.byId(gatewayId);
-    const event = gateway.verifyAndParseEvent(body, headers, query);
+    const event = await gateway.verifyAndParseEvent(body, headers, query);
 
     if (event.outcome === 'IGNORE') {
       return { received: true };

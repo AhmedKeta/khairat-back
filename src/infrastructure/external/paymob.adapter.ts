@@ -19,12 +19,6 @@ import {
   isPaymobChargeable,
 } from '../../shared/constants/currencies';
 
-/**
- * Paymob Transaction Processed Callback HMAC field order (lexicographic).
- * Concatenated with no separator and hashed with HMAC-SHA512 using the
- * dashboard HMAC secret. Source: developers.paymob.com → HMAC Transaction
- * Callback.
- */
 const PAYMOB_HMAC_FIELDS = [
   'amount_cents',
   'created_at',
@@ -120,7 +114,6 @@ export class PaymobAdapter implements PaymentGatewayPort {
         email: dto.customerEmail || 'donor@khairat.local',
         phone_number: dto.customerPhone || 'NA',
         country: dto.customerCountry || 'EG',
-        // Required by Paymob even when blank.
         apartment: 'NA',
         floor: 'NA',
         street: 'NA',
@@ -186,11 +179,11 @@ export class PaymobAdapter implements PaymentGatewayPort {
     };
   }
 
-  verifyAndParseEvent(
+  async verifyAndParseEvent(
     body: Buffer,
     _headers: Record<string, string | string[] | undefined>,
     query: Record<string, string>,
-  ): ParsedWebhookEvent {
+  ): Promise<ParsedWebhookEvent> {
     const hmacSecret = this.configService.get<string>('PAYMOB_HMAC_SECRET');
     if (!hmacSecret) {
       throw new InternalServerErrorException(

@@ -35,14 +35,40 @@ async function bootstrap() {
     }),
   );
 
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const frontendUrl = configService.get<string>(
+    "FRONTEND_URL",
+    "http://localhost:3000",
+  );
+  const dashboardUrl = configService.get<string>(
+    "DASHBOARD_URL",
+    "http://localhost:3002",
+  );
+  const corsExtra = configService.get<string>("CORS_EXTRA_ORIGINS") ?? "";
+
+  const corsOrigin =
+    nodeEnv === "production"
+      ? [
+          ...new Set(
+            [frontendUrl, dashboardUrl].concat(
+              corsExtra
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean),
+            ),
+          ),
+        ]
+      : true;
+
   app.enableCors({
-    origin: "*",
-    // [
-    //   configService.get('FRONTEND_URL', 'http://localhost:3000'),
-    //   configService.get('DASHBOARD_URL', 'http://localhost:3002'),
-    // ]
+    origin: corsOrigin,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Seed-Secret",
+      "x-seed-secret",
+    ],
     credentials: true,
   });
 
@@ -84,14 +110,22 @@ async function bootstrap() {
     .addTag("tracking", "Website visits and marketing attribution")
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api/docs", app, document);
+  const enableSwagger =
+    nodeEnv !== "production" ||
+    configService.get<string>("ENABLE_SWAGGER") === "true";
+
+  if (enableSwagger) {
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup("api/docs", app, document);
+  }
 
   const port = configService.get<number>("PORT", 3001);
   await app.listen(port);
 
   logger.log(`Khairat API running on port ${port}`, "Bootstrap");
-  logger.log(`Swagger docs: http://localhost:${port}/api/docs`, "Bootstrap");
+  if (enableSwagger) {
+    logger.log(`Swagger docs: http://localhost:${port}/api/docs`, "Bootstrap");
+  }
   logger.log(
     `Audit logs (admin): GET http://localhost:${port}/api/v1/users/admin/audit-logs`,
     "Bootstrap",

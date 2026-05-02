@@ -28,6 +28,17 @@ export class PaymentEntity {
   @Column({ name: 'transaction_id', nullable: true })
   transactionId: string;
 
+  /**
+   * Gateway-specific merchant reference (e.g. EasyKash `customerReference`).
+   * Used to correlate server callbacks when the gateway does not echo `orderId`.
+   */
+  @Column({
+    name: 'gateway_customer_reference',
+    nullable: true,
+    length: 32,
+  })
+  gatewayCustomerReference: string | null;
+
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
 
