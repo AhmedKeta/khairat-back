@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { ServiceEntity } from '../../entities/service.entity';
 
 const TARGET_SERVICE_ROWS = 16;
-const BASE_SERVICE_TITLES_EN = ['Zakat Guidance', 'Hajj & Umrah Support', 'Islamic Will (Wasiyya)'];
+const BASE_SERVICE_TITLES_EN = ['Zakat Guidance', 'Hajj Support', 'Islamic Will (Wasiyya)'];
 
 // Rough reference rates used for seed data only. Admins override real
 // prices per-currency from the dashboard; these just give sensible demo values.
@@ -43,10 +43,10 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
       isActive: true,
     },
     {
-      title: { en: 'Hajj & Umrah Support', ar: 'دعم الحج والعمرة' },
+      title: { en: 'Hajj Support', ar: 'دعم الحج' },
       description: {
-        en: 'Step-by-step guidance and checklist for your sacred journey.',
-        ar: 'إرشادات خطوة بخطوة وقائمة تحقق لرحلتك المقدسة.',
+        en: 'Step-by-step guidance and checklist for Hajj preparations.',
+        ar: 'إرشادات خطوة بخطوة وقائمة تحقق للتحضير للحج.',
       },
       price: 79.0,
       currency: 'USD',

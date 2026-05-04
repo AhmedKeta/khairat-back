@@ -3,10 +3,10 @@ import { OurWorkEntity } from '../../entities/our-work.entity';
 
 const SEED_ROWS: Partial<OurWorkEntity>[] = [
   {
-    title: 'Umrah Service in Mecca',
-    titleAr: 'خدمة العمرة في مكة',
+    title: 'Water Wells Project',
+    titleAr: 'مشروع آبار المياه',
     imageUrl:
-      'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&auto=format&fit=crop',
     sortOrder: 0,
     isVisible: true,
   },

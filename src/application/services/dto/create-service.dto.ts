@@ -67,12 +67,12 @@ function HasUsdEntry(validationOptions?: ValidationOptions) {
 }
 
 export class CreateServiceDto {
-  @ApiProperty({ example: { ar: 'عمرة', en: 'Umrah' } })
+  @ApiProperty({ example: { ar: 'أضحية', en: 'Qurbani' } })
   @ValidateNested()
   @Type(() => LocalizedTextDto)
   title: LocalizedTextDto;
 
-  @ApiProperty({ example: { ar: 'وصف العمرة', en: 'Umrah description' } })
+  @ApiProperty({ example: { ar: 'وصف الأضحية', en: 'Qurbani description' } })
   @ValidateNested()
   @Type(() => LocalizedTextDto)
   description: LocalizedTextDto;
