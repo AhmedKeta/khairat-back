@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
+import { toStoredUploadRef } from '../upload/upload-path.util';
 
 @Injectable()
 export class ServicesService {
@@ -27,13 +28,16 @@ export class ServicesService {
       amount: Number(p.amount),
     }));
 
+    const images = (dto.images || []).map(toStoredUploadRef);
+    const videos = (dto.videos || []).map(toStoredUploadRef);
+
     const service = await this.serviceRepository.create({
       title: dto.title,
       description: dto.description,
       prices,
       feedsCount: dto.feedsCount,
-      images: dto.images || [],
-      videos: dto.videos || [],
+      images,
+      videos,
       isActive: true,
     });
     return service;
@@ -47,6 +51,12 @@ export class ServicesService {
         currency: String(p.currency).toUpperCase(),
         amount: Number(p.amount),
       }));
+    }
+    if (dto.images !== undefined) {
+      payload.images = dto.images.map(toStoredUploadRef);
+    }
+    if (dto.videos !== undefined) {
+      payload.videos = dto.videos.map(toStoredUploadRef);
     }
     return this.serviceRepository.update(id, payload);
   }

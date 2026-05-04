@@ -33,8 +33,8 @@ export class UploadController {
     if (!files?.length) {
       throw new BadRequestException('No files uploaded');
     }
-    const urls = this.uploadService.filesToPublicUrls(files, 'images');
-    return { urls };
+    const paths = this.uploadService.filesToStoredPaths(files, 'images');
+    return { paths };
   }
 
   @Post('videos')
@@ -48,8 +48,8 @@ export class UploadController {
     if (!files?.length) {
       throw new BadRequestException('No files uploaded');
     }
-    const urls = this.uploadService.filesToPublicUrls(files, 'videos');
-    return { urls };
+    const paths = this.uploadService.filesToStoredPaths(files, 'videos');
+    return { paths };
   }
 
   @Post('delete')
