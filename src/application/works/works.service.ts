@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { OurWorkEntity } from '../../infrastructure/database/entities/our-work.entity';
 import { CreateOurWorkDto } from './dto/create-our-work.dto';
 import { UpdateOurWorkDto } from './dto/update-our-work.dto';
+import { toStoredUploadRef } from '../upload/upload-path.util';
 
 @Injectable()
 export class WorksService {
@@ -35,7 +36,7 @@ export class WorksService {
     const row = this.repo.create({
       title: dto.title,
       titleAr: dto.titleAr ?? null,
-      imageUrl: dto.imageUrl,
+      imageUrl: toStoredUploadRef(dto.imageUrl),
       sortOrder: dto.sortOrder ?? 0,
       isVisible: dto.isVisible ?? true,
     });
@@ -44,7 +45,11 @@ export class WorksService {
 
   async update(id: string, dto: UpdateOurWorkDto) {
     await this.findById(id);
-    await this.repo.update(id, dto);
+    const payload: Record<string, unknown> = { ...dto };
+    if (dto.imageUrl !== undefined) {
+      payload.imageUrl = toStoredUploadRef(dto.imageUrl);
+    }
+    await this.repo.update(id, payload as UpdateOurWorkDto);
     return this.findById(id);
   }
 

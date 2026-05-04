@@ -9920,3 +9920,1093 @@
 {"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-02T20:21:30.709Z"}
 {"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-02T20:21:30.710Z"}
 {"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-02T20:21:30.711Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-02T22:01:26.170Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-02T22:01:26.171Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.172Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-02T22:01:26.172Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-02T22:01:26.173Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-02T22:01:26.173Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-02T22:01:26.174Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-02T22:01:26.174Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-02T22:01:26.174Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-02T22:01:26.175Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-02T22:01:26.175Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-02T22:01:26.176Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.176Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.176Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.177Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.177Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.177Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.178Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.178Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.178Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.179Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:01:26.179Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-02T22:01:26.179Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-02T22:01:26.180Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-02T22:01:26.180Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-02T22:01:26.180Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-02T22:01:26.180Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-02T22:01:26.181Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-02T22:01:26.181Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-02T22:01:26.181Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-02T22:01:26.182Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-02T22:01:26.182Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-02T22:01:26.182Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-02T22:01:26.182Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-02T22:01:26.183Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.183Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.183Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.183Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.184Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.184Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-02T22:01:26.184Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.184Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.185Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-02T22:01:26.185Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.186Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.186Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.186Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.186Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.187Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.187Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.187Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.187Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.188Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:01:26.188Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.188Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.188Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-02T22:01:26.189Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.189Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.189Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.189Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.190Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:01:26.190Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.190Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-02T22:01:26.190Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.190Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.191Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.191Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.191Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.192Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-02T22:01:26.192Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.192Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.192Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.193Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.193Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-02T22:01:26.193Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.193Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.194Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-02T22:01:26.194Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.194Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.194Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.195Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.195Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.195Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:01:26.196Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-02T22:01:26.196Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.196Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.197Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.197Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.198Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.198Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:01:26.199Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-02T22:01:26.199Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.199Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:01:26.200Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.200Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.200Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-02T22:01:26.201Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:01:26.201Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-02T22:01:26.201Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.201Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.202Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.202Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-02T22:01:26.202Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-02T22:01:26.203Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-02T22:01:26.203Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-02T22:01:26.203Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-02T22:01:26.204Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-02T22:01:26.204Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-02T22:01:26.205Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-02T22:11:18.597Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-02T22:11:18.598Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.598Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-02T22:11:18.599Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-02T22:11:18.599Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-02T22:11:18.600Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-02T22:11:18.600Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-02T22:11:18.600Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-02T22:11:18.601Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-02T22:11:18.601Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-02T22:11:18.602Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-02T22:11:18.602Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.602Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.603Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.603Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.603Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.604Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.604Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.604Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.604Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.605Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-02T22:11:18.605Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-02T22:11:18.605Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-02T22:11:18.605Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-02T22:11:18.606Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-02T22:11:18.606Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-02T22:11:18.606Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-02T22:11:18.606Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-02T22:11:18.606Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-02T22:11:18.607Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-02T22:11:18.607Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-02T22:11:18.607Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-02T22:11:18.607Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-02T22:11:18.608Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-02T22:11:18.608Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.608Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.608Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.609Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.609Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.609Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-02T22:11:18.609Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.610Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.610Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-02T22:11:18.610Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.610Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.610Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.611Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.611Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.611Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.611Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.612Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.612Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.612Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:11:18.612Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.613Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.613Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-02T22:11:18.613Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.613Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.614Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.614Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.614Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:11:18.614Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.615Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-02T22:11:18.615Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.615Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.615Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.615Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.616Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.616Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-02T22:11:18.616Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.616Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.617Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-02T22:11:18.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.618Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-02T22:11:18.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.619Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.619Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:11:18.620Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-02T22:11:18.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.622Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:11:18.622Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-02T22:11:18.622Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-02T22:11:18.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.624Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-02T22:11:18.624Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-02T22:11:18.625Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-02T22:11:18.625Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.625Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.626Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.626Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-02T22:11:18.626Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-02T22:11:18.626Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-02T22:11:18.627Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-02T22:11:18.627Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-02T22:11:18.628Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-02T22:11:18.628Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-02T22:11:18.629Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T21:47:42.646Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T21:47:42.648Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.650Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T21:47:42.651Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T21:47:42.652Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T21:47:42.653Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T21:47:42.653Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T21:47:42.654Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T21:47:42.654Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T21:47:42.655Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T21:47:42.656Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T21:47:42.656Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.657Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.657Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.657Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.658Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.658Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.659Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.659Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.659Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.660Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:47:42.660Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T21:47:42.660Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T21:47:42.660Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T21:47:42.661Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T21:47:42.661Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T21:47:42.661Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T21:47:42.662Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T21:47:42.662Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T21:47:42.663Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T21:47:42.663Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T21:47:42.664Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T21:47:42.664Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T21:47:42.665Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T21:47:42.666Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.666Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.667Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.668Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.669Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.669Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T21:47:42.670Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.670Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.670Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T21:47:42.671Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.671Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.671Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.671Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.672Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.672Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.673Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.673Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.673Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.673Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:47:42.674Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.674Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.674Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T21:47:42.675Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.675Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.675Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.675Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.676Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:47:42.676Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.676Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T21:47:42.676Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.677Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.677Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.677Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.678Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.678Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T21:47:42.678Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.678Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.679Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.679Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.679Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T21:47:42.680Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.680Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.680Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T21:47:42.680Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.681Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.681Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.681Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.682Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.682Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:47:42.682Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T21:47:42.683Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.683Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.683Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.683Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.684Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.684Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:47:42.684Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T21:47:42.684Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.685Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:47:42.685Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.685Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.686Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T21:47:42.686Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:47:42.686Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T21:47:42.686Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.687Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.687Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.687Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T21:47:42.687Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T21:47:42.687Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T21:47:42.688Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T21:47:42.688Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T21:47:42.689Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T21:47:42.689Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T21:47:42.690Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T21:55:47.066Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T21:55:47.067Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.067Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T21:55:47.068Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T21:55:47.068Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T21:55:47.068Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T21:55:47.069Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T21:55:47.069Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T21:55:47.069Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T21:55:47.070Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T21:55:47.070Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T21:55:47.070Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.071Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.071Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.071Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.072Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.072Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.072Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.072Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.073Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.073Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T21:55:47.073Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T21:55:47.073Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T21:55:47.074Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T21:55:47.074Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T21:55:47.074Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T21:55:47.075Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T21:55:47.075Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T21:55:47.075Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T21:55:47.075Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T21:55:47.076Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T21:55:47.076Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T21:55:47.076Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T21:55:47.076Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T21:55:47.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.078Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.078Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T21:55:47.078Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.078Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.079Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T21:55:47.079Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.079Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.079Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.080Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.080Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.080Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.080Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.081Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.081Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.081Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:55:47.082Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.082Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.083Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T21:55:47.083Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.083Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.084Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.084Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.085Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:55:47.085Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.086Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T21:55:47.086Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.086Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.087Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.087Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.087Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.088Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T21:55:47.088Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.088Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.089Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.089Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.089Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T21:55:47.089Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.090Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.090Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T21:55:47.090Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.090Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.091Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.091Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.091Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.092Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:55:47.092Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T21:55:47.092Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.092Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.093Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.093Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.093Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.093Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:55:47.094Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T21:55:47.094Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.094Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T21:55:47.094Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.095Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.095Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T21:55:47.095Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T21:55:47.095Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T21:55:47.096Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.096Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.096Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.097Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T21:55:47.097Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T21:55:47.097Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T21:55:47.097Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T21:55:47.098Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T21:55:47.102Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T21:55:47.102Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T21:55:47.103Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T22:30:59.711Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T22:30:59.712Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.713Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T22:30:59.713Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T22:30:59.714Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T22:30:59.715Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T22:30:59.715Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T22:30:59.715Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T22:30:59.716Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T22:30:59.716Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T22:30:59.717Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T22:30:59.717Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.717Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.718Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.718Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.718Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.720Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.720Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.720Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:30:59.720Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T22:30:59.721Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T22:30:59.721Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T22:30:59.721Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T22:30:59.721Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T22:30:59.722Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T22:30:59.722Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T22:30:59.722Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T22:30:59.723Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T22:30:59.723Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T22:30:59.723Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T22:30:59.724Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T22:30:59.724Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T22:30:59.724Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.724Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.725Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.725Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.725Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.726Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T22:30:59.726Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.726Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.726Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T22:30:59.727Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.727Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.727Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.728Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.728Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.728Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.728Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.729Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.729Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.729Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:30:59.729Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.730Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.730Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T22:30:59.731Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.731Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.732Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.732Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.733Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:30:59.733Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.734Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T22:30:59.734Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.735Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.735Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.735Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.736Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.736Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T22:30:59.736Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.737Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.737Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.738Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.738Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T22:30:59.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.739Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.739Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T22:30:59.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.740Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:30:59.741Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T22:30:59.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:30:59.743Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T22:30:59.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:30:59.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.745Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T22:30:59.745Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:30:59.745Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T22:30:59.746Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.750Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.750Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.751Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T22:30:59.751Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T22:30:59.752Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T22:30:59.752Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T22:30:59.753Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T22:30:59.754Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T22:30:59.754Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T22:30:59.755Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T22:32:16.605Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T22:32:16.606Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.607Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T22:32:16.607Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T22:32:16.608Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T22:32:16.608Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T22:32:16.609Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T22:32:16.609Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T22:32:16.609Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T22:32:16.610Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T22:32:16.610Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T22:32:16.611Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.611Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.611Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.612Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.612Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.612Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.612Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.613Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.613Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.613Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T22:32:16.613Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T22:32:16.614Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T22:32:16.614Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T22:32:16.614Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T22:32:16.615Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T22:32:16.615Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T22:32:16.615Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T22:32:16.615Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T22:32:16.616Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T22:32:16.616Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T22:32:16.616Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T22:32:16.616Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T22:32:16.617Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T22:32:16.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.617Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.618Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T22:32:16.618Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.619Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.619Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T22:32:16.619Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.620Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.621Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.622Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:32:16.622Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.622Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.623Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T22:32:16.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.623Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.624Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.624Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:32:16.624Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.625Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T22:32:16.625Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.625Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.625Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.626Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.626Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.627Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T22:32:16.627Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.627Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.628Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.628Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.628Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T22:32:16.628Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.629Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.629Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T22:32:16.629Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.630Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.630Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.630Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.630Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.631Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:32:16.631Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T22:32:16.631Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.632Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.632Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.632Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.632Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.633Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:32:16.633Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T22:32:16.633Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.633Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T22:32:16.634Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.634Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.634Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T22:32:16.634Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T22:32:16.634Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T22:32:16.635Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.635Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.635Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.636Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T22:32:16.636Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T22:32:16.636Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T22:32:16.636Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T22:32:16.637Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T22:32:16.638Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T22:32:16.638Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T22:32:16.639Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T23:03:27.961Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T23:03:27.963Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.964Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T23:03:27.964Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T23:03:27.965Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T23:03:27.965Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T23:03:27.966Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:27.966Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:27.967Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T23:03:27.967Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T23:03:27.968Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T23:03:27.968Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.968Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.969Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.969Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.969Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.970Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.970Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.970Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.971Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.971Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:27.971Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T23:03:27.971Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T23:03:27.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T23:03:27.972Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T23:03:27.973Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T23:03:27.974Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T23:03:27.974Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T23:03:27.975Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T23:03:27.975Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T23:03:27.976Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T23:03:27.976Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T23:03:27.977Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T23:03:27.977Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T23:03:27.977Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.978Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.978Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.978Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.979Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.979Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T23:03:27.979Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.979Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.980Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T23:03:27.980Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.980Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.981Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.981Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.981Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.981Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.982Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.982Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.982Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.983Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:27.983Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.983Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.984Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T23:03:27.984Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.984Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.984Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.985Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.985Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:27.985Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.986Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T23:03:27.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.986Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.987Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.987Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T23:03:27.988Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.988Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.988Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.988Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.989Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T23:03:27.989Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.990Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.990Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T23:03:27.990Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.991Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.992Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.992Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.992Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:27.993Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T23:03:27.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:27.996Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T23:03:27.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:27.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:27.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:27.998Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T23:03:27.998Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.998Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.999Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.999Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T23:03:27.999Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T23:03:27.999Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T23:03:28.000Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T23:03:28.000Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T23:03:28.001Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T23:03:28.001Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T23:03:28.002Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T23:03:40.304Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T23:03:40.306Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.307Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T23:03:40.307Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T23:03:40.308Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T23:03:40.308Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T23:03:40.309Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:40.310Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:40.311Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T23:03:40.312Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T23:03:40.313Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T23:03:40.313Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.314Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.314Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.315Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.315Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.316Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.317Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.317Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.319Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.321Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:40.321Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T23:03:40.322Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T23:03:40.323Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T23:03:40.323Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T23:03:40.324Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T23:03:40.324Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T23:03:40.325Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T23:03:40.326Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T23:03:40.327Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T23:03:40.328Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T23:03:40.329Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T23:03:40.331Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T23:03:40.332Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T23:03:40.334Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.337Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.339Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.342Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.344Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.345Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T23:03:40.345Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.346Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.347Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T23:03:40.349Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.350Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.352Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.354Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.355Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.356Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.356Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.357Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.358Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.359Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:40.360Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.361Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.361Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T23:03:40.362Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.363Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.363Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.367Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.370Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:40.371Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.372Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T23:03:40.373Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.374Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.375Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.376Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.378Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.379Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T23:03:40.380Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.381Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.381Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.382Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.383Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T23:03:40.383Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.384Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.386Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T23:03:40.387Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.388Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.390Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.391Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.391Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.392Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:40.393Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T23:03:40.394Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.394Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.395Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.396Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.397Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.398Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:40.398Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T23:03:40.398Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.399Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:40.399Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.400Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.402Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:40.403Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:40.404Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T23:03:40.404Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.405Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.405Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.406Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T23:03:40.407Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T23:03:40.408Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T23:03:40.411Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T23:03:40.413Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T23:03:40.416Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T23:03:40.420Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T23:03:40.422Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T23:03:55.017Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T23:03:55.018Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.019Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T23:03:55.020Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T23:03:55.021Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T23:03:55.022Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T23:03:55.022Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:55.023Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:03:55.023Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T23:03:55.024Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T23:03:55.025Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T23:03:55.026Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.026Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.027Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.027Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.028Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.028Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.029Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.030Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.031Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.032Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:03:55.033Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T23:03:55.034Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T23:03:55.035Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T23:03:55.035Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T23:03:55.036Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T23:03:55.037Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T23:03:55.037Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T23:03:55.038Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T23:03:55.038Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T23:03:55.039Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T23:03:55.039Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T23:03:55.040Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T23:03:55.041Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T23:03:55.041Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.042Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.043Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.044Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.044Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.045Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T23:03:55.045Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.048Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.048Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T23:03:55.050Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.051Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.051Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.052Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.052Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.053Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.054Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.054Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.055Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.055Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:55.055Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.056Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.056Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T23:03:55.056Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.057Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.057Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.058Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.059Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:55.059Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.059Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T23:03:55.060Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.060Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.061Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.062Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.062Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.064Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T23:03:55.065Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.065Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.066Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.067Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.068Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T23:03:55.069Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.069Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.070Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T23:03:55.070Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.070Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.071Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.071Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.071Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.072Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:55.072Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T23:03:55.072Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.073Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.073Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.074Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.074Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.075Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:55.075Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T23:03:55.075Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.076Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:03:55.076Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.076Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:03:55.077Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:03:55.077Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T23:03:55.078Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.079Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.079Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.080Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T23:03:55.081Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T23:03:55.081Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T23:03:55.082Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T23:03:55.083Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T23:03:55.086Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T23:03:55.086Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T23:03:55.087Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2026-05-04T23:04:15.914Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2026-05-04T23:04:15.915Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.915Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2026-05-04T23:04:15.916Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2026-05-04T23:04:15.916Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2026-05-04T23:04:15.917Z"}
+{"context":"InstanceLoader","level":"info","message":"WinstonModule dependencies initialized","timestamp":"2026-05-04T23:04:15.917Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:04:15.918Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2026-05-04T23:04:15.918Z"}
+{"context":"InstanceLoader","level":"info","message":"UploadModule dependencies initialized","timestamp":"2026-05-04T23:04:15.919Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2026-05-04T23:04:15.919Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2026-05-04T23:04:15.919Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.920Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.920Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.920Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.921Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.921Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.921Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.921Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.922Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.922Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2026-05-04T23:04:15.922Z"}
+{"context":"InstanceLoader","level":"info","message":"AuditLogsModule dependencies initialized","timestamp":"2026-05-04T23:04:15.923Z"}
+{"context":"InstanceLoader","level":"info","message":"SeedModule dependencies initialized","timestamp":"2026-05-04T23:04:15.924Z"}
+{"context":"InstanceLoader","level":"info","message":"TrackingModule dependencies initialized","timestamp":"2026-05-04T23:04:15.925Z"}
+{"context":"InstanceLoader","level":"info","message":"CountriesModule dependencies initialized","timestamp":"2026-05-04T23:04:15.925Z"}
+{"context":"InstanceLoader","level":"info","message":"FaqModule dependencies initialized","timestamp":"2026-05-04T23:04:15.926Z"}
+{"context":"InstanceLoader","level":"info","message":"TestimonialsModule dependencies initialized","timestamp":"2026-05-04T23:04:15.926Z"}
+{"context":"InstanceLoader","level":"info","message":"WorksModule dependencies initialized","timestamp":"2026-05-04T23:04:15.927Z"}
+{"context":"InstanceLoader","level":"info","message":"ServicesModule dependencies initialized","timestamp":"2026-05-04T23:04:15.927Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2026-05-04T23:04:15.927Z"}
+{"context":"InstanceLoader","level":"info","message":"OrdersModule dependencies initialized","timestamp":"2026-05-04T23:04:15.928Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2026-05-04T23:04:15.928Z"}
+{"context":"InstanceLoader","level":"info","message":"PaymentsModule dependencies initialized","timestamp":"2026-05-04T23:04:15.928Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth} (version: 1):","timestamp":"2026-05-04T23:04:15.929Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.929Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.930Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.930Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/forgot-password, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.930Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/reset-password, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.931Z"}
+{"context":"RoutesResolver","level":"info","message":"TrackingController {/api/tracking} (version: 1):","timestamp":"2026-05-04T23:04:15.931Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.931Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tracking/visit, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.932Z"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/users} (version: 1):","timestamp":"2026-05-04T23:04:15.932Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.932Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.933Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.933Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/audit-logs, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.933Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-visits, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.934Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/admin/tracking-analytics, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.934Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.935Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.935Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.935Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:04:15.936Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/block, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.936Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id/unblock, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.936Z"}
+{"context":"RoutesResolver","level":"info","message":"ServicesController {/api/services} (version: 1):","timestamp":"2026-05-04T23:04:15.937Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.937Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.937Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.938Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.938Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:04:15.938Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/services/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.939Z"}
+{"context":"RoutesResolver","level":"info","message":"OrdersController {/api/orders} (version: 1):","timestamp":"2026-05-04T23:04:15.940Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.941Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/me, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.941Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.942Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.943Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/orders/:id/status, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.943Z"}
+{"context":"RoutesResolver","level":"info","message":"PaymentsController {/api/payments} (version: 1):","timestamp":"2026-05-04T23:04:15.944Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/initiate, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.945Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook/:gatewayId, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.945Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/webhook, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.946Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/payments/:id, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.947Z"}
+{"context":"RoutesResolver","level":"info","message":"CountriesController {/api/countries} (version: 1):","timestamp":"2026-05-04T23:04:15.947Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.947Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/countries/seed, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.948Z"}
+{"context":"RoutesResolver","level":"info","message":"FaqController {/api/faq} (version: 1):","timestamp":"2026-05-04T23:04:15.948Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.949Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.949Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.949Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.950Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id/toggle-active, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.950Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/faq/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:04:15.950Z"}
+{"context":"RoutesResolver","level":"info","message":"TestimonialsController {/api/testimonials} (version: 1):","timestamp":"2026-05-04T23:04:15.951Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.951Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.951Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.952Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.952Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.953Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/testimonials/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:04:15.953Z"}
+{"context":"RoutesResolver","level":"info","message":"WorksController {/api/works} (version: 1):","timestamp":"2026-05-04T23:04:15.954Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.954Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/admin, GET} (version: 1) route","timestamp":"2026-05-04T23:04:15.954Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.955Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.955Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id/toggle-visible, PATCH} (version: 1) route","timestamp":"2026-05-04T23:04:15.956Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/works/:id, DELETE} (version: 1) route","timestamp":"2026-05-04T23:04:15.957Z"}
+{"context":"RoutesResolver","level":"info","message":"UploadController {/api/upload} (version: 1):","timestamp":"2026-05-04T23:04:15.958Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/images, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.959Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/videos, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.960Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/upload/delete, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.961Z"}
+{"context":"RoutesResolver","level":"info","message":"SeedController {/api/seed} (version: 1):","timestamp":"2026-05-04T23:04:15.961Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/seed/run, POST} (version: 1) route","timestamp":"2026-05-04T23:04:15.962Z"}
+{"context":"AuditLogsStartupHook","level":"info","message":"Audit list API: GET /api/v1/users/admin/audit-logs (admin JWT)","timestamp":"2026-05-04T23:04:15.962Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2026-05-04T23:04:15.963Z"}
+{"context":"Bootstrap","level":"info","message":"Khairat API running on port 3001","timestamp":"2026-05-04T23:04:15.964Z"}
+{"context":"Bootstrap","level":"info","message":"Swagger docs: http://localhost:3001/api/docs","timestamp":"2026-05-04T23:04:15.965Z"}
+{"context":"Bootstrap","level":"info","message":"Audit logs (admin): GET http://localhost:3001/api/v1/users/admin/audit-logs","timestamp":"2026-05-04T23:04:15.965Z"}
