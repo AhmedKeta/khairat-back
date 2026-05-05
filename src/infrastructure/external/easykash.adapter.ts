@@ -7,6 +7,7 @@ import {
 import { ConfigService } from "@nestjs/config";
 import axios, { AxiosInstance } from "axios";
 import { createHash, createHmac, timingSafeEqual } from "crypto";
+import { parse as parseQs } from "querystring";
 import {
   PaymentGatewayPort,
   InitiatePaymentDto,
@@ -165,15 +166,11 @@ export class EasyKashAdapter implements PaymentGatewayPort {
       );
     }
 
-    let payload: Record<string, any>;
-    try {
-      payload =
-        body && body.length > 0 ? JSON.parse(body.toString("utf8")) : {};
-    } catch {
-      throw new BadRequestException("Invalid EasyKash callback body");
-    }
+    const payload = this.parseWebhookBody(body);
 
-    const received = String(payload?.signatureHash ?? "").trim();
+    const received = String(payload?.signatureHash ?? "")
+      .trim()
+      .toLowerCase();
     if (!received) {
       throw new BadRequestException("Missing EasyKash signatureHash");
     }
@@ -183,7 +180,8 @@ export class EasyKashAdapter implements PaymentGatewayPort {
     );
     const computed = createHmac("sha512", secret)
       .update(concat, "utf8")
-      .digest("hex");
+      .digest("hex")
+      .toLowerCase();
 
     if (
       computed.length !== received.length ||
@@ -309,5 +307,30 @@ export class EasyKashAdapter implements PaymentGatewayPort {
     } catch {
       return null;
     }
+  }
+
+  private parseWebhookBody(body: Buffer): Record<string, any> {
+    if (!body || body.length === 0) {
+      return {};
+    }
+
+    const raw = body.toString("utf8").trim();
+    if (!raw) return {};
+
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        return parsed as Record<string, any>;
+      }
+    } catch {
+      // Not JSON; fallback to url-encoded payload parsing.
+    }
+
+    const asQuery = parseQs(raw);
+    if (Object.keys(asQuery).length > 0) {
+      return asQuery as Record<string, any>;
+    }
+
+    throw new BadRequestException("Invalid EasyKash callback body");
   }
 }
