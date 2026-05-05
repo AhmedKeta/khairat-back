@@ -70,8 +70,11 @@ export class UserRepository implements UserRepositoryPort {
     await this.repo.delete(id);
   }
 
-  async existsByEmail(email: string): Promise<boolean> {
-    const count = await this.repo.count({ where: { email } });
+  async existsByEmail(email: string, excludeUserId?: string): Promise<boolean> {
+    const where = excludeUserId
+      ? { email, id: Not(Equal(excludeUserId)) }
+      : { email };
+    const count = await this.repo.count({ where });
     return count > 0;
   }
 

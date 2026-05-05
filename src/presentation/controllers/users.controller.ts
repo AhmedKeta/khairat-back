@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../../application/users/users.service';
 import { UpdateUserDto } from '../../application/users/dto/update-user.dto';
+import { UpdateMeDto } from '../../application/users/dto/update-me.dto';
 import { CreateUserDto } from '../../application/users/dto/create-user.dto';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 import { Roles } from '../../shared/decorators/roles.decorator';
@@ -33,9 +34,9 @@ export class UsersController {
 
   @Patch('me')
   @ApiOperation({ summary: 'Update current user profile' })
-  async updateMe(@CurrentUser() user: any, @Body() dto: UpdateUserDto) {
-    const { role, ...allowedUpdates } = dto;
-    return this.usersService.update(user.id, allowedUpdates);
+  async updateMe(@CurrentUser() user: any, @Body() dto: UpdateMeDto) {
+    const { role, ...meDto } = dto as UpdateMeDto & { role?: unknown };
+    return this.usersService.updateSelf(user.id, meDto);
   }
 
   @Post()
