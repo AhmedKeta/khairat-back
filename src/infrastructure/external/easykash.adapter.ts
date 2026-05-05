@@ -33,9 +33,17 @@ const CALLBACK_HMAC_KEYS = [
   "customerReference",
 ] as const;
 
-/** Deterministic safe integer for EasyKash `customerReference` (UUID cannot be sent as-is). */
-export function orderIdToEasyKashCustomerReference(orderId: string): number {
-  const buf = createHash("sha256").update(orderId, "utf8").digest();
+/**
+ * Generate a safe integer for EasyKash `customerReference`
+ * (UUID cannot be sent as-is). We include an attempt seed so retries
+ * on the same order get a new reference.
+ */
+export function orderIdToEasyKashCustomerReference(
+  orderId: string,
+  attemptSeed: string,
+): number {
+  const source = `${orderId}:${attemptSeed}`;
+  const buf = createHash("sha256").update(source, "utf8").digest();
   let n = 0n;
   for (let i = 0; i < 7; i++) {
     n = (n << 8n) | BigInt(buf[i]);
@@ -93,7 +101,11 @@ export class EasyKashAdapter implements PaymentGatewayPort {
       throw new BadRequestException("Invalid payment amount");
     }
 
-    const customerReference = orderIdToEasyKashCustomerReference(dto.orderId);
+    const attemptSeed = `${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`;
+    const customerReference = orderIdToEasyKashCustomerReference(
+      dto.orderId,
+      attemptSeed,
+    );
     const refStr = String(customerReference);
 
     const cashExpiryRaw = this.configService.get<string>(
@@ -135,7 +147,16 @@ export class EasyKashAdapter implements PaymentGatewayPort {
     }
 
     const redirectUrl: string | undefined =
-      data?.redirectUrl ?? data?.redirect_url;
+      data?.redirectUrl ??
+      data?.redirect_url ??
+      data?.paymentUrl ??
+      data?.payment_url ??
+      data?.url ??
+      data?.data?.redirectUrl ??
+      data?.data?.redirect_url ??
+      data?.data?.paymentUrl ??
+      data?.data?.payment_url ??
+      data?.data?.url;
     if (!redirectUrl || typeof redirectUrl !== "string") {
       throw new InternalServerErrorException(
         "EasyKash did not return a redirectUrl",
