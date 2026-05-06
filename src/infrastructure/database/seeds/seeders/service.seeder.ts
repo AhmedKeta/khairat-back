@@ -9,14 +9,8 @@ const BASE_SERVICE_TITLES_EN = ['Zakat Guidance', 'Hajj Support', 'Islamic Will 
 const SEED_RATES: Record<string, number> = {
   USD: 1,
   EUR: 0.92,
-  GBP: 0.8,
   EGP: 48.5,
   SAR: 3.75,
-  KWD: 0.31,
-  QAR: 3.64,
-  AED: 3.67,
-  BHD: 0.38,
-  OMR: 0.38,
 };
 
 function buildSeedPrices(usd: number): { currency: string; amount: number }[] {

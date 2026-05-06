@@ -1,19 +1,7 @@
 /**
- * All currencies the app can *display* (navbar, dashboard form, service pages).
- * Includes Middle-Eastern currencies that Polar does NOT accept for charging.
+ * Currencies the app uses for pricing and checkout (matches frontend navbar regions).
  */
-export const SUPPORTED_CURRENCIES = [
-  'USD',
-  'EUR',
-  'GBP',
-  'EGP',
-  'SAR',
-  'KWD',
-  'QAR',
-  'AED',
-  'BHD',
-  'OMR',
-] as const;
+export const SUPPORTED_CURRENCIES = ['USD', 'EUR', 'EGP', 'SAR'] as const;
 
 export type SupportedCurrency = (typeof SUPPORTED_CURRENCIES)[number];
 
@@ -23,7 +11,7 @@ export const POLAR_DEFAULT_CURRENCY: SupportedCurrency = 'USD';
  * Currencies that Polar actually accepts for charging customers.
  * Defaults to every supported currency - trusts whatever the Polar
  * organization allows in its dashboard. Narrow it via env var
- * `POLAR_CHARGEABLE_CURRENCIES="USD,EUR,GBP"` if Polar rejects any currency
+ * `POLAR_CHARGEABLE_CURRENCIES="USD,EUR"` if Polar rejects any currency
  * for your org; customers who pick a rejected currency will be charged in
  * the fallback (USD) instead.
  */
@@ -74,15 +62,7 @@ export function isPaymobChargeable(code: string): boolean {
  * EasyKash Direct Payment hosted currencies per Pay API docs.
  * Override with `EASYKASH_CHARGEABLE_CURRENCIES="EGP,USD,..."`.
  */
-const EASYKASH_DEFAULT_CHARGEABLE = [
-  'EGP',
-  'USD',
-  'SAR',
-  'EUR',
-  'GBP',
-  'QAR',
-  'AED',
-] as const;
+const EASYKASH_DEFAULT_CHARGEABLE = ['EGP', 'USD', 'SAR', 'EUR'] as const;
 
 function parseEasykashChargeable(): readonly string[] {
   const raw = process.env.EASYKASH_CHARGEABLE_CURRENCIES;
