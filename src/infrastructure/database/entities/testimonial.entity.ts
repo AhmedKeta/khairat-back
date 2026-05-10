@@ -3,31 +3,31 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('testimonials')
+@Entity("testimonials")
 export class TestimonialEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ name: 'user_name' })
+  @Column({ name: "user_name" })
   userName: string;
 
   @Column({ nullable: true })
   avatar: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: "text" })
   content: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: "text", nullable: true })
   contentAr: string;
 
-  @Column({ type: 'int', default: 5 })
+  @Column({ type: "int", default: 5 })
   rating: number;
 
-  @Column({ name: 'is_visible', default: true })
+  @Column({ name: "is_visible", default: true })
   isVisible: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 }
