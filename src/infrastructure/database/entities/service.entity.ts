@@ -41,6 +41,9 @@ export class ServiceEntity {
   @Column({ name: 'polar_product_id', type: 'varchar', nullable: true })
   polarProductId: string | null;
 
+  @Column({ name: 'display_order', type: 'int', default: 0 })
+  displayOrder: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

@@ -13,4 +13,7 @@ export abstract class ServiceRepositoryPort {
   abstract create(service: Partial<Service>): Promise<Service>;
   abstract update(id: string, service: Partial<Service>): Promise<Service>;
   abstract delete(id: string): Promise<void>;
+  abstract getNextDisplayOrder(): Promise<number>;
+  abstract reorder(orderedIds: string[]): Promise<void>;
+  abstract countWhereIdsIn(ids: string[]): Promise<number>;
 }

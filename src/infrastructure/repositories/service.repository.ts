@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ServiceEntity } from '../database/entities/service.entity';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { Service, ServicePrice } from '../../domain/service/entities/service.entity';
@@ -15,7 +15,16 @@ export class ServiceRepository implements ServiceRepositoryPort {
   ) {}
 
   async findAll(filters: ServiceFilters): Promise<PaginatedResult<Service>> {
-    const { page = 1, limit = 20, search, sortBy = 'createdAt', sortOrder = 'DESC', isActive, minPrice, maxPrice } = filters;
+    const {
+      page = 1,
+      limit = 20,
+      search,
+      sortBy = 'displayOrder',
+      sortOrder = 'ASC',
+      isActive,
+      minPrice,
+      maxPrice,
+    } = filters;
 
     const query = this.repo.createQueryBuilder('service');
 
@@ -30,7 +39,9 @@ export class ServiceRepository implements ServiceRepositoryPort {
     if (minPrice) query.andWhere('service.price >= :minPrice', { minPrice });
     if (maxPrice) query.andWhere('service.price <= :maxPrice', { maxPrice });
 
-    query.orderBy(`service.${sortBy}`, sortOrder as 'ASC' | 'DESC');
+    query
+      .orderBy(`service.${sortBy}`, sortOrder as 'ASC' | 'DESC')
+      .addOrderBy('service.createdAt', 'DESC');
     query.skip((page - 1) * limit).take(limit);
 
     const [entities, total] = await query.getManyAndCount();
@@ -61,6 +72,28 @@ export class ServiceRepository implements ServiceRepositoryPort {
 
   async delete(id: string): Promise<void> {
     await this.repo.delete(id);
+  }
+
+  async getNextDisplayOrder(): Promise<number> {
+    const row = await this.repo
+      .createQueryBuilder('s')
+      .select('MAX(s.displayOrder)', 'max')
+      .getRawOne<{ max: string | null }>();
+    const max = row?.max != null ? Number(row.max) : NaN;
+    return Number.isFinite(max) ? max + 1 : 0;
+  }
+
+  async reorder(orderedIds: string[]): Promise<void> {
+    await this.repo.manager.transaction(async (em) => {
+      for (let i = 0; i < orderedIds.length; i++) {
+        await em.update(ServiceEntity, { id: orderedIds[i] }, { displayOrder: i });
+      }
+    });
+  }
+
+  async countWhereIdsIn(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0;
+    return this.repo.count({ where: { id: In(ids) } });
   }
 
   private normalizePrices(raw: unknown): ServicePrice[] {
@@ -116,6 +149,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
       videos: entity.videos,
       isActive: entity.isActive,
       polarProductId: entity.polarProductId ?? null,
+      displayOrder: entity.displayOrder ?? 0,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
