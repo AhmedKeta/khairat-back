@@ -4,6 +4,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ServicesService } from '../../application/services/services.service';
 import { CreateServiceDto } from '../../application/services/dto/create-service.dto';
 import { UpdateServiceDto } from '../../application/services/dto/update-service.dto';
+import { ReorderServicesDto } from '../../application/services/dto/reorder-services.dto';
 import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
@@ -33,6 +34,16 @@ export class ServicesController {
   @ApiOperation({ summary: 'Create service (admin)' })
   async create(@Body() dto: CreateServiceDto) {
     return this.servicesService.create(dto);
+  }
+
+  @Patch('reorder')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Set display order for services (admin)' })
+  async reorder(@Body() dto: ReorderServicesDto) {
+    await this.servicesService.reorder(dto.orderedIds);
+    return { ok: true };
   }
 
   @Patch(':id')

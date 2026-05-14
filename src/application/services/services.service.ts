@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Logger } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
@@ -31,6 +31,8 @@ export class ServicesService {
     const images = (dto.images || []).map(toStoredUploadRef);
     const videos = (dto.videos || []).map(toStoredUploadRef);
 
+    const displayOrder = await this.serviceRepository.getNextDisplayOrder();
+
     const service = await this.serviceRepository.create({
       title: dto.title,
       description: dto.description,
@@ -39,6 +41,7 @@ export class ServicesService {
       images,
       videos,
       isActive: true,
+      displayOrder,
     });
     return service;
   }
@@ -69,5 +72,13 @@ export class ServicesService {
   async toggleActive(id: string) {
     const service = await this.findById(id);
     return this.serviceRepository.update(id, { isActive: !service.isActive });
+  }
+
+  async reorder(orderedIds: string[]) {
+    const count = await this.serviceRepository.countWhereIdsIn(orderedIds);
+    if (count !== orderedIds.length) {
+      throw new BadRequestException('One or more services do not exist');
+    }
+    await this.serviceRepository.reorder(orderedIds);
   }
 }

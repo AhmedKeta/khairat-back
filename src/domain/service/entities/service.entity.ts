@@ -25,6 +25,7 @@ export class Service {
   videos: string[];
   isActive: boolean;
   polarProductId: string | null;
+  displayOrder: number;
   createdAt: Date;
   updatedAt: Date;
 
