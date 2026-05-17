@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
+import { ServiceCategoriesService } from '../service-categories/service-categories.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { toStoredUploadRef } from '../upload/upload-path.util';
@@ -10,7 +11,16 @@ export class ServicesService {
 
   constructor(
     private readonly serviceRepository: ServiceRepositoryPort,
+    private readonly categoriesService: ServiceCategoriesService,
   ) {}
+
+  private async resolveCategoryId(categoryId: string): Promise<string> {
+    const category = await this.categoriesService.findByIdOrNull(categoryId);
+    if (!category) {
+      throw new BadRequestException('Service category not found');
+    }
+    return category.id;
+  }
 
   async findAll(filters: ServiceFilters) {
     return this.serviceRepository.findAll(filters);
@@ -23,6 +33,8 @@ export class ServicesService {
   }
 
   async create(dto: CreateServiceDto) {
+    const categoryId = await this.resolveCategoryId(dto.categoryId);
+
     const prices = (dto.prices ?? []).map((p) => ({
       currency: String(p.currency).toUpperCase(),
       amount: Number(p.amount),
@@ -42,13 +54,21 @@ export class ServicesService {
       videos,
       isActive: true,
       displayOrder,
+      categoryId,
     });
     return service;
   }
 
   async update(id: string, dto: UpdateServiceDto) {
-    await this.findById(id);
+    const existing = await this.findById(id);
     const payload: any = { ...dto };
+
+    if (dto.categoryId !== undefined) {
+      payload.categoryId = await this.resolveCategoryId(dto.categoryId);
+    } else if (!existing.categoryId) {
+      throw new BadRequestException('categoryId is required for services without a category');
+    }
+
     if (Array.isArray(dto.prices)) {
       payload.prices = dto.prices.map((p) => ({
         currency: String(p.currency).toUpperCase(),
@@ -61,6 +81,7 @@ export class ServicesService {
     if (dto.videos !== undefined) {
       payload.videos = dto.videos.map(toStoredUploadRef);
     }
+    delete payload.category;
     return this.serviceRepository.update(id, payload);
   }
 

@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { ServiceCategoryEntity } from './service-category.entity';
 
 @Entity('services')
 export class ServiceEntity {
@@ -43,6 +46,16 @@ export class ServiceEntity {
 
   @Column({ name: 'display_order', type: 'int', default: 0 })
   displayOrder: number;
+
+  @Column({ name: 'category_id', type: 'uuid', nullable: true })
+  categoryId: string | null;
+
+  @ManyToOne(() => ServiceCategoryEntity, (category) => category.services, {
+    nullable: true,
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'category_id' })
+  category?: ServiceCategoryEntity | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

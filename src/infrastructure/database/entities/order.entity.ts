@@ -9,6 +9,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { OrderStatus } from '../../../domain/order/value-objects/order-status.enum';
+import { OrderIntention } from '../../../domain/order/value-objects/order-intention.enum';
+import { DedicationGender } from '../../../domain/order/value-objects/dedication-gender.enum';
+import { BeneficiaryStatus } from '../../../domain/order/value-objects/beneficiary-status.enum';
 import { UserEntity } from './user.entity';
 import { ServiceEntity } from './service.entity';
 import { UserTrackingEntity } from './user-tracking.entity';
@@ -68,6 +71,24 @@ export class OrderEntity {
 
   @Column({ nullable: true, type: 'text' })
   notes: string;
+
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  intention: OrderIntention | null;
+
+  @Column({ name: 'on_behalf_of', type: 'jsonb', nullable: true })
+  onBehalfOf: string[] | null;
+
+  @Column({ name: 'dedication_gender', type: 'varchar', length: 32, nullable: true })
+  dedicationGender: DedicationGender | null;
+
+  @Column({ name: 'beneficiary_status', type: 'varchar', length: 32, nullable: true })
+  beneficiaryStatus: BeneficiaryStatus | null;
+
+  @Column({ name: 'short_duaa', type: 'text', nullable: true })
+  shortDuaa: string | null;
+
+  @Column({ name: 'photo_url', type: 'varchar', length: 512, nullable: true })
+  photoUrl: string | null;
 
   @Column({ name: 'tracking_visit_id', nullable: true })
   trackingVisitId?: string | null;

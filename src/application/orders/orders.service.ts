@@ -2,12 +2,14 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  BadRequestException,
   Logger,
 } from '@nestjs/common';
 import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/order.repository.port';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDetailsDto } from './dto/update-order-details.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { TrackingService } from '../tracking/tracking.service';
@@ -108,5 +110,25 @@ export class OrdersService {
     if (!order) throw new NotFoundException('Order not found');
 
     return this.orderRepository.update(id, { status });
+  }
+
+  async updateDetails(id: string, dto: UpdateOrderDetailsDto, userId: string) {
+    const order = await this.orderRepository.findById(id);
+    if (!order) throw new NotFoundException('Order not found');
+    if (order.userId !== userId) {
+      throw new ForbiddenException('Access denied');
+    }
+    if (order.status !== OrderStatus.PENDING) {
+      throw new BadRequestException('Only pending orders can be updated');
+    }
+
+    return this.orderRepository.update(id, {
+      intention: dto.intention,
+      onBehalfOf: dto.onBehalfOf,
+      dedicationGender: dto.dedicationGender,
+      beneficiaryStatus: dto.beneficiaryStatus,
+      shortDuaa: dto.shortDuaa ?? null,
+      photoUrl: dto.photoUrl ?? null,
+    });
   }
 }

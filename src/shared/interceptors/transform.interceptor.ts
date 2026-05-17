@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { stripSensitiveFields } from '../utils/sanitize-response.util';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -30,11 +31,15 @@ export class TransformInterceptor<T>
           'success' in data &&
           'data' in data
         ) {
-          return data;
+          const wrapped = data as ApiResponse<T>;
+          return {
+            ...wrapped,
+            data: stripSensitiveFields(wrapped.data) as T,
+          };
         }
         return {
           success: true,
-          data: data ?? null,
+          data: stripSensitiveFields(data ?? null) as T,
           message: 'Success',
           errors: null,
         };

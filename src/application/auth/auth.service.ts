@@ -12,6 +12,7 @@ import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { TrackingService } from '../tracking/tracking.service';
+import { sanitizeUser } from '../../shared/utils/sanitize-response.util';
 
 @Injectable()
 export class AuthService {
@@ -61,7 +62,7 @@ export class AuthService {
     await this.attachTrackingToUser(dto.guestId, dto.trackingVisitId, user.id);
 
     return {
-      user: this.sanitizeUser(user),
+      user: sanitizeUser(user as unknown as Record<string, unknown>),
       ...tokens,
     };
   }
@@ -95,7 +96,7 @@ export class AuthService {
     await this.attachTrackingToUser(dto.guestId, dto.trackingVisitId, user.id);
 
     return {
-      user: this.sanitizeUser(user),
+      user: sanitizeUser(user as unknown as Record<string, unknown>),
       ...tokens,
     };
   }
@@ -151,11 +152,6 @@ export class AuthService {
     ]);
 
     return { accessToken, refreshToken };
-  }
-
-  private sanitizeUser(user: any) {
-    const { password, refreshToken, ...rest } = user;
-    return rest;
   }
 
   private normalizePhone(value: string): string | null {

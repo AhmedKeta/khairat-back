@@ -5,6 +5,8 @@ export interface ServiceFilters extends PaginationDto {
   isActive?: boolean;
   minPrice?: number;
   maxPrice?: number;
+  categoryId?: string;
+  categorySlug?: string;
 }
 
 export abstract class ServiceRepositoryPort {

@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from '../../application/orders/orders.service';
 import { CreateOrderDto } from '../../application/orders/dto/create-order.dto';
+import { UpdateOrderDetailsDto } from '../../application/orders/dto/update-order-details.dto';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
@@ -49,6 +50,16 @@ export class OrdersController {
   @ApiOperation({ summary: 'Get order by ID' })
   async findById(@Param('id') id: string, @CurrentUser() user: any) {
     return this.ordersService.findById(id, user);
+  }
+
+  @Patch(':id/details')
+  @ApiOperation({ summary: 'Update order dedication details (owner, pending orders)' })
+  async updateDetails(
+    @Param('id') id: string,
+    @Body() dto: UpdateOrderDetailsDto,
+    @CurrentUser() user: any,
+  ) {
+    return this.ordersService.updateDetails(id, dto, user.id);
   }
 
   @Patch(':id/status')

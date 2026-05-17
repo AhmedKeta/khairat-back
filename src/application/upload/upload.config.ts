@@ -32,6 +32,26 @@ export function createImageUploadOptions() {
   };
 }
 
+export function createOrderPhotoUploadOptions() {
+  const dest = ensureDir('images');
+  return {
+    storage: diskStorage({
+      destination: (_req, _file, cb) => cb(null, dest),
+      filename: (_req, file, cb) => {
+        const ext = extname(file.originalname) || '.jpg';
+        cb(null, `${uuidv4()}${ext}`);
+      },
+    }),
+    limits: { fileSize: 2 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      if (!IMAGE_MIME.test(file.mimetype)) {
+        return cb(new Error('Only JPEG, PNG, GIF, or WebP images are allowed'), false);
+      }
+      cb(null, true);
+    },
+  };
+}
+
 export function createVideoUploadOptions() {
   const dest = ensureDir('videos');
   return {

@@ -31,6 +31,15 @@ export class PaymentsService {
     if (order.userId !== user.id)
       throw new BadRequestException('Order does not belong to user');
 
+    if (
+      !order.intention ||
+      !order.onBehalfOf?.length ||
+      !order.dedicationGender ||
+      !order.beneficiaryStatus
+    ) {
+      throw new BadRequestException('Order details are incomplete');
+    }
+
     const existingPayment =
       await this.paymentRepository.findByOrderId(orderId);
     if (existingPayment?.status === PaymentStatus.SUCCESS) {

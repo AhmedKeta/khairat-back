@@ -1,4 +1,7 @@
 import { OrderStatus } from '../value-objects/order-status.enum';
+import { OrderIntention } from '../value-objects/order-intention.enum';
+import { DedicationGender } from '../value-objects/dedication-gender.enum';
+import { BeneficiaryStatus } from '../value-objects/beneficiary-status.enum';
 
 export class Order {
   id: string;
@@ -13,6 +16,12 @@ export class Order {
   status: OrderStatus;
   paymentId: string | null;
   notes: string | null;
+  intention: OrderIntention | null;
+  onBehalfOf: string[] | null;
+  dedicationGender: DedicationGender | null;
+  beneficiaryStatus: BeneficiaryStatus | null;
+  shortDuaa: string | null;
+  photoUrl: string | null;
   trackingVisitId?: string | null;
   createdAt: Date;
   updatedAt: Date;

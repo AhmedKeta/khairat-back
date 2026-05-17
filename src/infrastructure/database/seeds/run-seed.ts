@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { AppDataSource } from '../data-source';
 import { seedCountries } from './seeders/country.seeder';
 import { seedUsers } from './seeders/user.seeder';
+import { seedServiceCategories } from './seeders/service-category.seeder';
 import { seedServices } from './seeders/service.seeder';
 import { seedFaqs } from './seeders/faq.seeder';
 import { seedTestimonials } from './seeders/testimonial.seeder';
@@ -14,6 +15,8 @@ export async function runSeed(ds = AppDataSource): Promise<void> {
   await seedCountries(ds);
   console.log('Seeding users...');
   await seedUsers(ds);
+  console.log('Seeding service categories...');
+  await seedServiceCategories(ds);
   // console.log('Seeding services...');
   // await seedServices(ds);
   // console.log('Seeding FAQs...');

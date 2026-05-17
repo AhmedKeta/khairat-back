@@ -24,9 +24,13 @@ export class ServiceRepository implements ServiceRepositoryPort {
       isActive,
       minPrice,
       maxPrice,
+      categoryId,
+      categorySlug,
     } = filters;
 
-    const query = this.repo.createQueryBuilder('service');
+    const query = this.repo
+      .createQueryBuilder('service')
+      .leftJoinAndSelect('service.category', 'category');
 
     if (search) {
       query.andWhere(
@@ -38,6 +42,8 @@ export class ServiceRepository implements ServiceRepositoryPort {
     if (isActive !== undefined) query.andWhere('service.isActive = :isActive', { isActive });
     if (minPrice) query.andWhere('service.price >= :minPrice', { minPrice });
     if (maxPrice) query.andWhere('service.price <= :maxPrice', { maxPrice });
+    if (categoryId) query.andWhere('service.categoryId = :categoryId', { categoryId });
+    if (categorySlug) query.andWhere('category.slug = :categorySlug', { categorySlug });
 
     query
       .orderBy(`service.${sortBy}`, sortOrder as 'ASC' | 'DESC')
@@ -53,7 +59,10 @@ export class ServiceRepository implements ServiceRepositoryPort {
   }
 
   async findById(id: string): Promise<Service | null> {
-    const entity = await this.repo.findOne({ where: { id } });
+    const entity = await this.repo.findOne({
+      where: { id },
+      relations: ['category'],
+    });
     return entity ? this.toDomain(entity) : null;
   }
 
@@ -109,6 +118,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
 
   private syncLegacyFields(service: Partial<Service>): Partial<Service> {
     const copy: Partial<Service> = { ...service };
+    delete copy.category;
     if (copy.prices !== undefined) {
       copy.prices = this.normalizePrices(copy.prices);
       const usdEntry =
@@ -150,6 +160,14 @@ export class ServiceRepository implements ServiceRepositoryPort {
       isActive: entity.isActive,
       polarProductId: entity.polarProductId ?? null,
       displayOrder: entity.displayOrder ?? 0,
+      categoryId: entity.categoryId ?? null,
+      category: entity.category
+        ? {
+            id: entity.category.id,
+            name: entity.category.name,
+            slug: entity.category.slug,
+          }
+        : null,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });

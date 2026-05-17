@@ -13,6 +13,12 @@ export interface ServicePrice {
   amount: number;
 }
 
+export interface ServiceCategorySummary {
+  id: string;
+  name: ServiceTitle;
+  slug: string;
+}
+
 export class Service {
   id: string;
   title: ServiceTitle;
@@ -26,6 +32,8 @@ export class Service {
   isActive: boolean;
   polarProductId: string | null;
   displayOrder: number;
+  categoryId: string | null;
+  category?: ServiceCategorySummary | null;
   createdAt: Date;
   updatedAt: Date;
 
