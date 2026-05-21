@@ -4,6 +4,7 @@ import { resolve, join } from "path";
 import { DataSource } from "typeorm";
 import { UserEntity } from "./entities/user.entity";
 import { ServiceEntity } from "./entities/service.entity";
+import { ServiceCategoryEntity } from "./entities/service-category.entity";
 import { OrderEntity } from "./entities/order.entity";
 import { PaymentEntity } from "./entities/payment.entity";
 import { CountryEntity } from "./entities/country.entity";
@@ -18,6 +19,7 @@ config({ path: resolve(__dirname, "../../../.env") });
 const entities = [
   UserEntity,
   ServiceEntity,
+  ServiceCategoryEntity,
   OrderEntity,
   PaymentEntity,
   CountryEntity,

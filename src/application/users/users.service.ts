@@ -12,20 +12,24 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateMeDto } from './dto/update-me.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '../../domain/user/entities/user.entity';
+import { sanitizeUser } from '../../shared/utils/sanitize-response.util';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async findAll(filters: UserFilters) {
-    return this.userRepository.findAll(filters);
+    const result = await this.userRepository.findAll(filters);
+    return {
+      ...result,
+      data: result.data.map((u) => sanitizeUser(u as unknown as Record<string, unknown>)),
+    };
   }
 
   async findById(id: string) {
     const user = await this.userRepository.findById(id);
     if (!user) throw new NotFoundException('User not found');
-    const { password, ...rest } = user as any;
-    return rest;
+    return sanitizeUser(user as unknown as Record<string, unknown>);
   }
 
   async create(dto: CreateUserDto) {
@@ -50,8 +54,7 @@ export class UsersService {
       isVerified: false,
       isBlocked: false,
     });
-    const { password, ...rest } = user as any;
-    return rest;
+    return sanitizeUser(user as unknown as Record<string, unknown>);
   }
 
   async update(id: string, dto: UpdateUserDto) {
@@ -76,8 +79,7 @@ export class UsersService {
     }
 
     const updated = await this.userRepository.update(id, dto);
-    const { password, ...rest } = updated as any;
-    return rest;
+    return sanitizeUser(updated as unknown as Record<string, unknown>);
   }
 
   async updateSelf(id: string, dto: UpdateMeDto) {
@@ -130,8 +132,7 @@ export class UsersService {
     }
 
     const updated = await this.userRepository.update(id, patch);
-    const { password, ...rest } = updated as any;
-    return rest;
+    return sanitizeUser(updated as unknown as Record<string, unknown>);
   }
 
   async delete(id: string) {

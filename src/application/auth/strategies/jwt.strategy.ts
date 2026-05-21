@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { UserRepositoryPort } from '../../../domain/user/ports/user.repository.port';
+import { sanitizeUser } from '../../../shared/utils/sanitize-response.util';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,6 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user || user.isBlocked) {
       throw new UnauthorizedException();
     }
-    return user;
+    return sanitizeUser(user as unknown as Record<string, unknown>);
   }
 }

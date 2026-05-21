@@ -1,8 +1,20 @@
 import { DataSource } from 'typeorm';
 import { ServiceEntity } from '../../entities/service.entity';
+import {
+  getCategoryIdBySlug,
+  seedServiceCategories,
+} from './service-category.seeder';
+import type { DefaultCategorySlug } from '../data/service-category-defaults';
 
 const TARGET_SERVICE_ROWS = 16;
 const BASE_SERVICE_TITLES_EN = ['Zakat Guidance', 'Hajj Support', 'Islamic Will (Wasiyya)'];
+
+function categorySlugForTitle(en: string): DefaultCategorySlug {
+  if (en.includes('Zakat')) return 'zakat';
+  if (en.includes('Hajj')) return 'guidance';
+  if (en.includes('Will')) return 'guidance';
+  return 'general';
+}
 
 // Rough reference rates used for seed data only. Admins override real
 // prices per-currency from the dashboard; these just give sensible demo values.
@@ -89,6 +101,7 @@ function buildServiceRows(): Partial<ServiceEntity>[] {
 }
 
 export async function seedServices(ds: DataSource): Promise<void> {
+  await seedServiceCategories(ds);
   const repo = ds.getRepository(ServiceEntity);
 
   const rows = buildServiceRows();
@@ -102,7 +115,14 @@ export async function seedServices(ds: DataSource): Promise<void> {
       .where("s.title->>'en' = :en", { en })
       .getOne();
     if (!exists) {
-      await repo.save(repo.create(row));
+      const slug = categorySlugForTitle(en);
+      const categoryId = await getCategoryIdBySlug(ds, slug);
+      await repo.save(
+        repo.create({
+          ...row,
+          categoryId: categoryId ?? undefined,
+        }),
+      );
     }
   }
 }

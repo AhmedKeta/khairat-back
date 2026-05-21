@@ -3,16 +3,21 @@ import {
   Body,
   Controller,
   Post,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UploadService } from '../../application/upload/upload.service';
 import { DeleteUploadedFileDto } from '../../application/upload/dto/delete-uploaded-file.dto';
-import { createImageUploadOptions, createVideoUploadOptions } from '../../application/upload/upload.config';
+import {
+  createImageUploadOptions,
+  createOrderPhotoUploadOptions,
+  createVideoUploadOptions,
+} from '../../application/upload/upload.config';
 import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
@@ -21,6 +26,20 @@ import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 @Controller({ path: 'upload', version: '1' })
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
+
+  @Post('order-photo')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Upload a single order dedication photo (customer)' })
+  @UseInterceptors(FileInterceptor('file', createOrderPhotoUploadOptions()))
+  async uploadOrderPhoto(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('No file uploaded');
+    }
+    const [path] = this.uploadService.filesToStoredPaths([file], 'images');
+    return { path };
+  }
 
   @Post('images')
   @UseGuards(AuthGuard('jwt'), RolesGuard)

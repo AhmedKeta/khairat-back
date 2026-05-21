@@ -8,6 +8,7 @@ import {
   IsPositive,
   IsIn,
   ArrayMinSize,
+  IsUUID,
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
@@ -67,6 +68,10 @@ function HasUsdEntry(validationOptions?: ValidationOptions) {
 }
 
 export class CreateServiceDto {
+  @ApiProperty({ example: 'uuid-of-category' })
+  @IsUUID()
+  categoryId: string;
+
   @ApiProperty({ example: { ar: 'أضحية', en: 'Qurbani' } })
   @ValidateNested()
   @Type(() => LocalizedTextDto)

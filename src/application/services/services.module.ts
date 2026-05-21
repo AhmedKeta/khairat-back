@@ -6,9 +6,14 @@ import { ServiceEntity } from '../../infrastructure/database/entities/service.en
 import { ServiceRepository } from '../../infrastructure/repositories/service.repository';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { AuthModule } from '../auth/auth.module';
+import { ServiceCategoriesModule } from '../service-categories/service-categories.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ServiceEntity]), AuthModule],
+  imports: [
+    TypeOrmModule.forFeature([ServiceEntity]),
+    AuthModule,
+    ServiceCategoriesModule,
+  ],
   controllers: [ServicesController],
   providers: [
     ServicesService,
