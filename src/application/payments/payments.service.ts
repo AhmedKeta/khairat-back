@@ -9,6 +9,7 @@ import { PaymentRepositoryPort } from '../../domain/payment/ports/payment.reposi
 import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.port';
 import { PaymentStatus } from '../../domain/payment/value-objects/payment-status.enum';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
+import { OrderIntention } from '../../domain/order/value-objects/order-intention.enum';
 import { PaymentGatewayRouter } from './payment-gateway.router';
 
 const DEFAULT_LOCALE = 'en';
@@ -31,8 +32,13 @@ export class PaymentsService {
     if (order.userId !== user.id)
       throw new BadRequestException('Order does not belong to user');
 
+    const intentionComplete =
+      !!order.intention &&
+      (order.intention !== OrderIntention.OTHER ||
+        !!order.intentionOther?.trim());
+
     if (
-      !order.intention ||
+      !intentionComplete ||
       !order.onBehalfOf?.length ||
       !order.dedicationGender ||
       !order.beneficiaryStatus

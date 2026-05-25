@@ -7,8 +7,10 @@ import {
   IsString,
   IsIn,
   Length,
+  IsEnum,
 } from 'class-validator';
 import { SUPPORTED_CURRENCIES } from '../../../shared/constants/currencies';
+import { OrderPurchaseType } from '../../../domain/order/value-objects/order-purchase-type.enum';
 
 export class CreateOrderDto {
   @ApiProperty()
@@ -19,6 +21,15 @@ export class CreateOrderDto {
   @IsInt()
   @IsPositive()
   quantity: number;
+
+  @ApiPropertyOptional({
+    enum: OrderPurchaseType,
+    default: OrderPurchaseType.FULL,
+    description: 'FULL for whole service, SHARE for a share of the service.',
+  })
+  @IsOptional()
+  @IsEnum(OrderPurchaseType)
+  purchaseType?: OrderPurchaseType;
 
   @ApiPropertyOptional({
     enum: SUPPORTED_CURRENCIES,

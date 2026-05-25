@@ -7,6 +7,7 @@ import {
   IsString,
   MaxLength,
   IsOptional,
+  IsNotEmpty,
   Matches,
   ValidateIf,
 } from 'class-validator';
@@ -21,6 +22,14 @@ export class UpdateOrderDetailsDto {
   @ApiProperty({ enum: OrderIntention })
   @IsEnum(OrderIntention)
   intention: OrderIntention;
+
+  @ApiPropertyOptional({ maxLength: 250, description: 'Required when intention is other' })
+  @ValidateIf((o) => o.intention === OrderIntention.OTHER)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(250)
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
+  intentionOther?: string;
 
   @ApiProperty({ type: [String], example: ['Ahmed', 'Fatima'] })
   @IsArray()

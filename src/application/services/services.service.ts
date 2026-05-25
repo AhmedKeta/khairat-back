@@ -40,6 +40,11 @@ export class ServicesService {
       amount: Number(p.amount),
     }));
 
+    const sharePrices = (dto.sharePrices ?? []).map((p) => ({
+      currency: String(p.currency).toUpperCase(),
+      amount: Number(p.amount),
+    }));
+
     const images = (dto.images || []).map(toStoredUploadRef);
     const videos = (dto.videos || []).map(toStoredUploadRef);
 
@@ -49,6 +54,7 @@ export class ServicesService {
       title: dto.title,
       description: dto.description,
       prices,
+      sharePrices,
       feedsCount: dto.feedsCount,
       images,
       videos,
@@ -71,6 +77,12 @@ export class ServicesService {
 
     if (Array.isArray(dto.prices)) {
       payload.prices = dto.prices.map((p) => ({
+        currency: String(p.currency).toUpperCase(),
+        amount: Number(p.amount),
+      }));
+    }
+    if (dto.sharePrices !== undefined) {
+      payload.sharePrices = dto.sharePrices.map((p) => ({
         currency: String(p.currency).toUpperCase(),
         amount: Number(p.amount),
       }));

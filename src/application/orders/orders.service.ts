@@ -8,6 +8,8 @@ import {
 import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/order.repository.port';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
+import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
+import { OrderIntention } from '../../domain/order/value-objects/order-intention.enum';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDetailsDto } from './dto/update-order-details.dto';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
@@ -70,21 +72,48 @@ export class OrdersService {
       }
     }
 
+    const purchaseType = dto.purchaseType ?? OrderPurchaseType.FULL;
+
     const requested = normalizeCurrency(dto.currency);
-    const availablePrices = Array.isArray(service.prices) ? service.prices : [];
+    const priceSource =
+      purchaseType === OrderPurchaseType.SHARE
+        ? Array.isArray(service.sharePrices)
+          ? service.sharePrices
+          : []
+        : Array.isArray(service.prices)
+          ? service.prices
+          : [];
+
+    if (
+      purchaseType === OrderPurchaseType.SHARE &&
+      priceSource.length === 0
+    ) {
+      throw new BadRequestException(
+        'This service does not support share purchases',
+      );
+    }
+
     const match =
-      availablePrices.find(
+      priceSource.find(
         (p) => String(p.currency).toUpperCase() === requested,
       ) ??
-      availablePrices.find(
+      priceSource.find(
         (p) =>
           String(p.currency).toUpperCase() === POLAR_DEFAULT_CURRENCY,
       );
 
+    if (purchaseType === OrderPurchaseType.SHARE && !match) {
+      throw new BadRequestException(
+        'No share price available for the requested currency',
+      );
+    }
+
     const currency = match
       ? String(match.currency).toUpperCase()
       : POLAR_DEFAULT_CURRENCY;
-    const unitPrice = match ? Number(match.amount) : Number(service.price);
+    const unitPrice = match
+      ? Number(match.amount)
+      : Number(service.price);
     const subtotal = unitPrice * dto.quantity;
     const total = subtotal;
 
@@ -94,6 +123,7 @@ export class OrdersService {
       userId,
       serviceId: dto.serviceId,
       quantity: dto.quantity,
+      purchaseType,
       unitPrice,
       subtotal,
       total,
@@ -122,8 +152,14 @@ export class OrdersService {
       throw new BadRequestException('Only pending orders can be updated');
     }
 
+    const intentionOther =
+      dto.intention === OrderIntention.OTHER
+        ? (dto.intentionOther?.trim() ?? null)
+        : null;
+
     return this.orderRepository.update(id, {
       intention: dto.intention,
+      intentionOther,
       onBehalfOf: dto.onBehalfOf,
       dedicationGender: dto.dedicationGender,
       beneficiaryStatus: dto.beneficiaryStatus,

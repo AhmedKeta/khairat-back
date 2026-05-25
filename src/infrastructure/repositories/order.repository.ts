@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { OrderEntity } from '../database/entities/order.entity';
 import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/order.repository.port';
 import { Order } from '../../domain/order/entities/order.entity';
+import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
 import { PaginatedResult, PaginationDto } from '../../shared/dto/pagination.dto';
 
 @Injectable()
@@ -67,6 +68,7 @@ export class OrderRepository implements OrderRepositoryPort {
       userId: entity.userId,
       serviceId: entity.serviceId,
       quantity: entity.quantity,
+      purchaseType: entity.purchaseType ?? OrderPurchaseType.FULL,
       unitPrice: Number(entity.unitPrice),
       subtotal: Number(entity.subtotal),
       total: Number(entity.total),
@@ -76,6 +78,7 @@ export class OrderRepository implements OrderRepositoryPort {
       paymentId: entity.paymentId,
       notes: entity.notes,
       intention: entity.intention ?? null,
+      intentionOther: entity.intentionOther ?? null,
       onBehalfOf: entity.onBehalfOf ?? null,
       dedicationGender: entity.dedicationGender ?? null,
       beneficiaryStatus: entity.beneficiaryStatus ?? null,

@@ -67,6 +67,34 @@ function HasUsdEntry(validationOptions?: ValidationOptions) {
   };
 }
 
+function HasUsdEntryWhenNonEmpty(validationOptions?: ValidationOptions) {
+  return function (object: object, propertyName: string) {
+    registerDecorator({
+      name: 'hasUsdEntryWhenNonEmpty',
+      target: object.constructor,
+      propertyName,
+      options: {
+        message: `sharePrices must include an entry for ${POLAR_DEFAULT_CURRENCY} when provided`,
+        ...validationOptions,
+      },
+      validator: {
+        validate(value: unknown) {
+          if (!Array.isArray(value) || value.length === 0) return true;
+          return value.some(
+            (p: any) =>
+              typeof p === 'object' &&
+              p !== null &&
+              String(p.currency).toUpperCase() === POLAR_DEFAULT_CURRENCY,
+          );
+        },
+        defaultMessage(_args: ValidationArguments) {
+          return `sharePrices must include an entry for ${POLAR_DEFAULT_CURRENCY} when provided`;
+        },
+      },
+    });
+  };
+}
+
 export class CreateServiceDto {
   @ApiProperty({ example: 'uuid-of-category' })
   @IsUUID()
@@ -95,6 +123,19 @@ export class CreateServiceDto {
   @Type(() => ServicePriceDto)
   @HasUsdEntry()
   prices: ServicePriceDto[];
+
+  @ApiPropertyOptional({
+    type: [ServicePriceDto],
+    example: [{ currency: 'USD', amount: 25 }],
+    description:
+      'Optional per-share prices. When omitted or empty, customers can only buy the full service.',
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ServicePriceDto)
+  @HasUsdEntryWhenNonEmpty()
+  sharePrices?: ServicePriceDto[];
 
   @ApiPropertyOptional({
     example: 299.99,

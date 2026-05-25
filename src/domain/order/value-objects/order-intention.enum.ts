@@ -3,4 +3,5 @@ export enum OrderIntention {
   CHARITY = 'charity',
   VOW = 'vow',
   PROTECTIVE_SACRIFICE = 'protective_sacrifice',
+  OTHER = 'other',
 }

@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { OrderStatus } from '../../../domain/order/value-objects/order-status.enum';
+import { OrderPurchaseType } from '../../../domain/order/value-objects/order-purchase-type.enum';
 import { OrderIntention } from '../../../domain/order/value-objects/order-intention.enum';
 import { DedicationGender } from '../../../domain/order/value-objects/dedication-gender.enum';
 import { BeneficiaryStatus } from '../../../domain/order/value-objects/beneficiary-status.enum';
@@ -38,6 +39,14 @@ export class OrderEntity {
 
   @Column({ type: 'int', default: 1 })
   quantity: number;
+
+  @Column({
+    name: 'purchase_type',
+    type: 'varchar',
+    length: 16,
+    default: OrderPurchaseType.FULL,
+  })
+  purchaseType: OrderPurchaseType;
 
   @Column({ name: 'unit_price', type: 'decimal', precision: 10, scale: 2 })
   unitPrice: number;
@@ -74,6 +83,9 @@ export class OrderEntity {
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   intention: OrderIntention | null;
+
+  @Column({ name: 'intention_other', type: 'varchar', length: 250, nullable: true })
+  intentionOther: string | null;
 
   @Column({ name: 'on_behalf_of', type: 'jsonb', nullable: true })
   onBehalfOf: string[] | null;
