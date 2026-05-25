@@ -17,6 +17,7 @@ import { TestimonialsModule } from './application/testimonials/testimonials.modu
 import { WorksModule } from './application/works/works.module';
 import { UploadModule } from './application/upload/upload.module';
 import { SeedModule } from './application/seed/seed.module';
+import { SiteSettingsModule } from './application/site-settings/site-settings.module';
 import { UserEntity } from './infrastructure/database/entities/user.entity';
 import { AuditLogEntity } from './infrastructure/database/entities/audit-log.entity';
 import { UserTrackingEntity } from './infrastructure/database/entities/user-tracking.entity';
@@ -28,6 +29,7 @@ import { CountryEntity } from './infrastructure/database/entities/country.entity
 import { FaqEntity } from './infrastructure/database/entities/faq.entity';
 import { TestimonialEntity } from './infrastructure/database/entities/testimonial.entity';
 import { OurWorkEntity } from './infrastructure/database/entities/our-work.entity';
+import { SiteSettingEntity } from './infrastructure/database/entities/site-setting.entity';
 
 @Module({
   imports: [
@@ -95,6 +97,7 @@ import { OurWorkEntity } from './infrastructure/database/entities/our-work.entit
             OurWorkEntity,
             AuditLogEntity,
             UserTrackingEntity,
+            SiteSettingEntity,
           ],
           synchronize,
           logging: nodeEnv === 'development',
@@ -133,6 +136,7 @@ import { OurWorkEntity } from './infrastructure/database/entities/our-work.entit
     WorksModule,
     UploadModule,
     SeedModule,
+    SiteSettingsModule,
   ],
 })
 export class AppModule {}

@@ -26,6 +26,7 @@ export class Service {
   price: number;
   currency: string;
   prices: ServicePrice[];
+  sharePrices: ServicePrice[];
   feedsCount: number | null;
   images: string[];
   videos: string[];

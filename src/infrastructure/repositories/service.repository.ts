@@ -129,6 +129,9 @@ export class ServiceRepository implements ServiceRepositoryPort {
         if (copy.currency === undefined) copy.currency = usdEntry.currency;
       }
     }
+    if (copy.sharePrices !== undefined) {
+      copy.sharePrices = this.normalizePrices(copy.sharePrices);
+    }
     return copy;
   }
 
@@ -147,6 +150,13 @@ export class ServiceRepository implements ServiceRepositoryPort {
       });
     }
 
+    const sharePrices: ServicePrice[] = Array.isArray(entity.sharePrices)
+      ? entity.sharePrices.map((p) => ({
+          currency: String(p.currency ?? '').toUpperCase(),
+          amount: Number(p.amount),
+        }))
+      : [];
+
     return new Service({
       id: entity.id,
       title: entity.title,
@@ -154,6 +164,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
       price: Number(entity.price),
       currency: entity.currency,
       prices,
+      sharePrices,
       feedsCount: entity.feedsCount,
       images: entity.images,
       videos: entity.videos,
