@@ -165,6 +165,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
       currency: entity.currency,
       prices,
       sharePrices,
+      shareDescription: entity.shareDescription ?? null,
       feedsCount: entity.feedsCount,
       images: entity.images,
       videos: entity.videos,

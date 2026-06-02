@@ -96,9 +96,10 @@ function HasUsdEntryWhenNonEmpty(validationOptions?: ValidationOptions) {
 }
 
 export class CreateServiceDto {
-  @ApiProperty({ example: 'uuid-of-category' })
+  @ApiPropertyOptional({ example: 'uuid-of-category' })
+  @IsOptional()
   @IsUUID()
-  categoryId: string;
+  categoryId?: string;
 
   @ApiProperty({ example: { ar: 'أضحية', en: 'Qurbani' } })
   @ValidateNested()
@@ -136,6 +137,16 @@ export class CreateServiceDto {
   @Type(() => ServicePriceDto)
   @HasUsdEntryWhenNonEmpty()
   sharePrices?: ServicePriceDto[];
+
+  @ApiPropertyOptional({
+    example: { ar: 'تفاصيل الحصة', en: 'What this share covers' },
+    description:
+      'Optional bilingual rich-text explaining what a share purchase includes.',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => LocalizedTextDto)
+  shareDescription?: LocalizedTextDto;
 
   @ApiPropertyOptional({
     example: 299.99,
