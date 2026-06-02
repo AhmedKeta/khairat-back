@@ -32,6 +32,9 @@ export class ServiceEntity {
   @Column({ name: 'share_prices', type: 'jsonb', default: () => "'[]'::jsonb" })
   sharePrices: { currency: string; amount: number }[];
 
+  @Column({ name: 'share_description', type: 'jsonb', nullable: true })
+  shareDescription: { ar: string; en: string } | null;
+
   @Column({ name: 'feeds_count', nullable: true, type: 'int' })
   feedsCount: number | null;
 

@@ -55,6 +55,7 @@ export class ServicesService {
       description: dto.description,
       prices,
       sharePrices,
+      shareDescription: dto.shareDescription ?? null,
       feedsCount: dto.feedsCount,
       images,
       videos,
@@ -66,13 +67,13 @@ export class ServicesService {
   }
 
   async update(id: string, dto: UpdateServiceDto) {
-    const existing = await this.findById(id);
+    await this.findById(id);
     const payload: any = { ...dto };
 
     if (dto.categoryId !== undefined) {
-      payload.categoryId = await this.resolveCategoryId(dto.categoryId);
-    } else if (!existing.categoryId) {
-      throw new BadRequestException('categoryId is required for services without a category');
+      payload.categoryId = dto.categoryId
+        ? await this.resolveCategoryId(dto.categoryId)
+        : null;
     }
 
     if (Array.isArray(dto.prices)) {
