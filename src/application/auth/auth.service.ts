@@ -7,12 +7,19 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { randomInt } from 'crypto';
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { VerifyResetCodeDto } from './dto/verify-reset-code.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { User } from '../../domain/user/entities/user.entity';
 import { TrackingService } from '../tracking/tracking.service';
 import { sanitizeUser } from '../../shared/utils/sanitize-response.util';
+import { PasswordResetCodeRepository } from '../../infrastructure/repositories/password-reset-code.repository';
+import { MailService } from '../../infrastructure/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +28,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly trackingService: TrackingService,
+    private readonly passwordResetCodeRepository: PasswordResetCodeRepository,
+    private readonly mailService: MailService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -128,16 +137,106 @@ export class AuthService {
     return user;
   }
 
-  async forgotPassword(email: string) {
-    const user = await this.userRepository.findByEmail(email);
-    // In production, send reset email. For now, just return a success message.
-    return { message: 'If the email exists, a reset link has been sent.' };
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const normalizedEmail = dto.email.trim().toLowerCase();
+    const user = await this.userRepository.findByEmail(normalizedEmail);
+    const isDashboard = dto.client === 'dashboard';
+
+    if (isDashboard && user && user.role !== UserRole.ADMIN) {
+      throw new UnauthorizedException('Not authorized');
+    }
+
+    if (user && (!isDashboard || user.role === UserRole.ADMIN)) {
+      const code = String(randomInt(100000, 1000000));
+      const codeHash = await bcrypt.hash(code, 12);
+      const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+      await this.passwordResetCodeRepository.replaceForEmail(
+        normalizedEmail,
+        codeHash,
+        expiresAt,
+      );
+
+      await this.mailService.sendPasswordResetCode(normalizedEmail, code);
+    }
+
+    return { message: 'If the email exists, a reset code has been sent.' };
   }
 
-  async resetPassword(token: string, newPassword: string) {
-    // In production, verify token and update password
-    const hashed = await bcrypt.hash(newPassword, 12);
+  async verifyResetCode(dto: VerifyResetCodeDto) {
+    const normalizedEmail = dto.email.trim().toLowerCase();
+    const isDashboard = dto.client === 'dashboard';
+    const record =
+      await this.passwordResetCodeRepository.findValidByEmail(normalizedEmail);
+
+    if (!record) {
+      throw new UnauthorizedException('Invalid or expired verification code');
+    }
+
+    const codeValid = await bcrypt.compare(dto.code, record.codeHash);
+    if (!codeValid) {
+      throw new UnauthorizedException('Invalid or expired verification code');
+    }
+
+    const user = await this.userRepository.findByEmail(normalizedEmail);
+    if (!user) {
+      throw new UnauthorizedException('Invalid or expired verification code');
+    }
+
+    this.assertDashboardAdminReset(user, isDashboard);
+
+    const purpose = isDashboard ? 'password-reset-admin' : 'password-reset';
+    const resetToken = await this.jwtService.signAsync(
+      { sub: user.id, email: user.email, purpose },
+      {
+        secret: this.configService.get('JWT_SECRET', 'secret'),
+        expiresIn: '15m',
+      },
+    );
+
+    await this.passwordResetCodeRepository.deleteByEmail(normalizedEmail);
+
+    return { resetToken };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    if (dto.password !== dto.confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    let payload: { sub: string; email: string; purpose?: string };
+    try {
+      payload = this.jwtService.verify(dto.resetToken, {
+        secret: this.configService.get('JWT_SECRET', 'secret'),
+      });
+    } catch {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const allowedPurposes = ['password-reset', 'password-reset-admin'];
+    if (!payload.purpose || !allowedPurposes.includes(payload.purpose)) {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const user = await this.userRepository.findById(payload.sub);
+    if (!user) {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    if (payload.purpose === 'password-reset-admin') {
+      this.assertDashboardAdminReset(user, true);
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 12);
+    await this.userRepository.update(payload.sub, { password: hashedPassword });
+
     return { message: 'Password reset successfully' };
+  }
+
+  private assertDashboardAdminReset(user: User, isDashboard: boolean): void {
+    if (isDashboard && user.role !== UserRole.ADMIN) {
+      throw new UnauthorizedException('Not authorized');
+    }
   }
 
   private async generateTokens(userId: string, email: string, role: UserRole) {

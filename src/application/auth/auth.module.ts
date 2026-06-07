@@ -9,13 +9,17 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { UserEntity } from '../../infrastructure/database/entities/user.entity';
+import { PasswordResetCodeEntity } from '../../infrastructure/database/entities/password-reset-code.entity';
 import { UserRepository } from '../../infrastructure/repositories/user.repository';
+import { PasswordResetCodeRepository } from '../../infrastructure/repositories/password-reset-code.repository';
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
 import { TrackingModule } from '../tracking/tracking.module';
+import { MailModule } from '../../infrastructure/mail/mail.module';
 
 @Module({
   imports: [
     TrackingModule,
+    MailModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -27,13 +31,14 @@ import { TrackingModule } from '../tracking/tracking.module';
         },
       }),
     }),
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity, PasswordResetCodeEntity]),
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
     JwtStrategy,
     LocalStrategy,
+    PasswordResetCodeRepository,
     { provide: UserRepositoryPort, useClass: UserRepository },
   ],
   exports: [AuthService, JwtModule],

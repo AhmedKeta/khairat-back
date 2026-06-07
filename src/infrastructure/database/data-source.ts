@@ -13,6 +13,7 @@ import { TestimonialEntity } from "./entities/testimonial.entity";
 import { OurWorkEntity } from "./entities/our-work.entity";
 import { AuditLogEntity } from "./entities/audit-log.entity";
 import { UserTrackingEntity } from "./entities/user-tracking.entity";
+import { PasswordResetCodeEntity } from "./entities/password-reset-code.entity";
 
 config({ path: resolve(__dirname, "../../../.env") });
 
@@ -28,6 +29,7 @@ const entities = [
   OurWorkEntity,
   AuditLogEntity,
   UserTrackingEntity,
+  PasswordResetCodeEntity,
 ];
 
 const isProd = !!process.env.DATABASE_URL;
