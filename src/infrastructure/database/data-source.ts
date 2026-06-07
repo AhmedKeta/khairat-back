@@ -5,6 +5,8 @@ import { DataSource } from "typeorm";
 import { UserEntity } from "./entities/user.entity";
 import { ServiceEntity } from "./entities/service.entity";
 import { ServiceCategoryEntity } from "./entities/service-category.entity";
+import { ServiceMarkEntity } from "./entities/service-mark.entity";
+import { ServiceMarkAssignmentEntity } from "./entities/service-mark-assignment.entity";
 import { OrderEntity } from "./entities/order.entity";
 import { PaymentEntity } from "./entities/payment.entity";
 import { CountryEntity } from "./entities/country.entity";
@@ -21,6 +23,8 @@ const entities = [
   UserEntity,
   ServiceEntity,
   ServiceCategoryEntity,
+  ServiceMarkEntity,
+  ServiceMarkAssignmentEntity,
   OrderEntity,
   PaymentEntity,
   CountryEntity,

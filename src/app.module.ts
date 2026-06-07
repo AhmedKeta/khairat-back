@@ -9,6 +9,7 @@ import { AuthModule } from './application/auth/auth.module';
 import { UsersModule } from './application/users/users.module';
 import { ServicesModule } from './application/services/services.module';
 import { ServiceCategoriesModule } from './application/service-categories/service-categories.module';
+import { ServiceMarksModule } from './application/service-marks/service-marks.module';
 import { OrdersModule } from './application/orders/orders.module';
 import { PaymentsModule } from './application/payments/payments.module';
 import { CountriesModule } from './application/countries/countries.module';
@@ -23,6 +24,8 @@ import { AuditLogEntity } from './infrastructure/database/entities/audit-log.ent
 import { UserTrackingEntity } from './infrastructure/database/entities/user-tracking.entity';
 import { ServiceEntity } from './infrastructure/database/entities/service.entity';
 import { ServiceCategoryEntity } from './infrastructure/database/entities/service-category.entity';
+import { ServiceMarkEntity } from './infrastructure/database/entities/service-mark.entity';
+import { ServiceMarkAssignmentEntity } from './infrastructure/database/entities/service-mark-assignment.entity';
 import { OrderEntity } from './infrastructure/database/entities/order.entity';
 import { PaymentEntity } from './infrastructure/database/entities/payment.entity';
 import { CountryEntity } from './infrastructure/database/entities/country.entity';
@@ -90,6 +93,8 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
             UserEntity,
             ServiceEntity,
             ServiceCategoryEntity,
+            ServiceMarkEntity,
+            ServiceMarkAssignmentEntity,
             OrderEntity,
             PaymentEntity,
             CountryEntity,
@@ -130,6 +135,7 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
     UsersModule,
     ServicesModule,
     ServiceCategoriesModule,
+    ServiceMarksModule,
     OrdersModule,
     PaymentsModule,
     CountriesModule,
