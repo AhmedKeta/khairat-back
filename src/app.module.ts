@@ -30,6 +30,7 @@ import { FaqEntity } from './infrastructure/database/entities/faq.entity';
 import { TestimonialEntity } from './infrastructure/database/entities/testimonial.entity';
 import { OurWorkEntity } from './infrastructure/database/entities/our-work.entity';
 import { SiteSettingEntity } from './infrastructure/database/entities/site-setting.entity';
+import { PasswordResetCodeEntity } from './infrastructure/database/entities/password-reset-code.entity';
 
 @Module({
   imports: [
@@ -98,6 +99,7 @@ import { SiteSettingEntity } from './infrastructure/database/entities/site-setti
             AuditLogEntity,
             UserTrackingEntity,
             SiteSettingEntity,
+            PasswordResetCodeEntity,
           ],
           synchronize,
           logging: nodeEnv === 'development',

@@ -7,7 +7,10 @@ import { SITE_SETTING_KEYS } from './constants';
 import { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
 
 export type PublicSiteSettings = {
-  whatsappNumber: string;
+  whatsappNumber1: string;
+  whatsappNumber2: string;
+  whatsappNumber1Enabled: boolean;
+  whatsappNumber2Enabled: boolean;
 };
 
 @Injectable()
@@ -18,11 +21,32 @@ export class SiteSettingsService {
     private readonly config: ConfigService,
   ) {}
 
-  private defaultWhatsappNumber(): string {
+  private defaultWhatsappNumber1(): string {
     return (
+      this.config.get<string>('SITE_WHATSAPP_NUMBER_1')?.trim() ||
       this.config.get<string>('SITE_WHATSAPP_NUMBER')?.trim() ||
       '+966500000000'
     );
+  }
+
+  private defaultWhatsappNumber2(number1Fallback: string): string {
+    return (
+      this.config.get<string>('SITE_WHATSAPP_NUMBER_2')?.trim() ||
+      this.config.get<string>('SITE_WHATSAPP_SUPPORT_NUMBER')?.trim() ||
+      number1Fallback
+    );
+  }
+
+  private parseBool(value: string | null, defaultValue = true): boolean {
+    if (value == null) return defaultValue;
+    const normalized = value.trim().toLowerCase();
+    if (normalized === 'false' || normalized === '0') return false;
+    if (normalized === 'true' || normalized === '1') return true;
+    return defaultValue;
+  }
+
+  private boolToStorage(value: boolean): string {
+    return value ? 'true' : 'false';
   }
 
   private async getValue(key: string): Promise<string | null> {
@@ -35,15 +59,40 @@ export class SiteSettingsService {
   }
 
   async getPublicSettings(): Promise<PublicSiteSettings> {
-    const stored = await this.getValue(SITE_SETTING_KEYS.WHATSAPP_NUMBER);
+    const stored1 = await this.getValue(SITE_SETTING_KEYS.WHATSAPP_NUMBER_1);
+    const number1 = stored1 || this.defaultWhatsappNumber1();
+    const stored2 = await this.getValue(SITE_SETTING_KEYS.WHATSAPP_NUMBER_2);
+    const enabled1 = this.parseBool(
+      await this.getValue(SITE_SETTING_KEYS.WHATSAPP_NUMBER_1_ENABLED),
+    );
+    const enabled2 = this.parseBool(
+      await this.getValue(SITE_SETTING_KEYS.WHATSAPP_NUMBER_2_ENABLED),
+    );
     return {
-      whatsappNumber: stored || this.defaultWhatsappNumber(),
+      whatsappNumber1: number1,
+      whatsappNumber2: stored2 || this.defaultWhatsappNumber2(number1),
+      whatsappNumber1Enabled: enabled1,
+      whatsappNumber2Enabled: enabled2,
     };
   }
 
   async updateSettings(dto: UpdateSiteSettingsDto): Promise<PublicSiteSettings> {
-    const normalized = dto.whatsappNumber.trim();
-    await this.upsert(SITE_SETTING_KEYS.WHATSAPP_NUMBER, normalized);
+    await this.upsert(
+      SITE_SETTING_KEYS.WHATSAPP_NUMBER_1,
+      dto.whatsappNumber1.trim(),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.WHATSAPP_NUMBER_2,
+      dto.whatsappNumber2.trim(),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.WHATSAPP_NUMBER_1_ENABLED,
+      this.boolToStorage(dto.whatsappNumber1Enabled),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.WHATSAPP_NUMBER_2_ENABLED,
+      this.boolToStorage(dto.whatsappNumber2Enabled),
+    );
     return this.getPublicSettings();
   }
 }

@@ -19,7 +19,7 @@ export class AddSiteSettings1746500000000 implements MigrationInterface {
     await queryRunner.query(
       `
       INSERT INTO "site_settings" ("key", "value", "updated_at")
-      VALUES ('whatsapp_number', $1, now())
+      VALUES ('whatsapp_number_1', $1, now())
       ON CONFLICT ("key") DO NOTHING
     `,
       [defaultNumber],

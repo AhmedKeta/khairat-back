@@ -4,6 +4,9 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../../application/auth/auth.service';
 import { RegisterDto } from '../../application/auth/dto/register.dto';
 import { LoginDto } from '../../application/auth/dto/login.dto';
+import { ForgotPasswordDto } from '../../application/auth/dto/forgot-password.dto';
+import { VerifyResetCodeDto } from '../../application/auth/dto/verify-reset-code.dto';
+import { ResetPasswordDto } from '../../application/auth/dto/reset-password.dto';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
@@ -37,16 +40,26 @@ export class AuthController {
   }
 
   @Post('forgot-password')
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Send password reset email' })
-  async forgotPassword(@Body() body: { email: string }) {
-    return this.authService.forgotPassword(body.email);
+  @ApiOperation({ summary: 'Send password reset code to email' })
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto);
+  }
+
+  @Post('verify-reset-code')
+  @UseGuards(ThrottlerGuard)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify password reset code' })
+  async verifyResetCode(@Body() dto: VerifyResetCodeDto) {
+    return this.authService.verifyResetCode(dto);
   }
 
   @Post('reset-password')
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Reset password with token' })
-  async resetPassword(@Body() body: { token: string; password: string }) {
-    return this.authService.resetPassword(body.token, body.password);
+  @ApiOperation({ summary: 'Reset password with reset token' })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto);
   }
 }
