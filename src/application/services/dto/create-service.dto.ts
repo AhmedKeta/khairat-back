@@ -171,6 +171,12 @@ export class CreateServiceDto {
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()
   @IsArray()
+  @IsUUID('4', { each: true })
+  markIds?: string[];
+
+  @ApiPropertyOptional({ type: [String] })
+  @IsOptional()
+  @IsArray()
   images?: string[];
 
   @ApiPropertyOptional({ type: [String] })

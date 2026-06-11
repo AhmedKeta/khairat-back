@@ -30,7 +30,9 @@ export class ServiceRepository implements ServiceRepositoryPort {
 
     const query = this.repo
       .createQueryBuilder('service')
-      .leftJoinAndSelect('service.category', 'category');
+      .leftJoinAndSelect('service.category', 'category')
+      .leftJoinAndSelect('service.markAssignments', 'markAssignment')
+      .leftJoinAndSelect('markAssignment.mark', 'mark');
 
     if (search) {
       query.andWhere(
@@ -53,7 +55,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
     const [entities, total] = await query.getManyAndCount();
 
     return {
-      data: entities.map(this.toDomain),
+      data: entities.map((entity) => this.toDomain(entity)),
       meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
     };
   }
@@ -61,7 +63,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
   async findById(id: string): Promise<Service | null> {
     const entity = await this.repo.findOne({
       where: { id },
-      relations: ['category'],
+      relations: ['category', 'markAssignments', 'markAssignments.mark'],
     });
     return entity ? this.toDomain(entity) : null;
   }
@@ -119,6 +121,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
   private syncLegacyFields(service: Partial<Service>): Partial<Service> {
     const copy: Partial<Service> = { ...service };
     delete copy.category;
+    delete copy.marks;
     if (copy.prices !== undefined) {
       copy.prices = this.normalizePrices(copy.prices);
       const usdEntry =
@@ -133,6 +136,21 @@ export class ServiceRepository implements ServiceRepositoryPort {
       copy.sharePrices = this.normalizePrices(copy.sharePrices);
     }
     return copy;
+  }
+
+  private mapMarks(entity: ServiceEntity) {
+    const assignments = entity.markAssignments ?? [];
+    return [...assignments]
+      .sort((a, b) => a.displayOrder - b.displayOrder)
+      .filter((assignment) => assignment.mark)
+      .map((assignment) => ({
+        id: assignment.mark.id,
+        name: assignment.mark.name,
+        backgroundColor: assignment.mark.backgroundColor,
+        textColor: assignment.mark.textColor,
+        displayOrder: assignment.displayOrder,
+        isActive: assignment.mark.isActive,
+      }));
   }
 
   private toDomain(entity: ServiceEntity): Service {
@@ -180,6 +198,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
             slug: entity.category.slug,
           }
         : null,
+      marks: this.mapMarks(entity),
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });

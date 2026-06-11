@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { ServiceCategoriesService } from '../service-categories/service-categories.service';
+import { ServiceMarksService } from '../service-marks/service-marks.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { toStoredUploadRef } from '../upload/upload-path.util';
@@ -12,6 +13,7 @@ export class ServicesService {
   constructor(
     private readonly serviceRepository: ServiceRepositoryPort,
     private readonly categoriesService: ServiceCategoriesService,
+    private readonly marksService: ServiceMarksService,
   ) {}
 
   private async resolveCategoryId(categoryId: string): Promise<string> {
@@ -63,6 +65,12 @@ export class ServicesService {
       displayOrder,
       categoryId,
     });
+
+    if (dto.markIds !== undefined) {
+      await this.marksService.syncServiceMarks(service.id, dto.markIds);
+      return this.findById(service.id);
+    }
+
     return service;
   }
 
@@ -95,7 +103,16 @@ export class ServicesService {
       payload.videos = dto.videos.map(toStoredUploadRef);
     }
     delete payload.category;
-    return this.serviceRepository.update(id, payload);
+    delete payload.markIds;
+
+    const updated = await this.serviceRepository.update(id, payload);
+
+    if (dto.markIds !== undefined) {
+      await this.marksService.syncServiceMarks(id, dto.markIds);
+      return this.findById(id);
+    }
+
+    return updated;
   }
 
   async delete(id: string) {

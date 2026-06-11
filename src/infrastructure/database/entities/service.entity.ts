@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   JoinColumn,
 } from 'typeorm';
 import { ServiceCategoryEntity } from './service-category.entity';
+import { ServiceMarkAssignmentEntity } from './service-mark-assignment.entity';
 
 @Entity('services')
 export class ServiceEntity {
@@ -62,6 +64,9 @@ export class ServiceEntity {
   })
   @JoinColumn({ name: 'category_id' })
   category?: ServiceCategoryEntity | null;
+
+  @OneToMany(() => ServiceMarkAssignmentEntity, (assignment) => assignment.service)
+  markAssignments?: ServiceMarkAssignmentEntity[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

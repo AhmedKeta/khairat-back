@@ -3,16 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServicesController } from '../../presentation/controllers/services.controller';
 import { ServicesService } from './services.service';
 import { ServiceEntity } from '../../infrastructure/database/entities/service.entity';
+import { ServiceMarkAssignmentEntity } from '../../infrastructure/database/entities/service-mark-assignment.entity';
 import { ServiceRepository } from '../../infrastructure/repositories/service.repository';
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { AuthModule } from '../auth/auth.module';
 import { ServiceCategoriesModule } from '../service-categories/service-categories.module';
+import { ServiceMarksModule } from '../service-marks/service-marks.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ServiceEntity]),
+    TypeOrmModule.forFeature([ServiceEntity, ServiceMarkAssignmentEntity]),
     AuthModule,
     ServiceCategoriesModule,
+    ServiceMarksModule,
   ],
   controllers: [ServicesController],
   providers: [

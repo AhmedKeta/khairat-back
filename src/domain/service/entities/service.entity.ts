@@ -19,6 +19,15 @@ export interface ServiceCategorySummary {
   slug: string;
 }
 
+export interface ServiceMarkSummary {
+  id: string;
+  name: ServiceTitle;
+  backgroundColor: string;
+  textColor: string;
+  displayOrder: number;
+  isActive: boolean;
+}
+
 export class Service {
   id: string;
   title: ServiceTitle;
@@ -36,6 +45,7 @@ export class Service {
   displayOrder: number;
   categoryId: string | null;
   category?: ServiceCategorySummary | null;
+  marks?: ServiceMarkSummary[];
   createdAt: Date;
   updatedAt: Date;
 
