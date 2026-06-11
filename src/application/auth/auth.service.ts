@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   ConflictException,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -142,25 +143,27 @@ export class AuthService {
     const user = await this.userRepository.findByEmail(normalizedEmail);
     const isDashboard = dto.client === 'dashboard';
 
-    if (isDashboard && user && user.role !== UserRole.ADMIN) {
+    if (!user) {
+      throw new NotFoundException('No account found with this email address');
+    }
+
+    if (isDashboard && user.role !== UserRole.ADMIN) {
       throw new UnauthorizedException('Not authorized');
     }
 
-    if (user && (!isDashboard || user.role === UserRole.ADMIN)) {
-      const code = String(randomInt(100000, 1000000));
-      const codeHash = await bcrypt.hash(code, 12);
-      const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+    const code = String(randomInt(100000, 1000000));
+    const codeHash = await bcrypt.hash(code, 12);
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
-      await this.passwordResetCodeRepository.replaceForEmail(
-        normalizedEmail,
-        codeHash,
-        expiresAt,
-      );
+    await this.passwordResetCodeRepository.replaceForEmail(
+      normalizedEmail,
+      codeHash,
+      expiresAt,
+    );
 
-      await this.mailService.sendPasswordResetCode(normalizedEmail, code);
-    }
+    await this.mailService.sendPasswordResetCode(normalizedEmail, code);
 
-    return { message: 'If the email exists, a reset code has been sent.' };
+    return { message: 'A reset code has been sent to your email.' };
   }
 
   async verifyResetCode(dto: VerifyResetCodeDto) {
