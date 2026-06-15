@@ -53,6 +53,9 @@ export class OrdersService {
     const service = await this.serviceRepository.findById(dto.serviceId);
     if (!service) throw new NotFoundException('Service not found');
     if (!service.isActive) throw new ForbiddenException('Service is not available');
+    if (!service.isPurchasable) {
+      throw new ForbiddenException('Service is not available for purchase');
+    }
 
     let trackingVisitId: string | null = null;
     if (dto.trackingVisitId) {

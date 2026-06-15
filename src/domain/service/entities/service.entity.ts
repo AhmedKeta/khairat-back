@@ -26,6 +26,18 @@ export interface ServiceMarkSummary {
   textColor: string;
   displayOrder: number;
   isActive: boolean;
+  makesUnavailable: boolean;
+}
+
+export function computeIsPurchasable(
+  isActive: boolean,
+  marks?: ServiceMarkSummary[],
+): boolean {
+  if (!isActive) return false;
+  const blocked = marks?.some(
+    (m) => m.isActive && m.makesUnavailable,
+  );
+  return !blocked;
 }
 
 export class Service {
@@ -46,6 +58,7 @@ export class Service {
   categoryId: string | null;
   category?: ServiceCategorySummary | null;
   marks?: ServiceMarkSummary[];
+  isPurchasable: boolean;
   createdAt: Date;
   updatedAt: Date;
 

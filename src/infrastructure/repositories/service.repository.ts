@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { ServiceEntity } from '../database/entities/service.entity';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
-import { Service, ServicePrice } from '../../domain/service/entities/service.entity';
+import {
+  Service,
+  ServicePrice,
+  computeIsPurchasable,
+} from '../../domain/service/entities/service.entity';
 import { PaginatedResult } from '../../shared/dto/pagination.dto';
 import { POLAR_DEFAULT_CURRENCY } from '../../shared/constants/currencies';
 
@@ -150,6 +154,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
         textColor: assignment.mark.textColor,
         displayOrder: assignment.displayOrder,
         isActive: assignment.mark.isActive,
+        makesUnavailable: assignment.mark.makesUnavailable ?? false,
       }));
   }
 
@@ -175,6 +180,8 @@ export class ServiceRepository implements ServiceRepositoryPort {
         }))
       : [];
 
+    const marks = this.mapMarks(entity);
+
     return new Service({
       id: entity.id,
       title: entity.title,
@@ -198,7 +205,8 @@ export class ServiceRepository implements ServiceRepositoryPort {
             slug: entity.category.slug,
           }
         : null,
-      marks: this.mapMarks(entity),
+      marks,
+      isPurchasable: computeIsPurchasable(entity.isActive, marks),
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });

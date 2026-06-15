@@ -55,4 +55,13 @@ export class CreateServiceMarkDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'When true, services assigned this mark stay visible but cannot be purchased.',
+  })
+  @IsOptional()
+  @IsBoolean()
+  makesUnavailable?: boolean;
 }
