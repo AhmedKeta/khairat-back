@@ -31,6 +31,9 @@ export class ServiceMarkEntity {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
+  @Column({ name: 'makes_unavailable', default: false })
+  makesUnavailable: boolean;
+
   @OneToMany(() => ServiceMarkAssignmentEntity, (assignment) => assignment.mark)
   assignments: ServiceMarkAssignmentEntity[];
 

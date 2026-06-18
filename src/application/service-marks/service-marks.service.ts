@@ -68,6 +68,7 @@ export class ServiceMarksService {
       textColor: dto.textColor,
       displayOrder,
       isActive: dto.isActive ?? true,
+      makesUnavailable: dto.makesUnavailable ?? false,
     });
     return this.markRepo.save(mark);
   }
