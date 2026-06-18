@@ -1,8 +1,9 @@
 /**
  * Path pattern for files stored under ./uploads/images|videos/ (public route /uploads/...).
  */
-export const STORED_UPLOAD_PATH = /^\/uploads\/(images|videos)\/[^/]+$/;
+export const STORED_UPLOAD_PATH = /^\/uploads\/(images|videos|audio)\/[^/]+$/;
 export const STORED_IMAGE_PATH = /^\/uploads\/images\/[^/]+$/;
+export const STORED_AUDIO_PATH = /^\/uploads\/audio\/[^/]+$/;
 
 export function isStoredImagePath(path: string): boolean {
   return STORED_IMAGE_PATH.test(path);

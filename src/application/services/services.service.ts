@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
+import { ServiceVoiceReviewRepositoryPort } from '../../domain/service-voice-review/ports/service-voice-review.repository.port';
 import { ServiceCategoriesService } from '../service-categories/service-categories.service';
 import { ServiceMarksService } from '../service-marks/service-marks.service';
 import { CreateServiceDto } from './dto/create-service.dto';
@@ -12,6 +13,7 @@ export class ServicesService {
 
   constructor(
     private readonly serviceRepository: ServiceRepositoryPort,
+    private readonly voiceReviewRepository: ServiceVoiceReviewRepositoryPort,
     private readonly categoriesService: ServiceCategoriesService,
     private readonly marksService: ServiceMarksService,
   ) {}
@@ -31,7 +33,10 @@ export class ServicesService {
   async findById(id: string) {
     const service = await this.serviceRepository.findById(id);
     if (!service) throw new NotFoundException('Service not found');
-    return service;
+    const voiceReviews = await this.voiceReviewRepository.findByServiceId(id, {
+      visibleOnly: true,
+    });
+    return { ...service, voiceReviews };
   }
 
   async create(dto: CreateServiceDto) {

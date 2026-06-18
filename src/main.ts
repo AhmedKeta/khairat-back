@@ -14,7 +14,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 async function bootstrap() {
   const uploadRoot = join(process.cwd(), "uploads");
-  for (const dir of ["images", "videos"]) {
+  for (const dir of ["images", "videos", "audio"]) {
     mkdirSync(join(uploadRoot, dir), { recursive: true });
   }
 

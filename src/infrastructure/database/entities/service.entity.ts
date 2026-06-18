@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { ServiceCategoryEntity } from './service-category.entity';
 import { ServiceMarkAssignmentEntity } from './service-mark-assignment.entity';
+import { ServiceVoiceReviewEntity } from './service-voice-review.entity';
 
 @Entity('services')
 export class ServiceEntity {
@@ -67,6 +68,9 @@ export class ServiceEntity {
 
   @OneToMany(() => ServiceMarkAssignmentEntity, (assignment) => assignment.service)
   markAssignments?: ServiceMarkAssignmentEntity[];
+
+  @OneToMany(() => ServiceVoiceReviewEntity, (review) => review.service)
+  voiceReviews?: ServiceVoiceReviewEntity[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
