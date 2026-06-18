@@ -17,6 +17,7 @@ import {
   createImageUploadOptions,
   createOrderPhotoUploadOptions,
   createVideoUploadOptions,
+  createAudioUploadOptions,
 } from '../../application/upload/upload.config';
 import { Roles } from '../../shared/decorators/roles.decorator';
 import { RolesGuard } from '../../shared/guards/roles.guard';
@@ -68,6 +69,21 @@ export class UploadController {
       throw new BadRequestException('No files uploaded');
     }
     const paths = this.uploadService.filesToStoredPaths(files, 'videos');
+    return { paths };
+  }
+
+  @Post('audio')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Upload one or more audio files (admin)' })
+  @UseInterceptors(FilesInterceptor('files', 12, createAudioUploadOptions()))
+  async uploadAudio(@UploadedFiles() files: Express.Multer.File[]) {
+    if (!files?.length) {
+      throw new BadRequestException('No files uploaded');
+    }
+    const paths = this.uploadService.filesToStoredPaths(files, 'audio');
     return { paths };
   }
 

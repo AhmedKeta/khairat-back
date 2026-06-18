@@ -2,12 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { existsSync, unlinkSync } from 'fs';
 import { join, relative, resolve } from 'path';
 
-const UPLOAD_SEGMENT = /^\/uploads\/(images|videos)\/([^/]+)$/;
+const UPLOAD_SEGMENT = /^\/uploads\/(images|videos|audio)\/([^/]+)$/;
 
 @Injectable()
 export class UploadService {
-  /** Store path-only refs (`/uploads/images|videos/filename`) — clients resolve with their public API origin. */
-  filesToStoredPaths(files: Express.Multer.File[], folder: 'images' | 'videos'): string[] {
+  /** Store path-only refs (`/uploads/images|videos|audio/filename`) — clients resolve with their public API origin. */
+  filesToStoredPaths(
+    files: Express.Multer.File[],
+    folder: 'images' | 'videos' | 'audio',
+  ): string[] {
     return files.map((f) => `/uploads/${folder}/${f.filename}`);
   }
 
@@ -30,10 +33,10 @@ export class UploadService {
 
     const match = pathname.match(UPLOAD_SEGMENT);
     if (!match) {
-      throw new BadRequestException('URL does not point to an uploaded image or video');
+      throw new BadRequestException('URL does not point to an uploaded file');
     }
 
-    const folder = match[1] as 'images' | 'videos';
+    const folder = match[1] as 'images' | 'videos' | 'audio';
     const filename = match[2];
     if (!/^[\w.-]+$/.test(filename)) {
       throw new BadRequestException('Invalid file name');

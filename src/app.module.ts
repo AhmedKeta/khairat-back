@@ -10,6 +10,7 @@ import { UsersModule } from './application/users/users.module';
 import { ServicesModule } from './application/services/services.module';
 import { ServiceCategoriesModule } from './application/service-categories/service-categories.module';
 import { ServiceMarksModule } from './application/service-marks/service-marks.module';
+import { ServiceVoiceReviewsModule } from './application/service-voice-reviews/service-voice-reviews.module';
 import { OrdersModule } from './application/orders/orders.module';
 import { PaymentsModule } from './application/payments/payments.module';
 import { CountriesModule } from './application/countries/countries.module';
@@ -31,6 +32,7 @@ import { PaymentEntity } from './infrastructure/database/entities/payment.entity
 import { CountryEntity } from './infrastructure/database/entities/country.entity';
 import { FaqEntity } from './infrastructure/database/entities/faq.entity';
 import { TestimonialEntity } from './infrastructure/database/entities/testimonial.entity';
+import { ServiceVoiceReviewEntity } from './infrastructure/database/entities/service-voice-review.entity';
 import { OurWorkEntity } from './infrastructure/database/entities/our-work.entity';
 import { SiteSettingEntity } from './infrastructure/database/entities/site-setting.entity';
 import { PasswordResetCodeEntity } from './infrastructure/database/entities/password-reset-code.entity';
@@ -101,6 +103,7 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
             FaqEntity,
             TestimonialEntity,
             OurWorkEntity,
+            ServiceVoiceReviewEntity,
             AuditLogEntity,
             UserTrackingEntity,
             SiteSettingEntity,
@@ -136,6 +139,7 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
     ServicesModule,
     ServiceCategoriesModule,
     ServiceMarksModule,
+    ServiceVoiceReviewsModule,
     OrdersModule,
     PaymentsModule,
     CountriesModule,

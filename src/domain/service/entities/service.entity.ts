@@ -19,6 +19,17 @@ export interface ServiceCategorySummary {
   slug: string;
 }
 
+export interface ServiceVoiceReviewSummary {
+  id: string;
+  reviewerName: string;
+  audioUrl: string;
+  transcript: string | null;
+  transcriptAr: string | null;
+  rating: number;
+  displayOrder: number;
+  isVisible: boolean;
+}
+
 export interface ServiceMarkSummary {
   id: string;
   name: ServiceTitle;
@@ -58,6 +69,7 @@ export class Service {
   categoryId: string | null;
   category?: ServiceCategorySummary | null;
   marks?: ServiceMarkSummary[];
+  voiceReviews?: ServiceVoiceReviewSummary[];
   isPurchasable: boolean;
   createdAt: Date;
   updatedAt: Date;
