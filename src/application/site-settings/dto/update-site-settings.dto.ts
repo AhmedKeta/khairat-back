@@ -1,5 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsString, Matches, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsBoolean,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
+import { AboutStatCardDto } from './about-stat-card.dto';
+import { HeroSlideDto } from './hero-slide.dto';
 
 const PHONE_PATTERN = /^\+?[\d\s-]+$/;
 
@@ -27,4 +39,36 @@ export class UpdateSiteSettingsDto {
   @ApiProperty({ example: true, description: 'Show WhatsApp number 2 in the floating picker' })
   @IsBoolean()
   whatsappNumber2Enabled: boolean;
+
+  @ApiProperty({
+    example: '/uploads/videos/home-intro.mp4',
+    description: 'Home page hero video URL or upload path (empty to hide)',
+  })
+  @IsString()
+  @MaxLength(2048)
+  homePageVideoUrl: string;
+
+  @ApiProperty({ example: true, description: 'Show the home page video section' })
+  @IsBoolean()
+  homePageVideoEnabled: boolean;
+
+  @ApiProperty({
+    type: [AboutStatCardDto],
+    description: 'Who Are We section stat cards (exactly 4)',
+  })
+  @ValidateNested({ each: true })
+  @Type(() => AboutStatCardDto)
+  @ArrayMinSize(4)
+  @ArrayMaxSize(4)
+  aboutStats: AboutStatCardDto[];
+
+  @ApiProperty({
+    type: [HeroSlideDto],
+    description: 'Home page hero carousel slides (0–8)',
+  })
+  @ValidateNested({ each: true })
+  @Type(() => HeroSlideDto)
+  @ArrayMinSize(0)
+  @ArrayMaxSize(8)
+  heroSlides: HeroSlideDto[];
 }
