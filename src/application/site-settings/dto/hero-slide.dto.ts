@@ -10,6 +10,15 @@ export class HeroSlideDto {
   @MaxLength(2048)
   imageUrl: string;
 
+  @ApiPropertyOptional({
+    example: '/uploads/images/hero-slide-1-mobile.jpg',
+    description: 'Optional mobile image path or URL (falls back to imageUrl)',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(2048)
+  imageUrlMobile?: string;
+
   @ApiProperty({ example: 'Qurbani distribution in Africa' })
   @IsString()
   @MaxLength(200)

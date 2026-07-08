@@ -132,7 +132,7 @@ export class OrdersService {
       total,
       currency,
       country,
-      status: OrderStatus.PENDING,
+      status: OrderStatus.IN_CHECKOUT,
       notes: dto.notes,
       trackingVisitId,
     });
@@ -145,14 +145,28 @@ export class OrdersService {
     return this.orderRepository.update(id, { status });
   }
 
+  async migratePendingWithoutGatewayToInCheckout() {
+    const updated =
+      await this.orderRepository.migratePendingWithoutGatewayToInCheckout();
+    this.logger.log(
+      `Migrated ${updated} pending order(s) without payment gateway to IN_CHECKOUT`,
+    );
+    return { updated };
+  }
+
   async updateDetails(id: string, dto: UpdateOrderDetailsDto, userId: string) {
     const order = await this.orderRepository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
     if (order.userId !== userId) {
       throw new ForbiddenException('Access denied');
     }
-    if (order.status !== OrderStatus.PENDING) {
-      throw new BadRequestException('Only pending orders can be updated');
+    if (
+      order.status !== OrderStatus.IN_CHECKOUT &&
+      order.status !== OrderStatus.PENDING
+    ) {
+      throw new BadRequestException(
+        'Only in-checkout or pending orders can be updated',
+      );
     }
 
     const intentionOther =

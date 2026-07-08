@@ -46,6 +46,17 @@ export class OrdersController {
     return this.ordersService.findAll(filters);
   }
 
+  @Post('migrate-pending-to-in-checkout')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({
+    summary:
+      'Move pending orders with no payment gateway to IN_CHECKOUT (admin)',
+  })
+  async migratePendingToInCheckout() {
+    return this.ordersService.migratePendingWithoutGatewayToInCheckout();
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get order by ID' })
   async findById(@Param('id') id: string, @CurrentUser() user: any) {

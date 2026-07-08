@@ -7,4 +7,7 @@ export const SITE_SETTING_KEYS = {
   HOME_PAGE_VIDEO_ENABLED: 'home_page_video_enabled',
   ABOUT_STATS: 'about_stats',
   HERO_SLIDES: 'hero_slides',
+  NEWS_TICKER_ENABLED: 'news_ticker_enabled',
+  NEWS_TICKER_TEXT_EN: 'news_ticker_text_en',
+  NEWS_TICKER_TEXT_AR: 'news_ticker_text_ar',
 } as const;

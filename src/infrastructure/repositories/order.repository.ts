@@ -6,6 +6,7 @@ import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/orde
 import { Order } from '../../domain/order/entities/order.entity';
 import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
 import { PaginatedResult, PaginationDto } from '../../shared/dto/pagination.dto';
+import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
 
 @Injectable()
 export class OrderRepository implements OrderRepositoryPort {
@@ -60,6 +61,23 @@ export class OrderRepository implements OrderRepositoryPort {
   async update(id: string, order: Partial<Order>): Promise<Order> {
     await this.repo.update(id, order as Partial<OrderEntity>);
     return this.findById(id);
+  }
+
+  async migratePendingWithoutGatewayToInCheckout(): Promise<number> {
+    const result = await this.repo
+      .createQueryBuilder()
+      .update(OrderEntity)
+      .set({ status: OrderStatus.IN_CHECKOUT })
+      .where('status = :status', { status: OrderStatus.PENDING })
+      .andWhere(
+        `NOT EXISTS (
+          SELECT 1 FROM payments p
+          WHERE p.order_id = orders.id AND p.gateway_url IS NOT NULL
+        )`,
+      )
+      .execute();
+
+    return result.affected ?? 0;
   }
 
   private toDomain(entity: OrderEntity): Order {
