@@ -21,6 +21,9 @@ export type PublicSiteSettings = {
   whatsappNumber2Enabled: boolean;
   homePageVideoUrl: string;
   homePageVideoEnabled: boolean;
+  newsTickerEnabled: boolean;
+  newsTickerTextEn: string;
+  newsTickerTextAr: string;
   aboutStats: AboutStatCard[];
   heroSlides: HeroSlide[];
 };
@@ -92,6 +95,10 @@ export class SiteSettingsService {
       const row = item as Record<string, unknown>;
       const imageUrl =
         typeof row.imageUrl === 'string' ? row.imageUrl.trim() : '';
+      const imageUrlMobile =
+        typeof row.imageUrlMobile === 'string'
+          ? row.imageUrlMobile.trim()
+          : '';
       const altEn = typeof row.altEn === 'string' ? row.altEn.trim() : '';
       const altAr = typeof row.altAr === 'string' ? row.altAr.trim() : '';
       if (!imageUrl || !altEn || !altAr) return;
@@ -99,7 +106,14 @@ export class SiteSettingsService {
         typeof row.order === 'number' && Number.isFinite(row.order)
           ? Math.max(0, Math.floor(row.order))
           : undefined;
-      parsed.push({ imageUrl, altEn, altAr, order, _index: index });
+      parsed.push({
+        imageUrl,
+        ...(imageUrlMobile ? { imageUrlMobile } : {}),
+        altEn,
+        altAr,
+        order,
+        _index: index,
+      });
     });
     const withOrder = parsed.filter((item) => item.order != null);
     const withoutOrder = parsed.filter((item) => item.order == null);
@@ -156,6 +170,14 @@ export class SiteSettingsService {
       await this.getValue(SITE_SETTING_KEYS.HOME_PAGE_VIDEO_ENABLED),
       false,
     );
+    const newsTickerEnabled = this.parseBool(
+      await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_ENABLED),
+      false,
+    );
+    const newsTickerTextEn =
+      (await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_TEXT_EN)) || '';
+    const newsTickerTextAr =
+      (await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_TEXT_AR)) || '';
     return {
       whatsappNumber1: number1,
       whatsappNumber2: stored2 || this.defaultWhatsappNumber2(number1),
@@ -163,6 +185,9 @@ export class SiteSettingsService {
       whatsappNumber2Enabled: enabled2,
       homePageVideoUrl,
       homePageVideoEnabled,
+      newsTickerEnabled,
+      newsTickerTextEn,
+      newsTickerTextAr,
       aboutStats: await this.getAboutStats(),
       heroSlides: await this.getHeroSlides(),
     };
@@ -192,6 +217,18 @@ export class SiteSettingsService {
     await this.upsert(
       SITE_SETTING_KEYS.HOME_PAGE_VIDEO_ENABLED,
       this.boolToStorage(dto.homePageVideoEnabled),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.NEWS_TICKER_ENABLED,
+      this.boolToStorage(dto.newsTickerEnabled),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.NEWS_TICKER_TEXT_EN,
+      dto.newsTickerTextEn.trim(),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.NEWS_TICKER_TEXT_AR,
+      dto.newsTickerTextAr.trim(),
     );
     await this.upsert(
       SITE_SETTING_KEYS.ABOUT_STATS,

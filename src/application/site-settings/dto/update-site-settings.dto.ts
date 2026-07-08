@@ -52,6 +52,26 @@ export class UpdateSiteSettingsDto {
   @IsBoolean()
   homePageVideoEnabled: boolean;
 
+  @ApiProperty({ example: false, description: 'Show the site-wide news ticker' })
+  @IsBoolean()
+  newsTickerEnabled: boolean;
+
+  @ApiProperty({
+    example: 'Eid offer: 10% off all Qurbani services this week!',
+    description: 'News ticker text (English)',
+  })
+  @IsString()
+  @MaxLength(500)
+  newsTickerTextEn: string;
+
+  @ApiProperty({
+    example: 'عرض العيد: خصم 10% على جميع خدمات الأضحية هذا الأسبوع!',
+    description: 'News ticker text (Arabic)',
+  })
+  @IsString()
+  @MaxLength(500)
+  newsTickerTextAr: string;
+
   @ApiProperty({
     type: [AboutStatCardDto],
     description: 'Who Are We section stat cards (exactly 4)',

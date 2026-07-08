@@ -14,4 +14,5 @@ export abstract class OrderRepositoryPort {
   abstract findByUserId(userId: string, filters: PaginationDto): Promise<PaginatedResult<Order>>;
   abstract create(order: Partial<Order>): Promise<Order>;
   abstract update(id: string, order: Partial<Order>): Promise<Order>;
+  abstract migratePendingWithoutGatewayToInCheckout(): Promise<number>;
 }

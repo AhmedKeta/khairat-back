@@ -126,6 +126,12 @@ export class PaymentsService {
       throw new BadRequestException('Could not persist payment');
     }
 
+    if (order.status === OrderStatus.IN_CHECKOUT) {
+      await this.orderRepository.update(order.id, {
+        status: OrderStatus.PENDING,
+      });
+    }
+
     this.logger.log(
       `Payment initiated via ${gateway.id}: ${payment.id} for order: ${orderId}`,
     );
