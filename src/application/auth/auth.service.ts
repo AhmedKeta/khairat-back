@@ -3,7 +3,6 @@ import {
   UnauthorizedException,
   ConflictException,
   BadRequestException,
-  NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -21,9 +20,16 @@ import { TrackingService } from '../tracking/tracking.service';
 import { sanitizeUser } from '../../shared/utils/sanitize-response.util';
 import { PasswordResetCodeRepository } from '../../infrastructure/repositories/password-reset-code.repository';
 import { MailService } from '../../infrastructure/mail/mail.service';
+import { requireJwtSecret } from '../../shared/utils/jwt-secrets.util';
+
+const FORGOT_PASSWORD_MESSAGE =
+  'If an account exists for this email, a reset code has been sent.';
 
 @Injectable()
 export class AuthService {
+  private readonly jwtRefreshSecret: string;
+  private readonly jwtResetSecret: string;
+
   constructor(
     private readonly userRepository: UserRepositoryPort,
     private readonly jwtService: JwtService,
@@ -31,7 +37,16 @@ export class AuthService {
     private readonly trackingService: TrackingService,
     private readonly passwordResetCodeRepository: PasswordResetCodeRepository,
     private readonly mailService: MailService,
-  ) {}
+  ) {
+    this.jwtRefreshSecret = requireJwtSecret(
+      this.configService.get<string>('JWT_REFRESH_SECRET'),
+      'JWT_REFRESH_SECRET',
+    );
+    this.jwtResetSecret = requireJwtSecret(
+      this.configService.get<string>('JWT_RESET_SECRET'),
+      'JWT_RESET_SECRET',
+    );
+  }
 
   async register(dto: RegisterDto) {
     if (dto.password !== dto.confirmPassword) {
@@ -112,16 +127,21 @@ export class AuthService {
   }
 
   async refreshTokens(userId: string, refreshToken: string) {
-    const user = await this.userRepository.findById(userId);
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
+    let payload: { sub?: string; type?: string };
     try {
-      this.jwtService.verify(refreshToken, {
-        secret: this.configService.get('JWT_REFRESH_SECRET'),
+      payload = this.jwtService.verify(refreshToken, {
+        secret: this.jwtRefreshSecret,
       });
     } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    if (!payload.sub || payload.sub !== userId || payload.type !== 'refresh') {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const user = await this.userRepository.findById(payload.sub);
+    if (!user || user.isBlocked) {
       throw new UnauthorizedException('Invalid refresh token');
     }
 
@@ -143,12 +163,9 @@ export class AuthService {
     const user = await this.userRepository.findByEmail(normalizedEmail);
     const isDashboard = dto.client === 'dashboard';
 
-    if (!user) {
-      throw new NotFoundException('No account found with this email address');
-    }
-
-    if (isDashboard && user.role !== UserRole.ADMIN) {
-      throw new UnauthorizedException('Not authorized');
+    // Always return the same message to avoid account enumeration.
+    if (!user || (isDashboard && user.role !== UserRole.ADMIN)) {
+      return { message: FORGOT_PASSWORD_MESSAGE };
     }
 
     const code = String(randomInt(100000, 1000000));
@@ -163,7 +180,7 @@ export class AuthService {
 
     await this.mailService.sendPasswordResetCode(normalizedEmail, code);
 
-    return { message: 'A reset code has been sent to your email.' };
+    return { message: FORGOT_PASSWORD_MESSAGE };
   }
 
   async verifyResetCode(dto: VerifyResetCodeDto) {
@@ -190,9 +207,9 @@ export class AuthService {
 
     const purpose = isDashboard ? 'password-reset-admin' : 'password-reset';
     const resetToken = await this.jwtService.signAsync(
-      { sub: user.id, email: user.email, purpose },
+      { sub: user.id, email: user.email, purpose, type: 'password-reset' },
       {
-        secret: this.configService.get('JWT_SECRET', 'secret'),
+        secret: this.jwtResetSecret,
         expiresIn: '15m',
       },
     );
@@ -207,10 +224,10 @@ export class AuthService {
       throw new BadRequestException('Passwords do not match');
     }
 
-    let payload: { sub: string; email: string; purpose?: string };
+    let payload: { sub: string; email: string; purpose?: string; type?: string };
     try {
       payload = this.jwtService.verify(dto.resetToken, {
-        secret: this.configService.get('JWT_SECRET', 'secret'),
+        secret: this.jwtResetSecret,
       });
     } catch {
       throw new UnauthorizedException('Invalid or expired reset token');
@@ -243,12 +260,18 @@ export class AuthService {
   }
 
   private async generateTokens(userId: string, email: string, role: UserRole) {
-    const payload = { sub: userId, email, role };
+    const accessPayload = { sub: userId, email, role, type: 'access' as const };
+    const refreshPayload = {
+      sub: userId,
+      email,
+      role,
+      type: 'refresh' as const,
+    };
 
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload),
-      this.jwtService.signAsync(payload, {
-        secret: this.configService.get('JWT_REFRESH_SECRET', 'refresh-secret'),
+      this.jwtService.signAsync(accessPayload),
+      this.jwtService.signAsync(refreshPayload, {
+        secret: this.jwtRefreshSecret,
         expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN', '7d'),
       }),
     ]);

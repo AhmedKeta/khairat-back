@@ -36,17 +36,21 @@ export class SeedService {
 
     const nodeEnv = this.config.get<string>('NODE_ENV', 'development');
     const requiredSecret = this.config.get<string>('SEED_HTTP_SECRET');
+
+    // Always require a seed secret when HTTP seed is enabled (not only production).
+    if (!requiredSecret || requiredSecret.length < 16) {
+      throw new ForbiddenException(
+        'HTTP seed requires SEED_HTTP_SECRET (min 16 chars). Use CLI seed or set the secret and send header X-Seed-Secret.',
+      );
+    }
+    const a = Buffer.from(requiredSecret, 'utf8');
+    const b = Buffer.from(httpSecret ?? '', 'utf8');
+    if (a.length !== b.length || !timingSafeEqual(a, b)) {
+      throw new ForbiddenException('Invalid or missing X-Seed-Secret header.');
+    }
+
     if (nodeEnv === 'production') {
-      if (!requiredSecret) {
-        throw new ForbiddenException(
-          'HTTP seed is disabled in production until SEED_HTTP_SECRET is set. Use CLI seed or set the secret and send header X-Seed-Secret.',
-        );
-      }
-      const a = Buffer.from(requiredSecret, 'utf8');
-      const b = Buffer.from(httpSecret ?? '', 'utf8');
-      if (a.length !== b.length || !timingSafeEqual(a, b)) {
-        throw new ForbiddenException('Invalid or missing X-Seed-Secret header.');
-      }
+      this.logger.warn('HTTP database seed invoked in production');
     }
 
     const countriesResult = await this.countriesService.seed();

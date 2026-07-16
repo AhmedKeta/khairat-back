@@ -1,13 +1,12 @@
-import { Controller, Post, Body, UseGuards, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Body, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../../application/auth/auth.service';
 import { RegisterDto } from '../../application/auth/dto/register.dto';
 import { LoginDto } from '../../application/auth/dto/login.dto';
+import { RefreshTokenDto } from '../../application/auth/dto/refresh-token.dto';
 import { ForgotPasswordDto } from '../../application/auth/dto/forgot-password.dto';
 import { VerifyResetCodeDto } from '../../application/auth/dto/verify-reset-code.dto';
 import { ResetPasswordDto } from '../../application/auth/dto/reset-password.dto';
-import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
 @ApiTags('auth')
@@ -31,12 +30,11 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Refresh access token' })
-  async refresh(
-    @Body() body: { userId: string; refreshToken: string },
-  ) {
-    return this.authService.refreshTokens(body.userId, body.refreshToken);
+  async refresh(@Body() dto: RefreshTokenDto) {
+    return this.authService.refreshTokens(dto.userId, dto.refreshToken);
   }
 
   @Post('forgot-password')

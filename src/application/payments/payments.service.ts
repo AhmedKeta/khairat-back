@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,10 +11,12 @@ import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.p
 import { PaymentStatus } from '../../domain/payment/value-objects/payment-status.enum';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
 import { OrderIntention } from '../../domain/order/value-objects/order-intention.enum';
+import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { PaymentGatewayRouter } from './payment-gateway.router';
 
 const DEFAULT_LOCALE = 'en';
 const SUPPORTED_LOCALES = new Set(['en', 'ar']);
+const AMOUNT_TOLERANCE = 0.01;
 
 @Injectable()
 export class PaymentsService {
@@ -178,11 +181,37 @@ export class PaymentsService {
       return { received: true };
     }
 
+    if (payment.provider !== gatewayId) {
+      this.logger.warn(
+        `Webhook provider mismatch for payment ${payment.id}: expected ${payment.provider}, got ${gatewayId}`,
+      );
+      return { received: true };
+    }
+
     if (payment.webhookReceivedAt && payment.status === PaymentStatus.SUCCESS) {
       this.logger.log(
         `Webhook already processed for payment: ${payment.id} (SUCCESS)`,
       );
       return { received: true };
+    }
+
+    if (event.outcome === 'SUCCESS') {
+      if (!this.amountMatches(payment.amount, event.amount)) {
+        this.logger.warn(
+          `Webhook amount mismatch for payment ${payment.id}: expected ${payment.amount}, got ${event.amount}`,
+        );
+        return { received: true };
+      }
+      if (
+        event.currency &&
+        String(payment.currency || '').toUpperCase() !==
+          String(event.currency).toUpperCase()
+      ) {
+        this.logger.warn(
+          `Webhook currency mismatch for payment ${payment.id}: expected ${payment.currency}, got ${event.currency}`,
+        );
+        return { received: true };
+      }
     }
 
     const transactionId = event.transactionId ?? payment.transactionId;
@@ -214,9 +243,34 @@ export class PaymentsService {
     return { received: true };
   }
 
-  async findById(id: string) {
+  async findById(id: string, user: { id: string; role: string }) {
     const payment = await this.paymentRepository.findById(id);
     if (!payment) throw new NotFoundException('Payment not found');
+
+    const order = await this.orderRepository.findById(payment.orderId);
+    if (!order) throw new NotFoundException('Payment not found');
+
+    const isAdmin = user.role === UserRole.ADMIN;
+    if (!isAdmin && order.userId !== user.id) {
+      throw new ForbiddenException('Payment does not belong to user');
+    }
+
+    if (!isAdmin) {
+      const { responsePayload: _rp, ...safe } = payment as any;
+      return safe;
+    }
+
     return payment;
+  }
+
+  private amountMatches(
+    expected: number,
+    reported: number | null | undefined,
+  ): boolean {
+    // Some gateways omit amount; provider + signature already verified.
+    if (reported == null || !Number.isFinite(Number(reported))) {
+      return true;
+    }
+    return Math.abs(Number(expected) - Number(reported)) <= AMOUNT_TOLERANCE;
   }
 }

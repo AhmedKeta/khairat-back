@@ -5,24 +5,40 @@ import { ConfigService } from "@nestjs/config";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import helmet from "helmet";
 import { join } from "path";
-import { mkdirSync } from "fs";
 import * as express from "express";
 import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "./shared/filters/http-exception.filter";
 import { TransformInterceptor } from "./shared/interceptors/transform.interceptor";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+import { ensureUploadDir } from "./application/upload/upload.config";
 
 async function bootstrap() {
   const uploadRoot = join(process.cwd(), "uploads");
-  for (const dir of ["images", "videos", "audio"]) {
-    mkdirSync(join(uploadRoot, dir), { recursive: true });
+  for (const dir of ["images", "videos", "audio"] as const) {
+    ensureUploadDir(dir);
   }
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
     rawBody: true,
   });
-  app.use("/uploads", express.static(uploadRoot));
+  app.use(
+    "/uploads",
+    (_req, res, next) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader("Content-Disposition", "inline");
+      next();
+    },
+    express.static(uploadRoot, {
+      setHeaders: (res, filePath) => {
+        const lower = filePath.toLowerCase();
+        if (lower.endsWith(".html") || lower.endsWith(".htm") || lower.endsWith(".svg")) {
+          res.setHeader("Content-Type", "application/octet-stream");
+          res.setHeader("Content-Disposition", "attachment");
+        }
+      },
+    }),
+  );
 
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(logger);

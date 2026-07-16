@@ -10,4 +10,9 @@ export const SITE_SETTING_KEYS = {
   NEWS_TICKER_ENABLED: 'news_ticker_enabled',
   NEWS_TICKER_TEXT_EN: 'news_ticker_text_en',
   NEWS_TICKER_TEXT_AR: 'news_ticker_text_ar',
+  NEWS_TICKER_BG_COLOR: 'news_ticker_bg_color',
+  NEWS_TICKER_TEXT_COLOR: 'news_ticker_text_color',
 } as const;
+
+export const DEFAULT_NEWS_TICKER_BG_COLOR = '#1B5E20';
+export const DEFAULT_NEWS_TICKER_TEXT_COLOR = '#C9A84C';

@@ -73,6 +73,26 @@ export class UpdateSiteSettingsDto {
   newsTickerTextAr: string;
 
   @ApiProperty({
+    example: '#1B5E20',
+    description: 'News ticker background color (hex)',
+  })
+  @IsString()
+  @Matches(/^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/, {
+    message: 'newsTickerBgColor must be a valid hex color (e.g. #1B5E20)',
+  })
+  newsTickerBgColor: string;
+
+  @ApiProperty({
+    example: '#C9A84C',
+    description: 'News ticker text color (hex)',
+  })
+  @IsString()
+  @Matches(/^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/, {
+    message: 'newsTickerTextColor must be a valid hex color (e.g. #C9A84C)',
+  })
+  newsTickerTextColor: string;
+
+  @ApiProperty({
     type: [AboutStatCardDto],
     description: 'Who Are We section stat cards (exactly 4)',
   })

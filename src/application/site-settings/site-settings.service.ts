@@ -11,8 +11,15 @@ import {
   HeroSlide,
   DEFAULT_HERO_SLIDES,
 } from './hero-slides.defaults';
-import { SITE_SETTING_KEYS } from './constants';
+import {
+  DEFAULT_NEWS_TICKER_BG_COLOR,
+  DEFAULT_NEWS_TICKER_TEXT_COLOR,
+  SITE_SETTING_KEYS,
+} from './constants';
 import { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
+import { UploadService } from '../upload/upload.service';
+
+const HEX_COLOR_PATTERN = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/;
 
 export type PublicSiteSettings = {
   whatsappNumber1: string;
@@ -24,6 +31,8 @@ export type PublicSiteSettings = {
   newsTickerEnabled: boolean;
   newsTickerTextEn: string;
   newsTickerTextAr: string;
+  newsTickerBgColor: string;
+  newsTickerTextColor: string;
   aboutStats: AboutStatCard[];
   heroSlides: HeroSlide[];
 };
@@ -34,6 +43,7 @@ export class SiteSettingsService {
     @InjectRepository(SiteSettingEntity)
     private readonly repo: Repository<SiteSettingEntity>,
     private readonly config: ConfigService,
+    private readonly uploadService: UploadService,
   ) {}
 
   private defaultWhatsappNumber1(): string {
@@ -62,6 +72,12 @@ export class SiteSettingsService {
 
   private boolToStorage(value: boolean): string {
     return value ? 'true' : 'false';
+  }
+
+  private normalizeHexColor(value: string | null, fallback: string): string {
+    const trimmed = value?.trim() || '';
+    if (HEX_COLOR_PATTERN.test(trimmed)) return trimmed.toUpperCase();
+    return fallback;
   }
 
   private normalizeAboutStats(raw: unknown): AboutStatCard[] {
@@ -178,6 +194,14 @@ export class SiteSettingsService {
       (await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_TEXT_EN)) || '';
     const newsTickerTextAr =
       (await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_TEXT_AR)) || '';
+    const newsTickerBgColor = this.normalizeHexColor(
+      await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_BG_COLOR),
+      DEFAULT_NEWS_TICKER_BG_COLOR,
+    );
+    const newsTickerTextColor = this.normalizeHexColor(
+      await this.getValue(SITE_SETTING_KEYS.NEWS_TICKER_TEXT_COLOR),
+      DEFAULT_NEWS_TICKER_TEXT_COLOR,
+    );
     return {
       whatsappNumber1: number1,
       whatsappNumber2: stored2 || this.defaultWhatsappNumber2(number1),
@@ -188,12 +212,41 @@ export class SiteSettingsService {
       newsTickerEnabled,
       newsTickerTextEn,
       newsTickerTextAr,
+      newsTickerBgColor,
+      newsTickerTextColor,
       aboutStats: await this.getAboutStats(),
       heroSlides: await this.getHeroSlides(),
     };
   }
 
   async updateSettings(dto: UpdateSiteSettingsDto): Promise<PublicSiteSettings> {
+    const previousHeroSlides = await this.getHeroSlides();
+    const previousAboutStats = await this.getAboutStats();
+    const previousHomeVideoUrl =
+      (await this.getValue(SITE_SETTING_KEYS.HOME_PAGE_VIDEO_URL)) || '';
+
+    const nextAboutStats = this.normalizeAboutStats(dto.aboutStats);
+    const nextHeroSlides = this.normalizeHeroSlides(dto.heroSlides);
+    const nextHomeVideoUrl = dto.homePageVideoUrl.trim();
+
+    const collectHeroUrls = (slides: HeroSlide[]) =>
+      slides.flatMap((s) => [s.imageUrl, s.imageUrlMobile].filter(Boolean));
+    const collectIcons = (stats: AboutStatCard[]) =>
+      stats.map((s) => s.icon).filter(Boolean);
+
+    this.uploadService.diffAndDelete(
+      collectHeroUrls(previousHeroSlides),
+      collectHeroUrls(nextHeroSlides),
+    );
+    this.uploadService.diffAndDelete(
+      collectIcons(previousAboutStats),
+      collectIcons(nextAboutStats),
+    );
+    this.uploadService.diffAndDelete(
+      [previousHomeVideoUrl],
+      [nextHomeVideoUrl],
+    );
+
     await this.upsert(
       SITE_SETTING_KEYS.WHATSAPP_NUMBER_1,
       dto.whatsappNumber1.trim(),
@@ -212,7 +265,7 @@ export class SiteSettingsService {
     );
     await this.upsert(
       SITE_SETTING_KEYS.HOME_PAGE_VIDEO_URL,
-      dto.homePageVideoUrl.trim(),
+      nextHomeVideoUrl,
     );
     await this.upsert(
       SITE_SETTING_KEYS.HOME_PAGE_VIDEO_ENABLED,
@@ -231,12 +284,26 @@ export class SiteSettingsService {
       dto.newsTickerTextAr.trim(),
     );
     await this.upsert(
+      SITE_SETTING_KEYS.NEWS_TICKER_BG_COLOR,
+      this.normalizeHexColor(
+        dto.newsTickerBgColor,
+        DEFAULT_NEWS_TICKER_BG_COLOR,
+      ),
+    );
+    await this.upsert(
+      SITE_SETTING_KEYS.NEWS_TICKER_TEXT_COLOR,
+      this.normalizeHexColor(
+        dto.newsTickerTextColor,
+        DEFAULT_NEWS_TICKER_TEXT_COLOR,
+      ),
+    );
+    await this.upsert(
       SITE_SETTING_KEYS.ABOUT_STATS,
-      JSON.stringify(this.normalizeAboutStats(dto.aboutStats)),
+      JSON.stringify(nextAboutStats),
     );
     await this.upsert(
       SITE_SETTING_KEYS.HERO_SLIDES,
-      JSON.stringify(this.normalizeHeroSlides(dto.heroSlides)),
+      JSON.stringify(nextHeroSlides),
     );
     return this.getPublicSettings();
   }

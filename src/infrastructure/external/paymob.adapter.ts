@@ -251,10 +251,20 @@ export class PaymobAdapter implements PaymentGatewayPort {
     const transactionId: string | null =
       obj?.id != null ? String(obj.id) : null;
 
+    const amountCents = obj?.amount_cents ?? obj?.amount;
+    const amount =
+      amountCents != null && Number.isFinite(Number(amountCents))
+        ? Number(amountCents) / 100
+        : null;
+    const currency =
+      obj?.currency != null ? String(obj.currency).toUpperCase() : null;
+
     return {
       outcome,
       orderId: orderId != null ? String(orderId) : null,
       transactionId,
+      amount,
+      currency,
       raw: parsed,
     };
   }

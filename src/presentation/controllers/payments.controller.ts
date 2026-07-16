@@ -12,6 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { PaymentsService } from '../../application/payments/payments.service';
+import { InitiatePaymentDto } from '../../application/payments/dto/initiate-payment.dto';
 import { CurrentUser } from '../../shared/decorators/current-user.decorator';
 
 @ApiTags('payments')
@@ -24,7 +25,7 @@ export class PaymentsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Initiate payment for an order' })
   async initiate(
-    @Body() body: { orderId: string; locale?: string },
+    @Body() body: InitiatePaymentDto,
     @CurrentUser() user: any,
   ) {
     return this.paymentsService.initiatePayment(body.orderId, user, body.locale);
@@ -72,8 +73,8 @@ export class PaymentsController {
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get payment by ID' })
-  async findById(@Param('id') id: string) {
-    return this.paymentsService.findById(id);
+  async findById(@Param('id') id: string, @CurrentUser() user: any) {
+    return this.paymentsService.findById(id, user);
   }
 
   private normalizeQuery(
