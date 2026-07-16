@@ -1,3 +1,5 @@
+import { CardPriceDisplay } from '../value-objects/card-price-display.enum';
+
 export interface ServiceTitle {
   ar: string;
   en: string;
@@ -60,6 +62,8 @@ export class Service {
   prices: ServicePrice[];
   sharePrices: ServicePrice[];
   shareDescription: ServiceDescription | null;
+  /** Which price listing cards show. SHARE falls back to FULL when no share prices. */
+  cardPriceDisplay: CardPriceDisplay;
   feedsCount: number | null;
   images: string[];
   videos: string[];

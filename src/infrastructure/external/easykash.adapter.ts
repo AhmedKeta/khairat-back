@@ -241,6 +241,16 @@ export class EasyKashAdapter implements PaymentGatewayPort {
     const transactionId =
       payload?.easykashRef != null ? String(payload.easykashRef) : null;
 
+    const amountRaw = payload?.amount ?? payload?.paidAmount;
+    const amount =
+      amountRaw != null && Number.isFinite(Number(amountRaw))
+        ? Number(amountRaw)
+        : null;
+    const currency =
+      payload?.currency != null
+        ? String(payload.currency).toUpperCase()
+        : null;
+
     if (!orderId) {
       this.logger.warn(
         `EasyKash callback: unknown customerReference=${refStr}`,
@@ -249,6 +259,8 @@ export class EasyKashAdapter implements PaymentGatewayPort {
         outcome: "IGNORE",
         orderId: null,
         transactionId,
+        amount,
+        currency,
         raw: payload,
       };
     }
@@ -257,6 +269,8 @@ export class EasyKashAdapter implements PaymentGatewayPort {
       outcome,
       orderId,
       transactionId,
+      amount,
+      currency,
       raw: payload,
     };
   }

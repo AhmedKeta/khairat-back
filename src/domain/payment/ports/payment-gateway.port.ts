@@ -43,6 +43,9 @@ export type ParsedWebhookEvent = {
   outcome: 'SUCCESS' | 'FAILED' | 'IGNORE';
   orderId: string | null;
   transactionId: string | null;
+  /** Paid amount in major currency units when the gateway provides it. */
+  amount?: number | null;
+  currency?: string | null;
   raw: Record<string, any>;
 };
 

@@ -11,6 +11,7 @@ import {
 import { ServiceCategoryEntity } from './service-category.entity';
 import { ServiceMarkAssignmentEntity } from './service-mark-assignment.entity';
 import { ServiceVoiceReviewEntity } from './service-voice-review.entity';
+import { CardPriceDisplay } from '../../../domain/service/value-objects/card-price-display.enum';
 
 @Entity('services')
 export class ServiceEntity {
@@ -37,6 +38,14 @@ export class ServiceEntity {
 
   @Column({ name: 'share_description', type: 'jsonb', nullable: true })
   shareDescription: { ar: string; en: string } | null;
+
+  /** Which price to show on listing cards: FULL (default) or SHARE. */
+  @Column({
+    name: 'card_price_display',
+    type: 'varchar',
+    default: CardPriceDisplay.FULL,
+  })
+  cardPriceDisplay: CardPriceDisplay;
 
   @Column({ name: 'feeds_count', nullable: true, type: 'int' })
   feedsCount: number | null;

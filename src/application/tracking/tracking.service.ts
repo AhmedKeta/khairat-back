@@ -28,7 +28,8 @@ export class TrackingService {
     opts: { ipFromRequest: string | null; userAgentHeader: string | null },
   ): Promise<UserTrackingEntity> {
     const n = normalizeCreateVisitDto(dto);
-    const ipAddress = n.ipAddress || opts.ipFromRequest;
+    // Never trust client-supplied IP (analytics poisoning / spoofing).
+    const ipAddress = opts.ipFromRequest;
     let country = n.country;
     let location = n.location;
 

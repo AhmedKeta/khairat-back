@@ -84,10 +84,11 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         const nodeEnv = configService.get<string>('NODE_ENV');
-        const isProduction = nodeEnv === 'production';
         const databaseUrl = configService.get<string>('DATABASE_URL');
         const synchronize =
-          configService.get<string>('DB_SYNCHRONIZE') === 'true' || !isProduction;
+          configService.get<string>('DB_SYNCHRONIZE') === 'true';
+        const sslRejectUnauthorized =
+          configService.get<string>('DB_SSL_REJECT_UNAUTHORIZED') !== 'false';
 
         const baseConfig = {
           type: 'postgres' as const,
@@ -118,9 +119,16 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
             ...baseConfig,
             url: databaseUrl,
             ssl: {
-              rejectUnauthorized: false,
+              rejectUnauthorized: sslRejectUnauthorized,
             },
           };
+        }
+
+        const dbPassword = configService.get<string>('DB_PASSWORD');
+        if (!dbPassword) {
+          throw new Error(
+            'DB_PASSWORD is required when DATABASE_URL is not set.',
+          );
         }
 
         return {
@@ -128,7 +136,7 @@ import { PasswordResetCodeEntity } from './infrastructure/database/entities/pass
           host: configService.get<string>('DB_HOST', 'localhost'),
           port: configService.get<number>('DB_PORT', 5432),
           username: configService.get<string>('DB_USERNAME', 'postgres'),
-          password: configService.get<string>('DB_PASSWORD', 'postgres'),
+          password: dbPassword,
           database: configService.get<string>('DB_DATABASE', 'khairat'),
         };
       },

@@ -1,12 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { OrderEntity } from '../database/entities/order.entity';
-import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/order.repository.port';
-import { Order } from '../../domain/order/entities/order.entity';
-import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
-import { PaginatedResult, PaginationDto } from '../../shared/dto/pagination.dto';
-import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { OrderEntity } from "../database/entities/order.entity";
+import {
+  OrderRepositoryPort,
+  OrderFilters,
+} from "../../domain/order/ports/order.repository.port";
+import { Order } from "../../domain/order/entities/order.entity";
+import { OrderPurchaseType } from "../../domain/order/value-objects/order-purchase-type.enum";
+import {
+  PaginatedResult,
+  PaginationDto,
+} from "../../shared/dto/pagination.dto";
+import { resolveSortColumn } from "../../shared/utils/sort-column.util";
+
+const ORDER_SORT_COLUMNS = [
+  "createdAt",
+  "updatedAt",
+  "total",
+  "status",
+  "quantity",
+] as const;
 
 @Injectable()
 export class OrderRepository implements OrderRepositoryPort {
@@ -16,20 +30,31 @@ export class OrderRepository implements OrderRepositoryPort {
   ) {}
 
   async findAll(filters: OrderFilters): Promise<PaginatedResult<Order>> {
-    const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'DESC', userId, status, dateFrom, dateTo } = filters;
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = "createdAt",
+      sortOrder = "DESC",
+      userId,
+      status,
+      dateFrom,
+      dateTo,
+    } = filters;
 
-    const query = this.repo.createQueryBuilder('order')
-      .leftJoinAndSelect('order.user', 'user')
-      .leftJoinAndSelect('order.service', 'service')
-      .leftJoinAndSelect('order.trackingVisit', 'trackingVisit')
-      .leftJoinAndSelect('order.payment', 'payment');
+    const query = this.repo
+      .createQueryBuilder("order")
+      .leftJoinAndSelect("order.user", "user")
+      .leftJoinAndSelect("order.service", "service")
+      .leftJoinAndSelect("order.trackingVisit", "trackingVisit")
+      .leftJoinAndSelect("order.payment", "payment");
 
-    if (userId) query.andWhere('order.userId = :userId', { userId });
-    if (status) query.andWhere('order.status = :status', { status });
-    if (dateFrom) query.andWhere('order.createdAt >= :dateFrom', { dateFrom });
-    if (dateTo) query.andWhere('order.createdAt <= :dateTo', { dateTo });
+    if (userId) query.andWhere("order.userId = :userId", { userId });
+    if (status) query.andWhere("order.status = :status", { status });
+    if (dateFrom) query.andWhere("order.createdAt >= :dateFrom", { dateFrom });
+    if (dateTo) query.andWhere("order.createdAt <= :dateTo", { dateTo });
 
-    query.orderBy(`order.${sortBy}`, sortOrder as 'ASC' | 'DESC');
+    const safeSortBy = resolveSortColumn(sortBy, ORDER_SORT_COLUMNS, "createdAt");
+    query.orderBy(`order.${safeSortBy}`, sortOrder as "ASC" | "DESC");
     query.skip((page - 1) * limit).take(limit);
 
     const [entities, total] = await query.getManyAndCount();
@@ -43,12 +68,15 @@ export class OrderRepository implements OrderRepositoryPort {
   async findById(id: string): Promise<Order | null> {
     const entity = await this.repo.findOne({
       where: { id },
-      relations: ['user', 'service', 'trackingVisit', 'payment'],
+      relations: ["user", "service", "trackingVisit", "payment"],
     });
     return entity ? this.toDomain(entity) : null;
   }
 
-  async findByUserId(userId: string, filters: PaginationDto): Promise<PaginatedResult<Order>> {
+  async findByUserId(
+    userId: string,
+    filters: PaginationDto,
+  ): Promise<PaginatedResult<Order>> {
     return this.findAll({ ...filters, userId });
   }
 
@@ -63,23 +91,6 @@ export class OrderRepository implements OrderRepositoryPort {
     return this.findById(id);
   }
 
-  async migratePendingWithoutGatewayToInCheckout(): Promise<number> {
-    const result = await this.repo
-      .createQueryBuilder()
-      .update(OrderEntity)
-      .set({ status: OrderStatus.IN_CHECKOUT })
-      .where('status = :status', { status: OrderStatus.PENDING })
-      .andWhere(
-        `NOT EXISTS (
-          SELECT 1 FROM payments p
-          WHERE p.order_id = orders.id AND p.gateway_url IS NOT NULL
-        )`,
-      )
-      .execute();
-
-    return result.affected ?? 0;
-  }
-
   private toDomain(entity: OrderEntity): Order {
     const order = new Order({
       id: entity.id,
@@ -90,7 +101,7 @@ export class OrderRepository implements OrderRepositoryPort {
       unitPrice: Number(entity.unitPrice),
       subtotal: Number(entity.subtotal),
       total: Number(entity.total),
-      currency: entity.currency ?? 'USD',
+      currency: entity.currency ?? "USD",
       country: entity.country ?? null,
       status: entity.status,
       paymentId: entity.paymentId,

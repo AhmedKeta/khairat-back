@@ -15,6 +15,7 @@ import { PasswordResetCodeRepository } from '../../infrastructure/repositories/p
 import { UserRepositoryPort } from '../../domain/user/ports/user.repository.port';
 import { TrackingModule } from '../tracking/tracking.module';
 import { MailModule } from '../../infrastructure/mail/mail.module';
+import { requireJwtSecret } from '../../shared/utils/jwt-secrets.util';
 
 @Module({
   imports: [
@@ -25,7 +26,10 @@ import { MailModule } from '../../infrastructure/mail/mail.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET', 'secret'),
+        secret: requireJwtSecret(
+          configService.get<string>('JWT_SECRET'),
+          'JWT_SECRET',
+        ),
         signOptions: {
           expiresIn: configService.get('JWT_EXPIRES_IN', '15m'),
         },

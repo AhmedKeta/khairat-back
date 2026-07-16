@@ -19,6 +19,8 @@ import {
   normalizeCurrency,
   POLAR_DEFAULT_CURRENCY,
 } from '../../shared/constants/currencies';
+import { UploadService } from '../upload/upload.service';
+import { toStoredUploadRef } from '../upload/upload-path.util';
 
 @Injectable()
 export class OrdersService {
@@ -28,6 +30,7 @@ export class OrdersService {
     private readonly orderRepository: OrderRepositoryPort,
     private readonly serviceRepository: ServiceRepositoryPort,
     private readonly trackingService: TrackingService,
+    private readonly uploadService: UploadService,
   ) {}
 
   async findAll(filters: OrderFilters) {
@@ -145,15 +148,6 @@ export class OrdersService {
     return this.orderRepository.update(id, { status });
   }
 
-  async migratePendingWithoutGatewayToInCheckout() {
-    const updated =
-      await this.orderRepository.migratePendingWithoutGatewayToInCheckout();
-    this.logger.log(
-      `Migrated ${updated} pending order(s) without payment gateway to IN_CHECKOUT`,
-    );
-    return { updated };
-  }
-
   async updateDetails(id: string, dto: UpdateOrderDetailsDto, userId: string) {
     const order = await this.orderRepository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
@@ -174,6 +168,14 @@ export class OrdersService {
         ? (dto.intentionOther?.trim() ?? null)
         : null;
 
+    const nextPhotoUrl =
+      dto.photoUrl != null && dto.photoUrl !== ''
+        ? toStoredUploadRef(dto.photoUrl)
+        : null;
+    if (order.photoUrl && order.photoUrl !== nextPhotoUrl) {
+      this.uploadService.safeDeleteByPublicUrl(order.photoUrl);
+    }
+
     return this.orderRepository.update(id, {
       intention: dto.intention,
       intentionOther,
@@ -181,7 +183,7 @@ export class OrdersService {
       dedicationGender: dto.dedicationGender,
       beneficiaryStatus: dto.beneficiaryStatus,
       shortDuaa: dto.shortDuaa ?? null,
-      photoUrl: dto.photoUrl ?? null,
+      photoUrl: nextPhotoUrl,
     });
   }
 }

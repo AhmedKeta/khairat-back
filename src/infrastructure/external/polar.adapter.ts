@@ -196,10 +196,21 @@ export class PolarAdapter implements PaymentGatewayPort {
     const orderId: string | null = metadata.orderId ?? null;
     const transactionId: string | null = data.checkoutId ?? data.id ?? null;
 
+    const amountCents =
+      data.totalAmount ?? data.amount ?? data.netAmount ?? null;
+    const amount =
+      amountCents != null && Number.isFinite(Number(amountCents))
+        ? Number(amountCents) / 100
+        : null;
+    const currency =
+      data.currency != null ? String(data.currency).toUpperCase() : null;
+
     return {
       outcome: this.resolveOutcome(type, data),
       orderId,
       transactionId,
+      amount,
+      currency,
       raw: event,
     };
   }
@@ -213,8 +224,12 @@ export class PolarAdapter implements PaymentGatewayPort {
     type: string,
     data: Record<string, any>,
   ): "SUCCESS" | "FAILED" | "IGNORE" {
-    if (type === "order.paid" || type === "order.created") {
+    if (type === "order.paid") {
       return "SUCCESS";
+    }
+
+    if (type === "order.created") {
+      return "IGNORE";
     }
 
     if (type === "checkout.updated" || type === "checkout.created") {

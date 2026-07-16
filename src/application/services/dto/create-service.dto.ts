@@ -18,6 +18,7 @@ import {
   SUPPORTED_CURRENCIES,
   POLAR_DEFAULT_CURRENCY,
 } from '../../../shared/constants/currencies';
+import { CardPriceDisplay } from '../../../domain/service/value-objects/card-price-display.enum';
 
 class LocalizedTextDto {
   @IsString()
@@ -147,6 +148,16 @@ export class CreateServiceDto {
   @ValidateNested()
   @Type(() => LocalizedTextDto)
   shareDescription?: LocalizedTextDto;
+
+  @ApiPropertyOptional({
+    enum: CardPriceDisplay,
+    example: CardPriceDisplay.FULL,
+    description:
+      'Which price to show on service listing cards. SHARE falls back to FULL when sharePrices is empty.',
+  })
+  @IsOptional()
+  @IsIn(Object.values(CardPriceDisplay))
+  cardPriceDisplay?: CardPriceDisplay;
 
   @ApiPropertyOptional({
     example: 299.99,

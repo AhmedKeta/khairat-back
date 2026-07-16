@@ -5,12 +5,14 @@ import { OurWorkEntity } from '../../infrastructure/database/entities/our-work.e
 import { CreateOurWorkDto } from './dto/create-our-work.dto';
 import { UpdateOurWorkDto } from './dto/update-our-work.dto';
 import { toStoredUploadRef } from '../upload/upload-path.util';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class WorksService {
   constructor(
     @InjectRepository(OurWorkEntity)
     private readonly repo: Repository<OurWorkEntity>,
+    private readonly uploadService: UploadService,
   ) {}
 
   async findAllVisible() {
@@ -44,17 +46,22 @@ export class WorksService {
   }
 
   async update(id: string, dto: UpdateOurWorkDto) {
-    await this.findById(id);
+    const existing = await this.findById(id);
     const payload: Record<string, unknown> = { ...dto };
     if (dto.imageUrl !== undefined) {
-      payload.imageUrl = toStoredUploadRef(dto.imageUrl);
+      const nextImageUrl = toStoredUploadRef(dto.imageUrl);
+      payload.imageUrl = nextImageUrl;
+      if (existing.imageUrl && existing.imageUrl !== nextImageUrl) {
+        this.uploadService.safeDeleteByPublicUrl(existing.imageUrl);
+      }
     }
     await this.repo.update(id, payload as UpdateOurWorkDto);
     return this.findById(id);
   }
 
   async delete(id: string) {
-    await this.findById(id);
+    const row = await this.findById(id);
+    this.uploadService.safeDeleteByPublicUrl(row.imageUrl);
     await this.repo.delete(id);
   }
 

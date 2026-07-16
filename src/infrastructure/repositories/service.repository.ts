@@ -8,8 +8,18 @@ import {
   ServicePrice,
   computeIsPurchasable,
 } from '../../domain/service/entities/service.entity';
+import { CardPriceDisplay } from '../../domain/service/value-objects/card-price-display.enum';
 import { PaginatedResult } from '../../shared/dto/pagination.dto';
 import { POLAR_DEFAULT_CURRENCY } from '../../shared/constants/currencies';
+import { resolveSortColumn } from '../../shared/utils/sort-column.util';
+
+const SERVICE_SORT_COLUMNS = [
+  'displayOrder',
+  'createdAt',
+  'updatedAt',
+  'price',
+  'feedsCount',
+] as const;
 
 @Injectable()
 export class ServiceRepository implements ServiceRepositoryPort {
@@ -51,8 +61,9 @@ export class ServiceRepository implements ServiceRepositoryPort {
     if (categoryId) query.andWhere('service.categoryId = :categoryId', { categoryId });
     if (categorySlug) query.andWhere('category.slug = :categorySlug', { categorySlug });
 
+    const safeSortBy = resolveSortColumn(sortBy, SERVICE_SORT_COLUMNS, 'displayOrder');
     query
-      .orderBy(`service.${sortBy}`, sortOrder as 'ASC' | 'DESC')
+      .orderBy(`service.${safeSortBy}`, sortOrder as 'ASC' | 'DESC')
       .addOrderBy('service.createdAt', 'DESC');
     query.skip((page - 1) * limit).take(limit);
 
@@ -191,6 +202,10 @@ export class ServiceRepository implements ServiceRepositoryPort {
       prices,
       sharePrices,
       shareDescription: entity.shareDescription ?? null,
+      cardPriceDisplay:
+        entity.cardPriceDisplay === CardPriceDisplay.SHARE
+          ? CardPriceDisplay.SHARE
+          : CardPriceDisplay.FULL,
       feedsCount: entity.feedsCount,
       images: entity.images,
       videos: entity.videos,

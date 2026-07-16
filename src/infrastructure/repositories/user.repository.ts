@@ -5,6 +5,15 @@ import { UserEntity } from '../database/entities/user.entity';
 import { UserRepositoryPort, UserFilters } from '../../domain/user/ports/user.repository.port';
 import { User } from '../../domain/user/entities/user.entity';
 import { PaginatedResult } from '../../shared/dto/pagination.dto';
+import { resolveSortColumn } from '../../shared/utils/sort-column.util';
+
+const USER_SORT_COLUMNS = [
+  'createdAt',
+  'updatedAt',
+  'fullName',
+  'email',
+  'role',
+] as const;
 
 @Injectable()
 export class UserRepository implements UserRepositoryPort {
@@ -29,7 +38,8 @@ export class UserRepository implements UserRepositoryPort {
     if (role) query.andWhere('user.role = :role', { role });
     if (isBlocked !== undefined) query.andWhere('user.isBlocked = :isBlocked', { isBlocked });
 
-    query.orderBy(`user.${sortBy}`, sortOrder as 'ASC' | 'DESC');
+    const safeSortBy = resolveSortColumn(sortBy, USER_SORT_COLUMNS, 'createdAt');
+    query.orderBy(`user.${safeSortBy}`, sortOrder as 'ASC' | 'DESC');
     query.skip((page - 1) * limit).take(limit);
 
     const [entities, total] = await query.getManyAndCount();

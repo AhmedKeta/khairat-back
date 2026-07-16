@@ -1,4 +1,12 @@
-import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Logger,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { ServiceRepositoryPort, ServiceFilters } from '../../domain/service/ports/service.repository.port';
 import { ServiceVoiceReviewRepositoryPort } from '../../domain/service-voice-review/ports/service-voice-review.repository.port';
 import { ServiceCategoriesService } from '../service-categories/service-categories.service';
@@ -6,6 +14,9 @@ import { ServiceMarksService } from '../service-marks/service-marks.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { toStoredUploadRef } from '../upload/upload-path.util';
+import { UploadService } from '../upload/upload.service';
+import { CardPriceDisplay } from '../../domain/service/value-objects/card-price-display.enum';
+import { OrderEntity } from '../../infrastructure/database/entities/order.entity';
 
 @Injectable()
 export class ServicesService {
@@ -16,6 +27,9 @@ export class ServicesService {
     private readonly voiceReviewRepository: ServiceVoiceReviewRepositoryPort,
     private readonly categoriesService: ServiceCategoriesService,
     private readonly marksService: ServiceMarksService,
+    private readonly uploadService: UploadService,
+    @InjectRepository(OrderEntity)
+    private readonly orderRepo: Repository<OrderEntity>,
   ) {}
 
   private async resolveCategoryId(categoryId: string): Promise<string> {
@@ -40,7 +54,9 @@ export class ServicesService {
   }
 
   async create(dto: CreateServiceDto) {
-    const categoryId = await this.resolveCategoryId(dto.categoryId);
+    const categoryId = dto.categoryId
+      ? await this.resolveCategoryId(dto.categoryId)
+      : null;
 
     const prices = (dto.prices ?? []).map((p) => ({
       currency: String(p.currency).toUpperCase(),
@@ -63,6 +79,7 @@ export class ServicesService {
       prices,
       sharePrices,
       shareDescription: dto.shareDescription ?? null,
+      cardPriceDisplay: dto.cardPriceDisplay ?? CardPriceDisplay.FULL,
       feedsCount: dto.feedsCount,
       images,
       videos,
@@ -80,7 +97,7 @@ export class ServicesService {
   }
 
   async update(id: string, dto: UpdateServiceDto) {
-    await this.findById(id);
+    const existing = await this.findById(id);
     const payload: any = { ...dto };
 
     if (dto.categoryId !== undefined) {
@@ -103,9 +120,11 @@ export class ServicesService {
     }
     if (dto.images !== undefined) {
       payload.images = dto.images.map(toStoredUploadRef);
+      this.uploadService.diffAndDelete(existing.images, payload.images);
     }
     if (dto.videos !== undefined) {
       payload.videos = dto.videos.map(toStoredUploadRef);
+      this.uploadService.diffAndDelete(existing.videos, payload.videos);
     }
     delete payload.category;
     delete payload.markIds;
@@ -121,7 +140,20 @@ export class ServicesService {
   }
 
   async delete(id: string) {
-    await this.findById(id);
+    const service = await this.findById(id);
+
+    const orderCount = await this.orderRepo.count({ where: { serviceId: id } });
+    if (orderCount > 0) {
+      throw new ConflictException(
+        `Cannot delete service: ${orderCount} order(s) still reference it. Disable the service instead.`,
+      );
+    }
+
+    this.uploadService.safeDeleteMany([
+      ...(service.images ?? []),
+      ...(service.videos ?? []),
+      ...((service.voiceReviews ?? []).map((r) => r.audioUrl)),
+    ]);
     await this.serviceRepository.delete(id);
   }
 
