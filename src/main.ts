@@ -32,7 +32,11 @@ async function bootstrap() {
     express.static(uploadRoot, {
       setHeaders: (res, filePath) => {
         const lower = filePath.toLowerCase();
-        if (lower.endsWith(".html") || lower.endsWith(".htm") || lower.endsWith(".svg")) {
+        if (
+          lower.endsWith(".html") ||
+          lower.endsWith(".htm") ||
+          lower.endsWith(".svg")
+        ) {
           res.setHeader("Content-Type", "application/octet-stream");
           res.setHeader("Content-Disposition", "attachment");
         }

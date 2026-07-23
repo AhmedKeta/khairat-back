@@ -207,6 +207,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
           ? CardPriceDisplay.SHARE
           : CardPriceDisplay.FULL,
       feedsCount: entity.feedsCount,
+      detailNote: entity.detailNote ?? null,
       images: entity.images,
       videos: entity.videos,
       isActive: entity.isActive,

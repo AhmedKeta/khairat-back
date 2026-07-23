@@ -65,6 +65,7 @@ export class Service {
   /** Which price listing cards show. SHARE falls back to FULL when no share prices. */
   cardPriceDisplay: CardPriceDisplay;
   feedsCount: number | null;
+  detailNote: ServiceTitle | null;
   images: string[];
   videos: string[];
   isActive: boolean;

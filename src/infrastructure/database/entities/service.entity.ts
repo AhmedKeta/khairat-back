@@ -50,6 +50,10 @@ export class ServiceEntity {
   @Column({ name: 'feeds_count', nullable: true, type: 'int' })
   feedsCount: number | null;
 
+  /** Optional bilingual badge shown on the service page. */
+  @Column({ name: 'detail_note', type: 'jsonb', nullable: true })
+  detailNote: { ar: string; en: string } | null;
+
   @Column({ type: 'text', array: true, default: [] })
   images: string[];
 
