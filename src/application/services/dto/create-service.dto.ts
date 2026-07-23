@@ -28,6 +28,16 @@ class LocalizedTextDto {
   en: string;
 }
 
+class OptionalLocalizedTextDto {
+  @IsOptional()
+  @IsString()
+  ar?: string;
+
+  @IsOptional()
+  @IsString()
+  en?: string;
+}
+
 export class ServicePriceDto {
   @ApiProperty({ enum: SUPPORTED_CURRENCIES, example: 'USD' })
   @IsString()
@@ -178,6 +188,15 @@ export class CreateServiceDto {
   @IsOptional()
   @IsNumber()
   feedsCount?: number;
+
+  @ApiPropertyOptional({
+    example: { ar: 'يصل خلال ٤٨ ساعة', en: 'Delivered within 48 hours' },
+    description: 'Optional bilingual badge shown on the service page.',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => OptionalLocalizedTextDto)
+  detailNote?: OptionalLocalizedTextDto;
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()

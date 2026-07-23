@@ -18,6 +18,16 @@ import { UploadService } from '../upload/upload.service';
 import { CardPriceDisplay } from '../../domain/service/value-objects/card-price-display.enum';
 import { OrderEntity } from '../../infrastructure/database/entities/order.entity';
 
+function normalizeDetailNote(
+  value?: { ar?: string; en?: string } | null,
+): { ar: string; en: string } | null {
+  if (!value) return null;
+  const ar = value.ar?.trim() || '';
+  const en = value.en?.trim() || '';
+  if (!ar && !en) return null;
+  return { ar, en };
+}
+
 @Injectable()
 export class ServicesService {
   private readonly logger = new Logger(ServicesService.name);
@@ -81,6 +91,7 @@ export class ServicesService {
       shareDescription: dto.shareDescription ?? null,
       cardPriceDisplay: dto.cardPriceDisplay ?? CardPriceDisplay.FULL,
       feedsCount: dto.feedsCount,
+      detailNote: normalizeDetailNote(dto.detailNote),
       images,
       videos,
       isActive: true,
@@ -125,6 +136,9 @@ export class ServicesService {
     if (dto.videos !== undefined) {
       payload.videos = dto.videos.map(toStoredUploadRef);
       this.uploadService.diffAndDelete(existing.videos, payload.videos);
+    }
+    if (dto.detailNote !== undefined) {
+      payload.detailNote = normalizeDetailNote(dto.detailNote);
     }
     delete payload.category;
     delete payload.markIds;
