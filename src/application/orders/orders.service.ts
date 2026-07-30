@@ -9,6 +9,7 @@ import { OrderRepositoryPort, OrderFilters } from '../../domain/order/ports/orde
 import { ServiceRepositoryPort } from '../../domain/service/ports/service.repository.port';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
 import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
+import { OrderPaymentPlan } from '../../domain/order/value-objects/order-payment-plan.enum';
 import { OrderIntention } from '../../domain/order/value-objects/order-intention.enum';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDetailsDto } from './dto/update-order-details.dto';
@@ -130,9 +131,11 @@ export class OrdersService {
       serviceId: dto.serviceId,
       quantity: dto.quantity,
       purchaseType,
+      paymentPlan: OrderPaymentPlan.FULL,
       unitPrice,
       subtotal,
       total,
+      amountPaid: 0,
       currency,
       country,
       status: OrderStatus.IN_CHECKOUT,
@@ -144,6 +147,15 @@ export class OrdersService {
   async updateStatus(id: string, status: OrderStatus) {
     const order = await this.orderRepository.findById(id);
     if (!order) throw new NotFoundException('Order not found');
+
+    if (
+      status === OrderStatus.PENDING_SECOND_PAYMENT &&
+      order.status !== OrderStatus.IN_PROGRESS
+    ) {
+      throw new BadRequestException(
+        'Only in-progress orders can be moved to pending second payment',
+      );
+    }
 
     return this.orderRepository.update(id, { status });
   }

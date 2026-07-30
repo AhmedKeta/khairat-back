@@ -60,6 +60,10 @@ export class ServiceEntity {
   @Column({ type: 'text', array: true, default: [] })
   videos: string[];
 
+  /** Combined display order of image and video refs (interleaved). */
+  @Column({ name: 'media_order', type: 'text', array: true, default: [] })
+  mediaOrder: string[];
+
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 

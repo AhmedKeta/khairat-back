@@ -28,6 +28,26 @@ function normalizeDetailNote(
   return { ar, en };
 }
 
+/**
+ * Keep only refs that exist in images ∪ videos, preserve requested order,
+ * then append any media that was omitted from the requested list.
+ */
+function normalizeMediaOrder(
+  images: string[],
+  videos: string[],
+  requested?: string[],
+): string[] {
+  const known = new Set([...images, ...videos]);
+  const seen = new Set<string>();
+  const ordered = (requested ?? [])
+    .map(toStoredUploadRef)
+    .filter((r) => known.has(r) && !seen.has(r) && (seen.add(r), true));
+  return [
+    ...ordered,
+    ...[...images, ...videos].filter((r) => !seen.has(r)),
+  ];
+}
+
 @Injectable()
 export class ServicesService {
   private readonly logger = new Logger(ServicesService.name);
@@ -80,6 +100,7 @@ export class ServicesService {
 
     const images = (dto.images || []).map(toStoredUploadRef);
     const videos = (dto.videos || []).map(toStoredUploadRef);
+    const mediaOrder = normalizeMediaOrder(images, videos, dto.mediaOrder);
 
     const displayOrder = await this.serviceRepository.getNextDisplayOrder();
 
@@ -94,6 +115,7 @@ export class ServicesService {
       detailNote: normalizeDetailNote(dto.detailNote),
       images,
       videos,
+      mediaOrder,
       isActive: true,
       displayOrder,
       categoryId,
@@ -136,6 +158,19 @@ export class ServicesService {
     if (dto.videos !== undefined) {
       payload.videos = dto.videos.map(toStoredUploadRef);
       this.uploadService.diffAndDelete(existing.videos, payload.videos);
+    }
+    if (
+      dto.images !== undefined ||
+      dto.videos !== undefined ||
+      dto.mediaOrder !== undefined
+    ) {
+      const nextImages = payload.images ?? existing.images ?? [];
+      const nextVideos = payload.videos ?? existing.videos ?? [];
+      payload.mediaOrder = normalizeMediaOrder(
+        nextImages,
+        nextVideos,
+        dto.mediaOrder ?? existing.mediaOrder,
+      );
     }
     if (dto.detailNote !== undefined) {
       payload.detailNote = normalizeDetailNote(dto.detailNote);

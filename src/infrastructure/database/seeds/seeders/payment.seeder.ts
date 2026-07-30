@@ -37,6 +37,7 @@ export async function seedPayments(ds: DataSource): Promise<void> {
     await paymentRepo.upsert(
       {
         orderId: order.id,
+        installmentNumber: 1,
         provider: 'Polar',
         transactionId,
         amount: Number(order.total),
@@ -46,7 +47,7 @@ export async function seedPayments(ds: DataSource): Promise<void> {
         responsePayload: { source: 'seed', orderStatus: order.status } as any,
         webhookReceivedAt,
       },
-      ['orderId'],
+      ['orderId', 'installmentNumber'],
     );
 
     const payment = await paymentRepo.findOne({ where: { orderId: order.id }, select: ['id'] });

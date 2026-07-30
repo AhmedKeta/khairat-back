@@ -4,13 +4,17 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { PaymentStatus } from '../../../domain/payment/value-objects/payment-status.enum';
 import { OrderEntity } from './order.entity';
 
 @Entity('payments')
+@Index('UQ_payments_order_installment', ['orderId', 'installmentNumber'], {
+  unique: true,
+})
 export class PaymentEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,9 +22,12 @@ export class PaymentEntity {
   @Column({ name: 'order_id' })
   orderId: string;
 
-  @OneToOne(() => OrderEntity, (order) => order.payment)
+  @ManyToOne(() => OrderEntity, (order) => order.payments)
   @JoinColumn({ name: 'order_id' })
   order: OrderEntity;
+
+  @Column({ name: 'installment_number', type: 'int', default: 1 })
+  installmentNumber: number;
 
   @Column({ default: 'polar' })
   provider: string;

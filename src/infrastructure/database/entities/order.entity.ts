@@ -5,11 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   JoinColumn,
 } from 'typeorm';
 import { OrderStatus } from '../../../domain/order/value-objects/order-status.enum';
 import { OrderPurchaseType } from '../../../domain/order/value-objects/order-purchase-type.enum';
+import { OrderPaymentPlan } from '../../../domain/order/value-objects/order-payment-plan.enum';
 import { OrderIntention } from '../../../domain/order/value-objects/order-intention.enum';
 import { DedicationGender } from '../../../domain/order/value-objects/dedication-gender.enum';
 import { BeneficiaryStatus } from '../../../domain/order/value-objects/beneficiary-status.enum';
@@ -48,6 +49,14 @@ export class OrderEntity {
   })
   purchaseType: OrderPurchaseType;
 
+  @Column({
+    name: 'payment_plan',
+    type: 'varchar',
+    length: 16,
+    default: OrderPaymentPlan.FULL,
+  })
+  paymentPlan: OrderPaymentPlan;
+
   @Column({ name: 'unit_price', type: 'decimal', precision: 10, scale: 2 })
   unitPrice: number;
 
@@ -56,6 +65,15 @@ export class OrderEntity {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
+
+  @Column({
+    name: 'amount_paid',
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
+  amountPaid: number;
 
   @Column({ default: 'USD' })
   currency: string;
@@ -109,8 +127,8 @@ export class OrderEntity {
   @JoinColumn({ name: 'tracking_visit_id' })
   trackingVisit?: UserTrackingEntity | null;
 
-  @OneToOne(() => PaymentEntity, (payment) => payment.order)
-  payment?: PaymentEntity | null;
+  @OneToMany(() => PaymentEntity, (payment) => payment.order)
+  payments?: PaymentEntity[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

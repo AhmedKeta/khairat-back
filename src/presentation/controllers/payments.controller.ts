@@ -28,7 +28,12 @@ export class PaymentsController {
     @Body() body: InitiatePaymentDto,
     @CurrentUser() user: any,
   ) {
-    return this.paymentsService.initiatePayment(body.orderId, user, body.locale);
+    return this.paymentsService.initiatePayment(
+      body.orderId,
+      user,
+      body.locale,
+      body.paymentPlan,
+    );
   }
 
   /**

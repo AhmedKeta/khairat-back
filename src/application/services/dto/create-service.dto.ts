@@ -213,4 +213,13 @@ export class CreateServiceDto {
   @IsOptional()
   @IsArray()
   videos?: string[];
+
+  @ApiPropertyOptional({
+    type: [String],
+    description:
+      'Combined display order of image and video refs. Unknown refs are dropped; missing refs are appended.',
+  })
+  @IsOptional()
+  @IsArray()
+  mediaOrder?: string[];
 }

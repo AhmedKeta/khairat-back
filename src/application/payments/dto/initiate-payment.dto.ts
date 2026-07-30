@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import { OrderPaymentPlan } from '../../../domain/order/value-objects/order-payment-plan.enum';
 
 export class InitiatePaymentDto {
   @ApiProperty()
@@ -11,4 +12,9 @@ export class InitiatePaymentDto {
   @IsString()
   @MaxLength(8)
   locale?: string;
+
+  @ApiPropertyOptional({ enum: OrderPaymentPlan })
+  @IsOptional()
+  @IsEnum(OrderPaymentPlan)
+  paymentPlan?: OrderPaymentPlan;
 }

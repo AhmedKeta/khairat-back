@@ -11,8 +11,11 @@ import { OrderRepositoryPort } from '../../domain/order/ports/order.repository.p
 import { PaymentStatus } from '../../domain/payment/value-objects/payment-status.enum';
 import { OrderStatus } from '../../domain/order/value-objects/order-status.enum';
 import { OrderIntention } from '../../domain/order/value-objects/order-intention.enum';
+import { OrderPurchaseType } from '../../domain/order/value-objects/order-purchase-type.enum';
+import { OrderPaymentPlan } from '../../domain/order/value-objects/order-payment-plan.enum';
 import { UserRole } from '../../domain/user/value-objects/user-role.enum';
 import { PaymentGatewayRouter } from './payment-gateway.router';
+import { Order } from '../../domain/order/entities/order.entity';
 
 const DEFAULT_LOCALE = 'en';
 const SUPPORTED_LOCALES = new Set(['en', 'ar']);
@@ -29,11 +32,29 @@ export class PaymentsService {
     private readonly configService: ConfigService,
   ) {}
 
-  async initiatePayment(orderId: string, user: any, locale?: string) {
+  async initiatePayment(
+    orderId: string,
+    user: any,
+    locale?: string,
+    paymentPlan?: OrderPaymentPlan,
+  ) {
     const order = await this.orderRepository.findById(orderId);
     if (!order) throw new NotFoundException('Order not found');
     if (order.userId !== user.id)
       throw new BadRequestException('Order does not belong to user');
+
+    if (
+      order.status === OrderStatus.PAID ||
+      order.status === OrderStatus.CANCELLED
+    ) {
+      throw new BadRequestException('Order cannot accept payments');
+    }
+
+    if (order.status === OrderStatus.IN_PROGRESS) {
+      throw new BadRequestException(
+        'Second payment is not due until the service is marked complete',
+      );
+    }
 
     const intentionComplete =
       !!order.intention &&
@@ -49,10 +70,53 @@ export class PaymentsService {
       throw new BadRequestException('Order details are incomplete');
     }
 
+    const isSecondInstallment =
+      order.status === OrderStatus.PENDING_SECOND_PAYMENT;
+
+    if (
+      !isSecondInstallment &&
+      ![
+        OrderStatus.IN_CHECKOUT,
+        OrderStatus.PENDING,
+        OrderStatus.FAILED,
+      ].includes(order.status)
+    ) {
+      throw new BadRequestException(
+        'Order is not eligible for payment initiation',
+      );
+    }
+
+    let plan = order.paymentPlan ?? OrderPaymentPlan.FULL;
+    if (!isSecondInstallment && paymentPlan) {
+      if (
+        paymentPlan === OrderPaymentPlan.HALF &&
+        order.purchaseType === OrderPurchaseType.SHARE
+      ) {
+        throw new BadRequestException(
+          'Half payment plan is not available for share purchases',
+        );
+      }
+      plan = paymentPlan;
+      if (order.paymentPlan !== plan) {
+        await this.orderRepository.update(order.id, { paymentPlan: plan });
+        order.paymentPlan = plan;
+      }
+    }
+
+    const installmentNumber = isSecondInstallment ? 2 : 1;
+    const amount = this.resolveInstallmentAmount(order, plan, installmentNumber);
+
     const existingPayment =
-      await this.paymentRepository.findByOrderId(orderId);
+      await this.paymentRepository.findByOrderIdAndInstallment(
+        orderId,
+        installmentNumber,
+      );
     if (existingPayment?.status === PaymentStatus.SUCCESS) {
-      throw new BadRequestException('Order already paid');
+      throw new BadRequestException(
+        installmentNumber === 1
+          ? 'First installment already paid'
+          : 'Second installment already paid',
+      );
     }
 
     const frontendUrl = this.configService.get(
@@ -82,7 +146,7 @@ export class PaymentsService {
       userId: user.id,
       serviceId: order.serviceId,
       quantity: order.quantity,
-      amount: order.total,
+      amount,
       currency: orderCurrency,
       customerName: user.fullName,
       customerEmail: user.email,
@@ -92,10 +156,6 @@ export class PaymentsService {
       webhookUrl: `${backendUrl}/api/v1/payments/webhook/${gateway.id}`,
     });
 
-    /**
-     * Payment–Order is modeled as @OneToOne with JoinColumn on `order_id`, so that column is UNIQUE.
-     * Retrying payment (pending or failed) must UPDATE the existing row, not INSERT another.
-     */
     const refPayload =
       gatewayResponse.gatewayCustomerReference != null
         ? { gatewayCustomerReference: gatewayResponse.gatewayCustomerReference }
@@ -105,19 +165,21 @@ export class PaymentsService {
       ? await this.paymentRepository.update(existingPayment.id, {
           provider: gateway.id,
           transactionId: gatewayResponse.transactionId,
-          amount: order.total,
+          amount,
           currency: orderCurrency,
           status: PaymentStatus.INITIATED,
           gatewayUrl: gatewayResponse.redirectUrl,
           responsePayload: gatewayResponse.rawResponse,
           webhookReceivedAt: null,
+          installmentNumber,
           ...refPayload,
         })
       : await this.paymentRepository.create({
           orderId: order.id,
+          installmentNumber,
           provider: gateway.id,
           transactionId: gatewayResponse.transactionId,
-          amount: order.total,
+          amount,
           currency: orderCurrency,
           status: PaymentStatus.INITIATED,
           gatewayUrl: gatewayResponse.redirectUrl,
@@ -129,14 +191,17 @@ export class PaymentsService {
       throw new BadRequestException('Could not persist payment');
     }
 
-    if (order.status === OrderStatus.IN_CHECKOUT) {
+    if (
+      order.status === OrderStatus.IN_CHECKOUT ||
+      order.status === OrderStatus.FAILED
+    ) {
       await this.orderRepository.update(order.id, {
         status: OrderStatus.PENDING,
       });
     }
 
     this.logger.log(
-      `Payment initiated via ${gateway.id}: ${payment.id} for order: ${orderId}`,
+      `Payment initiated via ${gateway.id}: ${payment.id} (installment ${installmentNumber}) for order: ${orderId}`,
     );
 
     return {
@@ -144,6 +209,8 @@ export class PaymentsService {
       provider: gateway.id,
       redirectUrl: gatewayResponse.redirectUrl,
       transactionId: gatewayResponse.transactionId,
+      installmentNumber,
+      amount,
     };
   }
 
@@ -175,7 +242,12 @@ export class PaymentsService {
       return { received: true };
     }
 
-    const payment = await this.paymentRepository.findByOrderId(orderId);
+    let payment =
+      await this.paymentRepository.findLatestInitiatedByOrderId(orderId);
+    if (!payment) {
+      // Fallback: latest payment for the order (retry / race cases)
+      payment = await this.paymentRepository.findByOrderId(orderId);
+    }
     if (!payment) {
       this.logger.warn(`Payment not found for order: ${orderId}`);
       return { received: true };
@@ -215,6 +287,13 @@ export class PaymentsService {
     }
 
     const transactionId = event.transactionId ?? payment.transactionId;
+    const order = await this.orderRepository.findById(orderId);
+    if (!order) {
+      this.logger.warn(`Order not found for webhook: ${orderId}`);
+      return { received: true };
+    }
+
+    const installmentNumber = payment.installmentNumber ?? 1;
 
     if (event.outcome === 'SUCCESS') {
       await this.paymentRepository.update(payment.id, {
@@ -223,21 +302,48 @@ export class PaymentsService {
         responsePayload: event.raw,
         webhookReceivedAt: new Date(),
       });
+
+      const amountPaid =
+        Math.round(
+          (Number(order.amountPaid ?? 0) + Number(payment.amount)) * 100,
+        ) / 100;
+
+      const plan = order.paymentPlan ?? OrderPaymentPlan.FULL;
+      let nextStatus: OrderStatus;
+      if (installmentNumber === 1 && plan === OrderPaymentPlan.HALF) {
+        nextStatus = OrderStatus.IN_PROGRESS;
+      } else {
+        nextStatus = OrderStatus.PAID;
+      }
+
       await this.orderRepository.update(orderId, {
-        status: OrderStatus.PAID,
+        status: nextStatus,
+        amountPaid,
         paymentId: payment.id,
       });
-      this.logger.log(`Payment succeeded: ${payment.id}`);
+      this.logger.log(
+        `Payment succeeded: ${payment.id} (installment ${installmentNumber}) → ${nextStatus}`,
+      );
     } else {
       await this.paymentRepository.update(payment.id, {
         status: PaymentStatus.FAILED,
         responsePayload: event.raw,
         webhookReceivedAt: new Date(),
       });
-      await this.orderRepository.update(orderId, {
-        status: OrderStatus.FAILED,
-      });
-      this.logger.log(`Payment failed: ${payment.id}`);
+
+      if (installmentNumber === 2) {
+        await this.orderRepository.update(orderId, {
+          status: OrderStatus.PENDING_SECOND_PAYMENT,
+        });
+        this.logger.log(
+          `Second installment failed: ${payment.id}; order back to PENDING_SECOND_PAYMENT`,
+        );
+      } else {
+        await this.orderRepository.update(orderId, {
+          status: OrderStatus.FAILED,
+        });
+        this.logger.log(`Payment failed: ${payment.id}`);
+      }
     }
 
     return { received: true };
@@ -261,6 +367,27 @@ export class PaymentsService {
     }
 
     return payment;
+  }
+
+  private resolveInstallmentAmount(
+    order: Order,
+    plan: OrderPaymentPlan,
+    installmentNumber: number,
+  ): number {
+    const total = Number(order.total);
+    if (plan === OrderPaymentPlan.FULL || installmentNumber === 1) {
+      if (plan === OrderPaymentPlan.HALF) {
+        return Math.round((total / 2) * 100) / 100;
+      }
+      return total;
+    }
+
+    const amountPaid = Number(order.amountPaid ?? 0);
+    const remaining = Math.round((total - amountPaid) * 100) / 100;
+    if (remaining <= 0) {
+      throw new BadRequestException('No remaining balance to pay');
+    }
+    return remaining;
   }
 
   private amountMatches(
