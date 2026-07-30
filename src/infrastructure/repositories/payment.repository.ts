@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { PaymentEntity } from '../database/entities/payment.entity';
 import { PaymentRepositoryPort } from '../../domain/payment/ports/payment.repository.port';
 import { Payment } from '../../domain/payment/entities/payment.entity';
+import { PaymentStatus } from '../../domain/payment/value-objects/payment-status.enum';
 
 @Injectable()
 export class PaymentRepository implements PaymentRepositoryPort {
@@ -18,7 +19,30 @@ export class PaymentRepository implements PaymentRepositoryPort {
   }
 
   async findByOrderId(orderId: string): Promise<Payment | null> {
-    const entity = await this.repo.findOne({ where: { orderId } });
+    const entity = await this.repo.findOne({
+      where: { orderId },
+      order: { installmentNumber: 'DESC', createdAt: 'DESC' },
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
+  async findByOrderIdAndInstallment(
+    orderId: string,
+    installmentNumber: number,
+  ): Promise<Payment | null> {
+    const entity = await this.repo.findOne({
+      where: { orderId, installmentNumber },
+    });
+    return entity ? this.toDomain(entity) : null;
+  }
+
+  async findLatestInitiatedByOrderId(
+    orderId: string,
+  ): Promise<Payment | null> {
+    const entity = await this.repo.findOne({
+      where: { orderId, status: PaymentStatus.INITIATED },
+      order: { createdAt: 'DESC' },
+    });
     return entity ? this.toDomain(entity) : null;
   }
 
@@ -46,6 +70,7 @@ export class PaymentRepository implements PaymentRepositoryPort {
     return new Payment({
       id: entity.id,
       orderId: entity.orderId,
+      installmentNumber: entity.installmentNumber ?? 1,
       provider: entity.provider,
       transactionId: entity.transactionId,
       gatewayCustomerReference: entity.gatewayCustomerReference ?? null,

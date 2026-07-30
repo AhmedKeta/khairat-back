@@ -68,6 +68,8 @@ export class Service {
   detailNote: ServiceTitle | null;
   images: string[];
   videos: string[];
+  /** Combined display order of image and video refs (interleaved). */
+  mediaOrder: string[];
   isActive: boolean;
   polarProductId: string | null;
   displayOrder: number;

@@ -1,5 +1,6 @@
 import { OrderStatus } from '../value-objects/order-status.enum';
 import { OrderPurchaseType } from '../value-objects/order-purchase-type.enum';
+import { OrderPaymentPlan } from '../value-objects/order-payment-plan.enum';
 import { OrderIntention } from '../value-objects/order-intention.enum';
 import { DedicationGender } from '../value-objects/dedication-gender.enum';
 import { BeneficiaryStatus } from '../value-objects/beneficiary-status.enum';
@@ -10,9 +11,11 @@ export class Order {
   serviceId: string;
   quantity: number;
   purchaseType: OrderPurchaseType;
+  paymentPlan: OrderPaymentPlan;
   unitPrice: number;
   subtotal: number;
   total: number;
+  amountPaid: number;
   currency: string;
   country: string | null;
   status: OrderStatus;

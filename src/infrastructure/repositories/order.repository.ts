@@ -8,6 +8,7 @@ import {
 } from "../../domain/order/ports/order.repository.port";
 import { Order } from "../../domain/order/entities/order.entity";
 import { OrderPurchaseType } from "../../domain/order/value-objects/order-purchase-type.enum";
+import { OrderPaymentPlan } from "../../domain/order/value-objects/order-payment-plan.enum";
 import {
   PaginatedResult,
   PaginationDto,
@@ -46,7 +47,7 @@ export class OrderRepository implements OrderRepositoryPort {
       .leftJoinAndSelect("order.user", "user")
       .leftJoinAndSelect("order.service", "service")
       .leftJoinAndSelect("order.trackingVisit", "trackingVisit")
-      .leftJoinAndSelect("order.payment", "payment");
+      .leftJoinAndSelect("order.payments", "payments");
 
     if (userId) query.andWhere("order.userId = :userId", { userId });
     if (status) query.andWhere("order.status = :status", { status });
@@ -68,7 +69,7 @@ export class OrderRepository implements OrderRepositoryPort {
   async findById(id: string): Promise<Order | null> {
     const entity = await this.repo.findOne({
       where: { id },
-      relations: ["user", "service", "trackingVisit", "payment"],
+      relations: ["user", "service", "trackingVisit", "payments"],
     });
     return entity ? this.toDomain(entity) : null;
   }
@@ -98,9 +99,11 @@ export class OrderRepository implements OrderRepositoryPort {
       serviceId: entity.serviceId,
       quantity: entity.quantity,
       purchaseType: entity.purchaseType ?? OrderPurchaseType.FULL,
+      paymentPlan: entity.paymentPlan ?? OrderPaymentPlan.FULL,
       unitPrice: Number(entity.unitPrice),
       subtotal: Number(entity.subtotal),
       total: Number(entity.total),
+      amountPaid: Number(entity.amountPaid ?? 0),
       currency: entity.currency ?? "USD",
       country: entity.country ?? null,
       status: entity.status,
@@ -120,7 +123,14 @@ export class OrderRepository implements OrderRepositoryPort {
     (order as any).user = entity.user;
     (order as any).service = entity.service;
     (order as any).trackingVisit = entity.trackingVisit;
-    (order as any).payment = entity.payment ?? null;
+    (order as any).payments = entity.payments ?? [];
+    (order as any).payment =
+      entity.payments?.length
+        ? [...entity.payments].sort(
+            (a, b) =>
+              (b.installmentNumber ?? 1) - (a.installmentNumber ?? 1),
+          )[0]
+        : null;
     return order;
   }
 }

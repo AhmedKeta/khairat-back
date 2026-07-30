@@ -210,6 +210,7 @@ export class ServiceRepository implements ServiceRepositoryPort {
       detailNote: entity.detailNote ?? null,
       images: entity.images,
       videos: entity.videos,
+      mediaOrder: entity.mediaOrder ?? [],
       isActive: entity.isActive,
       polarProductId: entity.polarProductId ?? null,
       displayOrder: entity.displayOrder ?? 0,

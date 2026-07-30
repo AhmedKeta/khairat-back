@@ -3,6 +3,7 @@ import { PaymentStatus } from '../value-objects/payment-status.enum';
 export class Payment {
   id: string;
   orderId: string;
+  installmentNumber: number;
   provider: string;
   transactionId: string | null;
   gatewayCustomerReference: string | null;
